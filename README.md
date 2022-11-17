@@ -1,7 +1,7 @@
 # ITEL - PAP - Repo
 ## Prova de Aptidão Profissional - ITEL
 
-Projecto: (Cláudio Eduardo)[https://github.com/ClaudioCanga] e (Helder Cambuta)[https://github.com/heldercambuta]
+Projecto: [Cláudio Eduardo](https://github.com/ClaudioCanga) e [Helder Cambuta](https://github.com/heldercambuta)
 
 ### Descrição do Projecto
 
