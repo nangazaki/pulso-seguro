@@ -1,0 +1,98 @@
+// Tipografis do Projecto
+
+@mixin titulo ($tamanho, $dispositivo: desktop) {
+    font-family: 'Ubuntu', sans-serif;
+
+    // h1
+    @if $tamanho==h1 and $dispositivo==desktop {
+        font-size: 64px;
+        line-height: 100%;
+    }
+
+    @else if $tamanho==h1 and $dispositivo==mobile {
+        font-size: 36px;
+        line-height: 120%;
+    }
+
+    // h2
+    @if $tamanho==h2 and $dispositivo==desktop {
+        font-size: 52px;
+        line-height: 110%;
+    }
+
+    @else if $tamanho==h2 and $dispositivo==mobile {
+        font-size: 36px;
+        line-height: 120%;
+    }
+
+    // h3
+    @if $tamanho==h3 and $dispositivo==desktop {
+        font-size: 36px;
+        line-height: 120%;
+    }
+
+    @else if $tamanho==h3 and $dispositivo==mobile {
+        font-size: 24px;
+        line-height: 120%;
+    }
+
+    // h4
+    @if $tamanho==h4 and $dispositivo==desktop {
+        font-size: 24px;
+        line-height: 130%;
+    }
+
+    @else if $tamanho==h4 and $dispositivo==mobile {
+        font-size: 18px;
+        line-height: 130%;
+    }
+
+    // h5
+    @if $tamanho==h5 and $dispositivo==desktop {
+        font-size: 18px;
+        line-height: 140%;
+    }
+
+    @else if $tamanho==h5 and $dispositivo==mobile {
+        font-size: 16px;
+        line-height: 150%;
+    }
+}
+
+
+@mixin corpo ($tamanho, $dispositivo: desktop) {
+    font-family: 'Mukta', sans-serif;
+
+    // p1
+    @if $tamanho==p1 and $dispositivo==desktop {
+        font-size: 24px;
+        line-height: 130%;
+    }
+
+    @else if $tamanho==11 and $dispositivo==mobile {
+        font-size: 18px;
+        line-height: 130%;
+    }
+
+    // p2
+    @if $tamanho==p2 and $dispositivo==desktop {
+        font-size: 16px;
+        line-height: 140%;
+    }
+
+    @else if $tamanho==p2 and $dispositivo==mobile {
+        font-size: 14px;
+        line-height: 150%;
+    }
+
+    // p3
+    @if $tamanho==p3 and $dispositivo==desktop {
+        font-size: 14px;
+        line-height: 150%;
+    }
+
+    @else if $tamanho==p3 and $dispositivo==mobile {
+        font-size: 14px;
+        line-height: 150%;
+    }
+}

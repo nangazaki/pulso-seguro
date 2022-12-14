@@ -1,0 +1,23 @@
+*, *::after, *::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  scroll-behavior: smooth;
+  background-color: #fff;
+  font-family: "Mukta", sans-serif;
+}
+
+img, svg {
+  display: block;
+  width: 100%;
+}/*# sourceMappingURL=style.css.map */
