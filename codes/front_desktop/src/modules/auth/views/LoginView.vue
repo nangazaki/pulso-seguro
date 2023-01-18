@@ -19,8 +19,7 @@
             type="email"
             class="relative h-10 w-full py-3 pr-4 pl-11 border border-preto-claro rounded leading-none text-cinza-2 placeholder:text-cinza-3"
             placeholder="E-mail" 
-            v-model="usuario.email" />
-          <span class="">{{this.emailValido}}</span>
+            v-model="form.email" />
         </div>
        
         <div class="w-full mb-4">
@@ -31,7 +30,7 @@
             type="password"
             class="relative h-10 w-full py-3 pr-4 pl-11 border border-preto-claro rounded leading-none text-cinza-2 placeholder:text-cinza-3"
             placeholder="Senha" 
-            v-model="usuario.senha"
+            v-model="form.senha"
           />
         </div>
        
@@ -53,37 +52,26 @@
 </template>
 
 <script>
-import api from "@/service/api";
+import { mapActions } from "vuex";
 
 export default {
   data() {
     return {
-      usuario: {
+      form: {
         email: undefined,
         senha: undefined,
-        emailValido: ",",
       },
     };
   },
-
   methods: {
+    ...mapActions("auth", ["ActionLogin"]),
+
     async submit() {
-      console.log(this.usuario.email, this.usuario.senha);
-      await api
-        .post("/login", {
-          email: this.usuario.email,
-          senha: this.usuario.senha,
-        })
-        .then(
-          /* Validar o email */
-
-          /* Redireccionar para a Home do Dashboard */
-          this.$router.push("/dashboard")
-        )
-        .catch(
-          /* Tratar os erros */
-
-        );
+      try {
+        this.ActionLogin(this.form);
+      } catch (err) {
+        alert(err)
+      }
     },
   },
 };

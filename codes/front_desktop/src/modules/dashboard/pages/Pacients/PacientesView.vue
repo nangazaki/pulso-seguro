@@ -12,7 +12,86 @@
     </div>
 
     <div class="flex gap-8 mb-8">
+      
       <div class="bg-branco-claro w-full h-auto rounded-md p-4 shadow-sm">
+        <div class=" flex justify-between flex-wrap py-4 gap-4">
+            <div class="flex-grow">
+              <select class="bg-branco-claro p-2 border border-cinza-4 rounded-md">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+            <div class="flex items-center flex-wrap gap-4">
+              <div>
+                <input placeholder="Pesquisar paciente..." type="text"
+                  class="border border-cinza-4 rounded-md py-2 px-4 w-40"
+                />
+              </div>
+              <button type="button"
+                class=" text-cinza-3 hover:text-cinza-2 bg-cinza-5 hover:bg-cinza-4 px-4 py-2 flex items-center gap-2 rounded-md"
+              >
+                <span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    aria-hidden="true"
+                    role="img"
+                    tag="i"
+                    class="
+                      v-icon
+                      notranslate
+                      v-theme--light
+                      v-icon--size-default
+                      iconify iconify--tabler
+                    "
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 12v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h9M7 20h10m-8-4v4m6-4v4m2-16h4v4m-5 1l5-5"
+                    ></path>
+                  </svg>
+                </span>
+                <span data-no-activator=""> Exportar </span>
+              </button>
+
+              <router-link to="pacientes/adicionar-paciente"
+                type="button"
+                class=" bg-primaria-claro px-4 py-2 flex items-center gap-2 rounded-md">
+                <span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    aria-hidden="true"  
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 5v14m-7-7h14"
+                    ></path>
+                  </svg>
+                </span>
+                <span class="text-cinza-1">
+                  Adicionar Paciente
+                </span>
+              </router-link>
+            </div>
+          </div>
         <table class="w-full whitespace-nowrap">
           <thead class="border-b border-cinza-2 text-cinza-1">
             <th class="text-left py-3 px-2">Nome completo</th>
@@ -166,14 +245,13 @@
       </div>
     </div>
   </main>
-  <AdicionarPaciente />
+  <router-view />
 </template>
   
 <script>
 import NavbarComp from "@/components/NavbarComp.vue";
 import HeaderComp from "@/components/HeaderComp.vue";
 import PacienteItem from "./components/PacienteItem.vue";
-import AdicionarPaciente from "./components/AdicionarPaciente.vue";
 
 export default {
   data() {
@@ -262,6 +340,6 @@ export default {
       ],
     };
   },
-  components: { NavbarComp, HeaderComp, PacienteItem, AdicionarPaciente },
+  components: { NavbarComp, HeaderComp, PacienteItem },
 };
 </script>

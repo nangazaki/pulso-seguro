@@ -13,15 +13,21 @@
 
     <div class="flex gap-8 mb-8">
       <div class="bg-branco-claro w-full h-auto rounded-lg p-4 shadow-sm">
-        <div id="last-users">
+        <div id="last-professionals">
           <div class=" flex justify-between flex-wrap py-4 gap-4">
             <div class="flex-grow">
-              Teste
+              <select class="bg-branco-claro p-2 border border-cinza-4 rounded-md">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
             </div>
             <div class="flex items-center flex-wrap gap-4">
               <div>
                 <input placeholder="Pesquisar" type="text"
-                  class=" border border-cinza-4 rounded-md py-2 px-4 w-40"
+                  class="border border-cinza-4 rounded-md py-2 px-4 w-40"
                 />
               </div>
               <button type="button"
@@ -216,7 +222,6 @@
         </div>
       </div>
     </div>
-    <AdicionarMedico />
   </main>
   <router-view />
 </template>
@@ -225,7 +230,6 @@
 import NavbarComp from "@/components/NavbarComp.vue";
 import HeaderComp from "@/components/HeaderComp.vue";
 import MedicoItem from "./components/MedicoItem.vue";
-import AdicionarMedico from "./components/AdicionarMedico.vue";
 
 export default {
   data(){
@@ -314,6 +318,6 @@ export default {
       ],
     };
   },
-  components: { NavbarComp, HeaderComp, MedicoItem, AdicionarMedico },
+  components: { NavbarComp, HeaderComp, MedicoItem },
 };
 </script>

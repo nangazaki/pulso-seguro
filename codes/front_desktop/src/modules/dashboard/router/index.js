@@ -33,7 +33,22 @@ export default [
     {
         path: '/pacientes',
         name: 'Pacientes',
-        component: PacientesView
+        component: PacientesView,
+        children: [
+            {
+                path: ':adicionar-paciente',
+                component: () => import('../pages/Pacients/components/AdicionarPaciente.vue')
+            },
+            {
+                path: ':paciente/:id',
+                component: () => import('../pages/Pacients/components/PacienteItem.vue')
+            },
+
+        ]
+    },
+    {
+        path: '/teste',
+        component: () => import('../pages/Teste/TesteView.vue')
     },
     {
         path: '/*',

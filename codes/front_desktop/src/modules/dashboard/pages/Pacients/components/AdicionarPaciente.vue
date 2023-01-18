@@ -23,8 +23,8 @@
             py-1
             text-sm
           "
-          @click="isVisible = false"
-        >
+          @click="fecharMenu"
+          >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -36,7 +36,7 @@
             height="1em"
             viewBox="0 0 24 24"
             style="font-size: 18px; height: 18px; width: 18px"
-          >
+            >
             <path
               fill="none"
               stroke="currentColor"
@@ -130,7 +130,7 @@
         >
           Adicionar
         </button>
-        <button class="px-4 py-2 bg-cinza-5 text-cinza-3 rounded-md mr-4">
+        <button class="px-4 py-2 bg-cinza-5 text-cinza-3 rounded-md mr-4" @click="fecharMenu">
           Cancelar
         </button>
       </div>
@@ -162,6 +162,10 @@ export default {
     adicionarPaciente() {
       api.post("/paciente", {});
     },
+    fecharMenu() {
+      this.isVisible = false
+      this.$router.back()
+    }
   },
 };
 </script>
