@@ -19,7 +19,7 @@
         
         <td class="py-3 px-2">
             <div class="inline-flex items-center space-x-3">
-                <router-link to="/medicos/editar-medico-:id" href="" title="Editar">
+                <router-link to="/medicos/editar-medico/:id" href="" title="Editar">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" tag="i" class="w-5 h-5" viewBox="0 0 24 24" style="font-size: 22px; height: 22px; width: 22px">
                           <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
                             <path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1"></path>

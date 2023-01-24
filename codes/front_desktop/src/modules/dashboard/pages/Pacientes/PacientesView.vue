@@ -245,7 +245,6 @@
       </div>
     </div>
   </main>
-  <router-view />
 </template>
   
 <script>
