@@ -35,8 +35,8 @@ module.exports = {
         'amarelo-escuro': '#FFB76B',
       },
       fontFamily: {
-        'ubuntu': ['Ubuntu', 'sans-serif'],
-        'rubik': ['Rubik', 'sans-serif'],
+        'montserrat': ['Montserrat', 'sans-serif'],
+        'nunito': ['Nunito', 'sans-serif'],
       }
     },
   },

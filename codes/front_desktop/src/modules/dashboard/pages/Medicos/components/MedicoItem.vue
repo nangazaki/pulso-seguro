@@ -5,7 +5,7 @@
             <img class="inline-block h-12 w-12 rounded-full ring-2 ring-white" :src="usuario.img" alt="" />              
             <div class="px-4">
                 <div>
-                    <a href="#" class="text-cinza-1 font-bold">{{ usuario.nome }}</a>
+                    <router-link to="/medicos/editar-medico/:id" class="text-cinza-1 font-bold">{{ usuario.nome }}</router-link>
                 </div>
                 <div class="text-sm text-cinza-3">
                     {{ usuario.email }}
@@ -31,16 +31,6 @@
                 <a href="" title="Eliminar">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" tag="i" class="w-5 h-5" viewBox="0 0 24 24" style="font-size: 22px; height: 22px; width: 22px">
                           <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7h16m-10 4v6m4-6v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"></path>
-                    </svg>
-                </a>
-                
-                <a href="" title="Opções">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" tag="i" class="w-5 h-5" viewBox="0 0 24 24" style="font-size: 22px; height: 22px; width: 22px">
-                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
-                            <circle cx="12" cy="12" r="1"></circle>
-                            <circle cx="12" cy="19" r="1"></circle>
-                            <circle cx="12" cy="5" r="1"></circle>
-                        </g>
                     </svg>
                 </a>
             </div>

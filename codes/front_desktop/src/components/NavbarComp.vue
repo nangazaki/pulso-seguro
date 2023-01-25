@@ -57,6 +57,9 @@
 </template>
 
 <script>
+
+console.log()
+
 export default {
   data() {
     return{
@@ -70,6 +73,5 @@ export default {
     }
   }
 }
-
 
 </script>
