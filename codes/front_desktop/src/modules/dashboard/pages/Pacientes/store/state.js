@@ -1,0 +1,4 @@
+export default {
+    pacientsList: [],
+    pacientSelected: {},
+}

@@ -4,7 +4,7 @@
 
 <style>
 #app {
-  background-color: #EDEAEF;
+  background-color: #f9f9f9;
   display: flex;
 }
 </style>

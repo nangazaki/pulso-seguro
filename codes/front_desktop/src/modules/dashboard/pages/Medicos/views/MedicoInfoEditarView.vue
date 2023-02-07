@@ -1,17 +1,18 @@
 <template>
-  <NavbarComp />
-  <main class="h-screen w-full p-8 overflow-auto">
-    <HeaderComp />
-
-    <div>
+    <NavbarComp />
+    <main class="h-screen w-full p-8 overflow-auto">
+      <HeaderComp />
+  
+      <span class="font-montserrat pl-2 text-2xl text-cinza-1 mb-8 block">
+        Editar informações do Médico
+      </span>
+      
       <form
         type="post"
         @submit.prevent="adicionarMedico($event)"
         class="w-ful flex gap-8"
       >
-        <div class="bg-branco-claro w-[280px] h-[500px] rounded-lg p-4 shadow-sm">
-          <span class="pl-2 text-2xl text-cinza-1">Adicionar Médico</span>
-
+        <div class="bg-branco-claro w-[280px] h-[500px] rounded-lg p-4 card-shadow">
           <div class="w-full mt-8 overflow-hidden">
             <img
               class="w-40 h-40 mb-4"
@@ -24,9 +25,10 @@
             </div>
           </div>
         </div>
-        <div class="bg-branco-claro w-full h-auto rounded-lg p-4 shadow-sm mb-8">
+
+        <div class="bg-branco-claro w-full h-auto rounded-lg p-8 card-shadow mb-8">
           <div class="pb-4 mb-8 border-b">
-            <span class="text-xl block mb-4">Informações pessoais</span>
+            <span class="font-montserrat text-xl block mb-4">Informações pessoais</span>
             <div class="mb-4 flex gap-4">
               <div class="w-full min-w-[330px] flex-wrap">
                 <label class="block text-base text-cinza-3 mb-1">Nome:</label>
@@ -82,7 +84,7 @@
                 <input
                   type="text"
                   v-model="form.rua"
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md texe-sm"
+                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Rua"
                 />
               </div>
@@ -127,8 +129,33 @@
               </div>
             </div>
           </div>
+  
+          <div class="pb-4 mb-8 border-b">
+            <span class="font-montserrat text-xl block mb-4">Informações Profissional</span>
+            <div class="mb-4 flex gap-4">
+              <div class="w-full min-w-[330px]">
+                <label class="block text-base text-cinza-3 mb-1">Especialização:</label>
+                <input
+                  type="text"
+                  v-model="form.especialização"
+                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3"
+                  placeholder="Especialização"
+                />
+              </div>
+              <div class="w-full min-w-[330px]">
+                <label class="block text-base text-cinza-3 mb-1">Nº da Carteira:</label>
+                <input 
+                  type="number" 
+                  v-model="form.carteira" 
+                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3" 
+                  placeholder="Nº da carteira"
+                />
+              </div>
+            </div>
+          </div>
+
           <div class="mb-8">
-            <span class="text-xl block mb-4">Informações de acesso</span>
+            <span class="font-montserrat text-xl block mb-4">Informações de acesso</span>
             <div class="mb-4 flex gap-4">
               <div class="w-full min-w-[330px]">
                 <label class="block text-base text-cinza-3 mb-1">Nome do usuário:</label>
@@ -170,9 +197,10 @@
               </div>
             </div>
           </div>
+
           <div>
-            <button class=" px-4 py-2 bg-primaria-normal text-branco-claro rounded-md mr-4">
-              Adicionar Novo Doctor
+            <button class=" px-4 py-2 bg-primaria-claro text-branco-claro rounded-md mr-4">
+              Salvar
             </button>
             <button class="px-4 py-2 bg-cinza-5 text-cinza-3 rounded-md mr-4" @click="fecharMenu">
               Cancelar
@@ -180,47 +208,46 @@
           </div>
         </div>
       </form>
-    </div>
-  </main>
-</template>
-
-<script>
-import api from "@/service/api";
-import NavbarComp from "@/components/NavbarComp.vue";
-import HeaderComp from "@/components/HeaderComp.vue";
-
-export default {
-  data() {
-    return {
-      form: {
-        imagem: "",
-        nome: "",
-        sobrenome: "",
-        provincia: "",
-        municipio: "",
-        bairro: "",
-        rua: "",
-        bilhete: "",
-        tel: "",
-        nascimento: "",
-        genero: "",
-        username: "",
-        email: "",
-        senha: "",
-        repetirSenha: ""
+    </main>
+  </template>
+  
+  <script>
+  import api from "@/service/api";
+  import NavbarComp from "@/components/NavbarComp.vue";
+  import HeaderComp from "@/components/HeaderComp.vue";
+  
+  export default {
+    data() {
+      return {
+        form: {
+          imagem: "",
+          nome: "",
+          sobrenome: "",
+          provincia: "",
+          municipio: "",
+          bairro: "",
+          rua: "",
+          bilhete: "",
+          tel: "",
+          nascimento: "",
+          genero: "",
+          especializacao: "",
+          carteira: "",
+          username: "",
+          email: "",
+          senha: "",
+          repetirSenha: ""
+        },
+      };
+    },
+    components: { NavbarComp, HeaderComp },
+    methods: {
+      adicionarMedico() {
+        api.put("/add-medico", {});
       },
-    };
-  },
-  components: { NavbarComp, HeaderComp },
-  methods: {
-    adicionarMedico() {
-      console.log(this.form);
-      api.post("/add-medico", {});
+      fecharMenu() {
+        this.$router.back();
+      },
     },
-    fecharMenu() {
-      this.isVisible = false;
-      this.$router.back();
-    },
-  },
-};
-</script>
+  };
+  </script>

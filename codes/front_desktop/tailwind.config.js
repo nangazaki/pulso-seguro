@@ -7,7 +7,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primaria-claro': '#7FCCAA',
+        'background': '#F9F9F9',
+
+        'primaria-claro': '#1CA35E',
         'primaria-normal': '#51B58D',
         'primaria-escuro': '#209A6E',
 
@@ -22,7 +24,7 @@ module.exports = {
         'preto-normal': '#232224',
         'preto-escuro': '#161617',
 
-        'branco-claro': '#FEFBFF',
+        'branco-claro': '#FFF',
         'branco-normal': '#F7F2FA',
         'branco-escuro': '#EDEAEF',
 
@@ -35,8 +37,8 @@ module.exports = {
         'amarelo-escuro': '#FFB76B',
       },
       fontFamily: {
-        'montserrat': ['Montserrat', 'sans-serif'],
-        'nunito': ['Nunito', 'sans-serif'],
+        'montserrat': ['Montserrat'],
+        nunito: ['Nunito Sans', 'sans-serif']
       }
     },
   },

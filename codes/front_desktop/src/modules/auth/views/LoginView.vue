@@ -1,6 +1,6 @@
 <template lang="">
-  <div class="bg-branco-normal w-full h-screen flex justify-center items-center">
-    <div class="bg-branco-claro relative max-w-lg my-0 mx-auto w-full p-10 flex justify-center items-center rounded-2xl shadow-xl">
+  <div class="bg-background w-full h-screen flex justify-center items-center">
+    <div class="bg-branco-claro relative max-w-lg my-0 mx-auto w-full p-10 flex justify-center items-center rounded-2xl card-shadow">
       <form method="POST" @submit.prevent="submit($event)" 
         class="relative max-w-sm w-full"
       >
@@ -42,7 +42,7 @@
           <a href="#">Esqueceu a senha?</a>
         </div>
         
-        <button class="w-full h-10 bg-primaria-normal rounded font-medium text-lg text-branco-claro pointer">
+        <button class="w-full h-10 bg-primaria-claro rounded font-medium text-lg text-branco-claro pointer">
           Entrar
         </button>
       

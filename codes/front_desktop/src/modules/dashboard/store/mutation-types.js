@@ -1,0 +1,1 @@
+export const SET_MODAL = 'DASHBOARD/SET_MODAL'

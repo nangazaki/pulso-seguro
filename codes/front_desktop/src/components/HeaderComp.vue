@@ -1,5 +1,5 @@
 <template>
-  <header class="w-full h-16 mb-8 bg-branco-claro rounded-lg px-4 flex items-center shadow-sm">
+  <header class="w-full h-16 mb-8 bg-branco-claro rounded-xl px-4 flex items-center card-shadow">
     <PerfilComp :usuario="usuario"/>
   </header>
 </template>

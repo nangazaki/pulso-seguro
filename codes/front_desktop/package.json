@@ -10,9 +10,11 @@
   "dependencies": {
     "apexcharts": "^3.36.3",
     "axios": "^1.2.1",
+    "chart.js": "^4.2.0",
     "core-js": "^3.8.3",
     "pinia": "^2.0.28",
     "vue": "^3.2.13",
+    "vue-chartjs": "^5.2.0",
     "vue-router": "4",
     "vue3-apexcharts": "^1.4.1",
     "vuex": "^4.1.0"

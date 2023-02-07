@@ -1,22 +1,22 @@
 export default [
   {
-    path: '/medicos',
+    path: '/lista-medicos',
     name: 'medicos',
-    component: () => import('./MedicoView.vue'),
+    component: () => import('./views/MedicoView.vue'),
   },
   {
-    path: '/medicos/adicionar-medico',
+    path: '/lista-medicos/adicionar-medico',
     name: 'medico-adicionar',
-    component: () => import('./MedicoAddView.vue')
+    component: () => import('./views/MedicoAddView.vue')
   },
   {
-    path: '/medicos/editar-medico/:id',
+    path: '/lista-medicos/perfil-medico/:id',
     name: 'medico-info',
-    component: () => import('./MedicoInfoView.vue')
+    component: () => import('./views/MedicoInfoView.vue')
   },
   {
-    path: '/medicos/editar-medico/:id/editar',
+    path: '/lista-medicos/perfil-medico/:id/editar',
     name: 'medico-info-editar',
-    component: () => import('./MedicoInfoEditarView.vue')
+    component: () => import('./views/MedicoInfoEditarView.vue')
   }
 ]
