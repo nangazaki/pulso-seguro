@@ -7,8 +7,8 @@
        
         <div>
           <img src="@/assets/logo-inline-gradient.svg" class="w-1/2 mb-4"/>
-          <h1 class="text-2xl font-semibold">Acesso Restrito</h1>
-          <p>Por favor, preencha os campos com as suas informações de acesso.</p>
+          <h1 class="font-montserrat text-2xl">Acesso Restrito</h1>
+          <p class="font-nunito">Por favor, preencha os campos com as suas informações de acesso.</p>
         </div>
   
         <div class="w-full mb-3">

@@ -1,5 +1,5 @@
 export const dataDoughnut = {
-  labels: ['Male', 'Female'],
+  labels: ['Homens', 'Mulheres'],
   datasets: [
     {
       label: '',
@@ -33,7 +33,7 @@ export const dataBar = {
           gridLines: {
             display: true,
             lineWidth: 1,
-            color: "f1f1f1",
+            color: "#f1f1f1",
             drawBorder: false,
           },
           ticks: {
@@ -59,11 +59,12 @@ export const dataBar = {
   datasets: [
     {
       axis: 'y',
-      label: 'Patients',
+      label: 'Pacientes',
       borderColor: "#1ca35e",
       backgroundColor: 'rgba(28,163,94,0.1)',
       data: [38, 70, 36, 25],
       borderWidth: 2,
+      borderRadius: 50,
     }
   ]
 }

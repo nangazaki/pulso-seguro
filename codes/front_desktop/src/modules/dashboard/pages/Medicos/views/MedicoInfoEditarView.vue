@@ -9,18 +9,18 @@
       
       <form
         type="post"
-        @submit.prevent="adicionarMedico($event)"
+        @submit.prevent="adicionarMedico(doctorSelected)"
         class="w-ful flex gap-8"
       >
         <div class="bg-branco-claro w-[280px] h-[500px] rounded-lg p-4 card-shadow">
           <div class="w-full mt-8 overflow-hidden">
             <img
-              class="w-40 h-40 mb-4"
-              src="https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png"
+              class="w-40 h-40 mb-4 rounded-full object-cover"
+              :src="`${doctorSelected.imagem ? doctorSelected.imagem.name : doctorSelected.imagem.name }`"
               alt="Foto de perfil"
             />
             <div>
-              <input type="file" accept="image/*" class="mb-4" />
+              <input type="file" accept="image/*" @change="previewImage" class="mb-4" />
               <span class="text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
             </div>
           </div>
@@ -34,7 +34,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Nome:</label>
                 <input
                   type="text"
-                  v-model="form.nome"
+                  v-model="doctorSelected.nome"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Nome"
                 />
@@ -43,7 +43,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Sobrenome:</label>
                 <input
                   type="text"
-                  v-model="form.sobrenome"
+                  v-model="doctorSelected.sobrenome"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Sobrenome"
                 />
@@ -54,7 +54,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Província:</label>
                 <input
                   type="text"
-                  v-model="form.provincia"
+                  v-model="doctorSelected.Provincia"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Província"
                 />
@@ -63,7 +63,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Município:</label>
                 <input
                   type="text"
-                  v-model="form.municipio"
+                  v-model="doctorSelected.municipio"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Município"
                 />
@@ -74,7 +74,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Bairro:</label>
                 <input
                   type="text"
-                  v-model="form.bairro"
+                  v-model="doctorSelected.bairro"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Bairro"
                 />
@@ -83,7 +83,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Rua:</label>
                 <input
                   type="text"
-                  v-model="form.rua"
+                  v-model="doctorSelected.rua"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Rua"
                 />
@@ -94,7 +94,7 @@
                 <label class="block text-base text-cinza-3 mb-1">B.I:</label>
                 <input
                   type="text"
-                  v-model="form.bilhete"
+                  v-model="doctorSelected.N_BI"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Bilhete de identidade"
                 />
@@ -103,7 +103,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Nº de Telefone:</label>
                 <input
                   type="tel"
-                  v-model="form.tel"
+                  v-model="doctorSelected.telefone"
                   class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm"
                   placeholder="Número de telefone"
                 />
@@ -114,14 +114,14 @@
                 <label class="block text-base text-cinza-3 mb-1">Data de Nascimento:</label>
                 <input
                   type="date"
-                  v-model="form.nascimento"
+                  v-model="doctorSelected.nascimento"
                   class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3"
                   placeholder="Data de nascimento"
                 />
               </div>
               <div class="w-full min-w-[330px]">
                 <label class="block text-base text-cinza-3 mb-1">Gênero:</label>
-                <select v-model="form.genero" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
+                <select v-model="doctorSelected.genero" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
                   <option value="">Selecione o gênero</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Feminino">Feminino</option>
@@ -137,7 +137,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Especialização:</label>
                 <input
                   type="text"
-                  v-model="form.especialização"
+                  v-model="doctorSelected.especializacao"
                   class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3"
                   placeholder="Especialização"
                 />
@@ -146,7 +146,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Nº da Carteira:</label>
                 <input 
                   type="number" 
-                  v-model="form.carteira" 
+                  v-model="doctorSelected.N_da_carteira" 
                   class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3" 
                   placeholder="Nº da carteira"
                 />
@@ -161,7 +161,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Nome do usuário:</label>
                 <input
                   type="text"
-                  v-model="form.username"
+                  v-model="doctorSelected.username"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Nome de usuário"
                 />
@@ -170,7 +170,7 @@
                 <label class="block text-base text-cinza-3 mb-1">E-mail:</label>
                 <input
                   type="email"
-                  v-model="form.email"
+                  v-model="doctorSelected.email"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="E-mail"
                 />
@@ -181,7 +181,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Senha:</label>
                 <input
                   type="password"
-                  v-model="form.senha"
+                  v-model="doctorSelected.password"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Senha"
                 />
@@ -190,7 +190,7 @@
                 <label class="block text-base text-cinza-3 mb-1">Repita a senha:</label>
                 <input
                   type="password"
-                  v-model="form.repetirSenha"
+                  v-model="doctorSelected.password"
                   class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
                   placeholder="Senha"
                 />
@@ -212,42 +212,50 @@
   </template>
   
   <script>
-  import api from "@/service/api";
+  import { mapActions, mapState } from "vuex"
   import NavbarComp from "@/components/NavbarComp.vue";
   import HeaderComp from "@/components/HeaderComp.vue";
   
   export default {
     data() {
       return {
-        form: {
-          imagem: "",
-          nome: "",
-          sobrenome: "",
-          provincia: "",
-          municipio: "",
-          bairro: "",
-          rua: "",
-          bilhete: "",
-          tel: "",
-          nascimento: "",
-          genero: "",
-          especializacao: "",
-          carteira: "",
-          username: "",
-          email: "",
-          senha: "",
-          repetirSenha: ""
-        },
+        preview: null,
       };
     },
     components: { NavbarComp, HeaderComp },
+    computed: {
+      ...mapState('medicos', ['doctorSelected']),
+    },
+    mounted() {
+      this.ActionSetDoctorSelected(this.$route.params.id)
+    },
     methods: {
-      adicionarMedico() {
-        api.put("/add-medico", {});
+      ...mapActions('medicos', ['ActionSetDoctorSelected', 'ActionPutDoctorSelected']),
+
+      adicionarMedico(doctor){
+        this.ActionPutDoctorSelected(doctor).then(res => {
+          console.log(res.status)
+        })
+        console.log(doctor)
       },
+
       fecharMenu() {
         this.$router.back();
       },
+
+      previewImage (event) {
+        let input = event.target;
+        
+        if (input.files) {
+          let reader = new FileReader();
+          reader.onload = (e) => {
+            this.preview = e.target.result;
+          }
+          
+          this.doctorSelected.imagem=input.files[0];
+          reader.readAsDataURL(input.files[0]);
+        }
+      },
     },
   };
-  </script>
+</script>

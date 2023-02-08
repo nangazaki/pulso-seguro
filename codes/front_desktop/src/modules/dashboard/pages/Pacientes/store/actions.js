@@ -13,6 +13,8 @@ export const ActionSetPacientSelected = ({ commit }, payload) => (
   })
 )
 
-export const ActionPostPacient = (form) => {
-  console.log(form)
-}
+export const ActionPostPacient = ({ payload }) => (
+  api.post('/api/pacientes', payload).then(
+    
+  )
+)

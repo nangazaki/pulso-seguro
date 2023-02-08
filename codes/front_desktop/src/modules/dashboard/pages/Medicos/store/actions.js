@@ -13,6 +13,12 @@ export const ActionSetDoctorSelected = ({ commit }, payload) => (
   })
 )
 
+export const ActionPutDoctorSelected = ({ commit }, payload) => (
+  api.put(`/api/medicos/${payload.id}`, payload).then(res => {
+    commit(types.SET_DOCTOR_SELECTED, res.data)
+  })
+)
+
 export const ActionSetPacientsByDoctor = ({ commit }, payload) => (
   api.get(`/api/medicos/${payload}/pacientes`).then(res => {
     commit(types.SET_PACIENT_BY_DOCTOR, res.data)

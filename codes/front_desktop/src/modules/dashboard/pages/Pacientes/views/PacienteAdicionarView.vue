@@ -14,12 +14,12 @@
 
           <div class="w-full mt-8 overflow-hidden">
             <img
-              class="w-40 h-40 mb-4"
-              src="https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png"
+              class="w-40 h-40 mb-4 rounded-full object-cover"
+              :src="`${form.imagem ? preview : 'https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png' }`"
               alt="Foto de perfil"
             />
             <div>
-              <input type="file" accept="image/*" class="mb-4" />
+              <input type="file" accept="image/*" @change="previewImage" class="mb-4" />
               <span class="text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
             </div>
           </div>
@@ -127,7 +127,7 @@
               </div>
             </div>
           </div>
-          <div class="mb-8">
+          <div class="pb-4 mb-8 border-b">
             <span class="font-montserrat text-xl block mb-4">Informações de acesso</span>
             <div class="mb-4 flex gap-4">
               <div class="w-full min-w-[330px]">
@@ -170,6 +170,29 @@
               </div>
             </div>
           </div>
+          <div class="mb-8">
+            <span class="font-montserrat text-xl block mb-4">Associar Doctor</span>
+            <div class="mb-4 flex gap-4">
+              <div class="w-full min-w-[330px]">
+                <label class="block text-base text-cinza-3 mb-1">Nome do Doctor:</label>
+                <input
+                  type="text"
+                  v-model="form.username"
+                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                  placeholder="Nome de usuário"
+                />
+              </div>
+              <div class="w-full min-w-[330px]">
+                <label class="block text-base text-cinza-3 mb-1">E-mail:</label>
+                <input
+                  type="email"
+                  v-model="form.email"
+                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                  placeholder="E-mail"
+                />
+              </div>
+            </div>
+          </div>
           <div>
             <button class=" px-4 py-2 bg-primaria-claro text-branco-claro rounded-md mr-4">
               Adicionar Novo Paciente
@@ -192,6 +215,7 @@ import HeaderComp from "@/components/HeaderComp.vue";
 export default {
   data() {
     return {
+      preview: null,
       form: {
         imagem: "",
         nome: "",
@@ -217,6 +241,17 @@ export default {
     fecharMenu() {
       this.isVisible = false;
       this.$router.back();
+    },
+    previewImage (event) {
+      let input = event.target;
+      if (input.files) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
+        }
+        this.form.imagem=input.files[0];
+        reader.readAsDataURL(input.files[0]);
+      }
     },
   },
 };

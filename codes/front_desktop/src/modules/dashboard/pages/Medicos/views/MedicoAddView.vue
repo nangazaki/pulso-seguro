@@ -10,12 +10,12 @@
 
           <div class="w-full mt-8 overflow-hidden">
             <img
-              class="w-40 h-40 mb-4"
-              src="https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png"
+              class="w-40 h-40 mb-4 rounded-full object-cover"
+              :src="`${form.imagem ? preview : 'https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png' }`"
               alt="Foto de perfil"
             />
             <div>
-              <input type="file" accept="image/*" class="mb-4" />
+              <input type="file" accept="image/*" @change="previewImage" class="mb-4" />
               <span class="text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
             </div>
           </div>
@@ -215,6 +215,7 @@ import HeaderComp from "@/components/HeaderComp.vue";
 export default {
   data() {
     return {
+      preview: null,
       form: {
         imagem: "",
         nome: "",
@@ -245,6 +246,17 @@ export default {
     fecharMenu() {
       this.isVisible = false;
       this.$router.back();
+    },
+    previewImage (event) {
+      let input = event.target;
+      if (input.files) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
+        }
+        this.form.imagem=input.files[0];
+        reader.readAsDataURL(input.files[0]);
+      }
     },
   },
 };

@@ -5,7 +5,7 @@
 
     <h1 class="mb-8 pl-2 text-2xl text-cinza-1">Lista de Pacientes</h1>
 
-    <div class="flex gap-8 mb-8">
+    <div class="flex gap-8 mb-16">
       <div class="bg-branco-claro w-1/2 rounded-lg p-4 card-shadow">
         <div class="col-xl-6 mb-5">
           <h2 class="text-primaria-claro font-montserrat">Pacientes por idade</h2>
@@ -32,156 +32,47 @@
       </div>
     </div>
 
-    <div class="flex gap-8 mb-8">
-      
-      <div class="bg-branco-claro w-full h-auto rounded-md p-4 card-shadow">
-        <div class=" flex justify-between flex-wrap py-4 gap-4">
-            <div class="flex-grow">
-              <select class="w-20 bg-branco-claro p-2 border border-cinza-4 rounded-md">
-                <option selected>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-            <div class="flex items-center flex-wrap gap-4">
-              <div>
-                <input placeholder="Pesquisar paciente..." type="text"
-                  class="border border-cinza-4 rounded-md py-2 px-4 w-56"
-                />
-              </div>
-              <button type="button"
-                class=" text-cinza-3 hover:text-cinza-2 bg-cinza-5 hover:bg-cinza-4 px-4 py-2 flex items-center gap-2 rounded-md"
-              >
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    aria-hidden="true"
-                    role="img"
-                    tag="i"
-                    class="
-                      v-icon
-                      notranslate
-                      v-theme--light
-                      v-icon--size-default
-                      iconify iconify--tabler
-                    "
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M21 12v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h9M7 20h10m-8-4v4m6-4v4m2-16h4v4m-5 1l5-5"
-                    ></path>
-                  </svg>
-                </span>
-                <span data-no-activator=""> Exportar </span>
-              </button>
+    <div class="flex flex-col gap-8 mb-8">
+      <div class="h-[40px] flex justify-between">
+        <router-link to="/lista-medicos/adicionar-medico" class="bg-primaria-claro px-4 py-2 flex items-center gap-2 rounded-md text-branco-claro">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m-7-7h14"></path>
+            </svg>
+          </span>
+          <span>Adicionar Paciente</span>
+        </router-link>
 
-              <router-link to="/lista-pacientes/adicionar-paciente"
-                type="button"
-                class="bg-primaria-claro px-4 py-2 flex items-center gap-2 rounded-md text-branco-claro">
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    aria-hidden="true"  
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 5v14m-7-7h14"
-                    ></path>
-                  </svg>
-                </span>
-                <span>
-                  Adicionar Paciente
-                </span>
-              </router-link>
-            </div>
+        <div class="flex gap-8">
+          <div class="bg-white flex items-center rounded-md w-100 h-full overflow-hidden card-shadow">
+            <input class="h-full w-[86%] px-2 focus:border-none" placeholder="Pesquisar...">
+            <span class="">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="acorn-icons acorn-icons-search undefined"><circle cx="9" cy="9" r="7"></circle><path d="M14 14L17.5 17.5"></path></svg>
+            </span>
           </div>
-        <table class="w-full whitespace-nowrap">
-          <thead class="border-b border-cinza-2 text-cinza-1">
-            <th class="text-left py-3 px-2">Nome completo</th>
-            <th class="text-left py-3 px-2">Morada</th>
-            <th class="text-left py-3 px-2">Acções</th>
-          </thead>
-          <tbody>
-            <PacienteItem v-for="paciente in pacientsList" :key="paciente.id" :paciente="paciente" />
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="7" class="py-2">
-                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                  <div>
-                    <p class="text-sm text-gray-500">
-                      Mostrando de
-                      <span class="font-medium">1</span>
-                      a
-                      <span class="font-medium">10</span>
-                      de
-                      <span class="font-medium">20</span>
-                      resultados
-                    </p>
-                  </div>
-                  <div>
-                    <nav class="relative z-0 inline-flex gap-1 rounded-md card-shadow -space-x-px">
-                      <a href="#"
-                        class="relative inline-flex items-center px-2 rounded-md text-sm font-medium text-cinza-3 bg-cinza-5"
-                      >
-                        <span class="sr-only">Anterior</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 19l-7-7 7-7"
-                          />
-                        </svg>
-                      </a>
-                      <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-                      <a
-                        href="#"
-                        class="z-10 bg-cinza-4 text-cinza-2 relative rounded-md inline-flex items-center px-3 py-1 text-sm"
-                      >
-                        1
-                      </a>
-                      <a
-                        href="#"
-                        aria-current="page"
-                        class="z-10 bg-cinza-5 text-cinza-3 relative rounded-md inline-flex items-center px-3 py-1 text-sm"
-                      >
-                        2
-                      </a>
-                      <a
-                        href="#"
-                        class="relative inline-flex items-center px-2 rounded-md text-sm font-medium text-cinza-3 bg-cinza-5"
-                      >
-                        <span class="sr-only">Próximo</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                      </a>
-                    </nav>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+
+          <button class="bg-white h-full flex gap-2 items-center rounded-md px-2 py-1 text-cinza-3 card-shadow hover:text-primaria-claro">
+            Exportar PDF
+            <span class="">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="acorn-icons acorn-icons-download undefined"><path d="M2 14V14.5C2 15.9045 2 16.6067 2.33706 17.1111C2.48298 17.3295 2.67048 17.517 2.88886 17.6629C3.39331 18 4.09554 18 5.5 18H14.5C15.9045 18 16.6067 18 17.1111 17.6629C17.3295 17.517 17.517 17.3295 17.6629 17.1111C18 16.6067 18 15.9045 18 14.5V14"></path><path d="M14 10 10.7071 13.2929C10.3166 13.6834 9.68342 13.6834 9.29289 13.2929L6 10M10 2 10 13"></path></svg>
+            </span>
+          </button>
+          
+          <select class="w-20 h-full bg-branco-claro p-2 rounded-md card-shadow">
+            <option selected>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+      </div>
+     
+      <div class="flex gap-8 mb-8">
+        <PacienteItem v-for="paciente in pacientsList"
+          :key="paciente.id"
+          :paciente="paciente" 
+        />
       </div>
     </div>
   </main>
