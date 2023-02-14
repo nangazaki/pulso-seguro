@@ -1,6 +1,6 @@
 <template>
   <NavbarComp />
-  <main class="h-screen w-full p-8 overflow-auto">
+  <main>
     <HeaderComp />
 
     <div class="flex gap-8 mb-8">

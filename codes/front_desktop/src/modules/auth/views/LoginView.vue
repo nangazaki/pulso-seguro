@@ -14,7 +14,7 @@
           <div class="z-10 relative w-4 h-4 top-7 left-4">
             <img src="@/assets//icon-user.svg">
           </div>
-          <Field name="email" type="email" class="email-style" :rules="email" />
+          <Field name="email" type="email" class="email-style" :rules="email" placeholder="E-mail" />
           <ErrorMessage name="email" />
         </div>
        
@@ -22,7 +22,7 @@
           <div class="z-10 relative w-4 h-4 top-7 left-4">
             <img src="@/assets/icon-password.svg">
           </div>
-          <Field name="password" type="password" class="email-style" :rules="password" />
+          <Field name="password" type="password" class="email-style" :rules="password" placeholder="Senha" />
           <ErrorMessage name="password" />
         </div>
        

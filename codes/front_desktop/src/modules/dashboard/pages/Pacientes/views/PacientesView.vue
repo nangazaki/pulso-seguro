@@ -5,12 +5,12 @@
 
     <h1 class="mb-8 pl-2 text-2xl text-cinza-1">Lista de Pacientes</h1>
 
-    <div class="flex gap-8 mb-16">
+    <div class="w-full flex gap-8 mb-16">
       <div class="bg-branco-claro w-1/2 rounded-lg p-4 card-shadow">
         <div class="col-xl-6 mb-5">
           <h2 class="text-primaria-claro font-montserrat">Pacientes por idade</h2>
-          <div class="card">
-            <div class="card-body">
+          <div class="relative flex flex-col break-words">
+            <div class="">
               <div class="h-72">
                 <Bar :data="dataBar" :options="optionsBar" />
               </div>
@@ -22,7 +22,7 @@
         <div class="col-xl-6 mb-5">
           <h2 class="text-primaria-claro font-montserrat">Pacientes por gênero</h2>
           <div class="relative flex flex-col break-words">
-            <div class="card-body">
+            <div class="">
               <div class="h-72">
                 <Doughnut :data="dataDoughnut" :options="optionsDoughnut" />
               </div>
@@ -34,7 +34,7 @@
 
     <div class="flex flex-col gap-8 mb-8">
       <div class="h-[40px] flex justify-between">
-        <router-link to="/lista-medicos/adicionar-medico" class="bg-primaria-claro px-4 py-2 flex items-center gap-2 rounded-md text-branco-claro">
+        <router-link to="/lista-pacientes/adicionar-paciente" class="bg-primaria-claro px-4 py-2 flex items-center gap-2 rounded-md text-branco-claro">
           <span>
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24">
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m-7-7h14"></path>

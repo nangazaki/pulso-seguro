@@ -5,9 +5,9 @@
     </router-link>
     <div class="p-6">
       <router-link :to="`/lista-medicos/perfil-medico/${doctor.id}`" class="font-montserrat text-base text-primaria-claro">
-        {{ doctor.nome }} {{ doctor.sobrenome }}
+        {{ doctor.name }} {{ doctor.sobrenome }}
       </router-link>
-      <div class="font-nunito text-cinza-3 mb-4">{{ doctor.especializacao }}</div>
+      <div class="font-nunito text-cinza-3 mb-4">{{ doctor.especialidade }}</div>
       
       <div class="">
         <div class="mb-6">
@@ -38,7 +38,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="acorn-icons acorn-icons-pin text-primaria-claro"><path d="M3.5 8.49998C3.5 -0.191432 16.5 -0.191368 16.5 8.49998C16.5 12.6585 12.8256 15.9341 11.0021 17.3036C10.4026 17.7539 9.59777 17.754 8.99821 17.3037C7.17467 15.9342 3.5 12.6585 3.5 8.49998Z"></path></svg>
                 </div>
               </div>
-              <div class="text-cinza-2">{{ doctor.Provincia }}, {{ doctor.municipio }}</div>
+              <div class="text-cinza-2">{{ doctor.provincia }}, {{ doctor.municipio }}, {{ doctor.bairro }}</div>
             </div>
           </div>
       </div>

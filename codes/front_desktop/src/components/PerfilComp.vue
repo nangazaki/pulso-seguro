@@ -10,15 +10,14 @@
         </div>
       </div>
            
-      <!-- Drop down -->
       <div v-show="showDropDown" class="absolute z-10 mt-4 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           :class="[animationCSS]"
       >
         <div class="py-1 text-left" role="none">
-          <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-          <router-link to="#" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Menu admin</router-link>
-          <router-link to="#" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Menu admin</router-link>
-          <router-link to="#" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Menu admin</router-link>
+          <router-link to="/meu-perfil/" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Perfil</router-link>
+          <router-link to="#" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Configurações</router-link>
+          <router-link to="/adicionar-medico" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Adicionar Admin</router-link>
+          <span class="block w-full h-[1px] bg-[#f0f0f0]"></span>
           <form method="POST" action="#" role="none">
             <button type="submit" class="text-cinza-3 block w-full px-4 py-2 text-left text-sm transition duration-200 hover:text-cinza-2">Terminar sessão</button>
           </form>

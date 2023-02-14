@@ -1,12 +1,10 @@
 <template>
   <NavbarComp />
-  <main class="h-screen w-full p-8 overflow-auto">
+  <main>
     <HeaderComp />
 
     <div>
-      <form
-        type="post"
-        @submit.prevent="ActionPostPacient(form)"
+      <Form @submit="onSubmit" :validation-schema="schema"
         class="w-ful flex gap-8"
       >
         <div class="bg-branco-claro w-[280px] h-[500px] rounded-lg p-4 card-shadow">
@@ -19,7 +17,9 @@
               alt="Foto de perfil"
             />
             <div>
-              <input type="file" accept="image/*" @change="previewImage" class="mb-4" />
+              <Field name="file" class="mb-4" v-slot="{ previewImage }">
+                <input type="file" accept="image/*" @change="previewImage" />
+              </Field>
               <span class="text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
             </div>
           </div>
@@ -28,168 +28,154 @@
           <div class="pb-4 mb-8 border-b">
             <span class="font-montserrat text-xl block mb-4">Informações pessoais</span>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px] flex-wrap">
+              <div class="form-add flex-wrap">
                 <label class="block text-base text-cinza-3 mb-1">Nome:</label>
-                <input
-                  type="text"
-                  v-model="form.nome"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="nome"
+                  class="paciente-form"
                   placeholder="Nome"
                 />
+                <ErrorMessage name="nome" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Sobrenome:</label>
-                <input
-                  type="text"
-                  v-model="form.sobrenome"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="sobrenome"
+                  class="paciente-form"
                   placeholder="Sobrenome"
                 />
+                <ErrorMessage name="sobrenome" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Província:</label>
-                <input
-                  type="text"
-                  v-model="form.provincia"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="provincia"
+                  class="paciente-form"
                   placeholder="Província"
                 />
+                <ErrorMessage name="provincia" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Município:</label>
-                <input
-                  type="text"
-                  v-model="form.municipio"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="municipio"
+                  class="paciente-form"
                   placeholder="Município"
                 />
+                <ErrorMessage name="municipio" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Bairro:</label>
-                <input
-                  type="text"
-                  v-model="form.bairro"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="bairro"
+                  class="paciente-form"
                   placeholder="Bairro"
                 />
+                <ErrorMessage name="bairro" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Rua:</label>
-                <input
-                  type="text"
-                  v-model="form.rua"
+                <Field type="text"  name="rua"
                   class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md texe-sm"
                   placeholder="Rua"
                 />
+                <ErrorMessage name="rua" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">B.I:</label>
-                <input
-                  type="text"
-                  v-model="form.bilhete"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text"  name="nBI"
+                  class="paciente-form"
                   placeholder="Bilhete de identidade"
                 />
+                <ErrorMessage name="nBI" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Nº de Telefone:</label>
-                <input
-                  type="tel"
-                  v-model="form.tel"
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm"
+                <Field type="tel"  name="telefone"
+                  class="paciente-form"
                   placeholder="Número de telefone"
                 />
+                <ErrorMessage name="telefone" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Data de Nascimento:</label>
-                <input
-                  type="date"
-                  v-model="form.nascimento"
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3"
+                <Field type="date" name="dataNascimento"
+                  class="paciente-form"
                   placeholder="Data de nascimento"
                 />
+                <ErrorMessage name="dataNascimento" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Gênero:</label>
-                <select v-model="form.genero" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
+                <Field name="genero" as="select" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
                   <option value="">Selecione o gênero</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Feminino">Feminino</option>
-                </select>
+                </Field>
+                <ErrorMessage name="genero" />
               </div>
             </div>
           </div>
           <div class="pb-4 mb-8 border-b">
             <span class="font-montserrat text-xl block mb-4">Informações de acesso</span>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Nome do usuário:</label>
-                <input
-                  type="text"
-                  v-model="form.username"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="usuario"
+                  class="paciente-form"
                   placeholder="Nome de usuário"
                 />
+                <ErrorMessage name="usuario" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">E-mail:</label>
-                <input
-                  type="email"
-                  v-model="form.email"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="email" name="email"
+                  class="paciente-form"
                   placeholder="E-mail"
                 />
+                <ErrorMessage name="email" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Senha:</label>
-                <input
-                  type="password"
-                  v-model="form.senha"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="password"  name="senha"
+                  class="paciente-form"
                   placeholder="Senha"
                 />
+                <ErrorMessage name="senha" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Repita a senha:</label>
-                <input
-                  type="password"
-                  v-model="form.repetirSenha"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="password"  name="senha2"
+                  class="paciente-form"
                   placeholder="Senha"
                 />
+                <ErrorMessage name="senha2" />
               </div>
             </div>
           </div>
           <div class="mb-8">
             <span class="font-montserrat text-xl block mb-4">Associar Doctor</span>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Nome do Doctor:</label>
-                <input
-                  type="text"
-                  v-model="form.username"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
-                  placeholder="Nome de usuário"
+                <Field type="text" 
+                  name="doctorNome" class="paciente-form" placeholder="Nome de usuário"
                 />
+                <ErrorMessage name="doctorNome" />
               </div>
-              <div class="w-full min-w-[330px]">
-                <label class="block text-base text-cinza-3 mb-1">E-mail:</label>
-                <input
-                  type="email"
-                  v-model="form.email"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+              <div class="form-add">
+                <label class="block text-base text-cinza-3 mb-1">ID:</label>
+                <Field
+                  type="number" name="doctorID"
+                  class="paciente-form"
                   placeholder="E-mail"
                 />
+                <ErrorMessage name="doctorID" />
               </div>
             </div>
           </div>
@@ -202,7 +188,7 @@
             </button>
           </div>
         </div>
-      </form>
+      </Form>
     </div>
   </main>
 </template>
@@ -211,39 +197,41 @@
 import { mapActions } from "vuex"
 import NavbarComp from "@/components/NavbarComp.vue";
 import HeaderComp from "@/components/HeaderComp.vue";
+import { Form, Field, ErrorMessage } from "vee-validate"
+import * as yup from "yup"
+import { dataSchema } from "@/helpers/index"
 
 export default {
   data() {
     return {
       preview: null,
+      schema: yup.object(dataSchema),
       form: {
-        imagem: "",
-        nome: "",
-        sobrenome: "",
-        provincia: "",
-        municipio: "",
-        bairro: "",
-        rua: "",
-        bilhete: "",
-        tel: "",
-        nascimento: "",
-        genero: "",
-        username: "",
-        email: "",
-        senha: "",
-        repetirSenha: ""
+        imagem: '',
+        genero: ''
       },
     };
   },
-  components: { NavbarComp, HeaderComp },
+  components: { NavbarComp, HeaderComp, Form, Field, ErrorMessage },
   methods: {
     ...mapActions('pacientes', ['ActionPostPacient']),
     fecharMenu() {
       this.isVisible = false;
       this.$router.back();
     },
+    
+    async onSubmit(values){
+      try { 
+        this.ActionPostPacient(values) 
+        this.$router.push('pacientes')
+      } catch(e) { 
+        console.log(e) 
+      }
+    },
+    
     previewImage (event) {
       let input = event.target;
+      console.log(input)
       if (input.files) {
         let reader = new FileReader();
         reader.onload = (e) => {
