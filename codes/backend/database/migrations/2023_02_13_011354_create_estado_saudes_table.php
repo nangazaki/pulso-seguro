@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEstadoDeSaudesTable extends Migration
+class CreateEstadoSaudesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEstadoDeSaudesTable extends Migration
      */
     public function up()
     {
-        Schema::create('estado_de_saudes', function (Blueprint $table) {
+        Schema::create('estado_saudes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->float('temperatura');
@@ -21,8 +21,8 @@ class CreateEstadoDeSaudesTable extends Migration
 
              // Chave
 
-             $table->unsignedBigInteger('paciente_id');
-             $table->foreign('paciente_id')->references('id')->on('pacientes');
+            $table->unsignedBigInteger('paciente_id');
+            $table->foreign('paciente_id')->references('id')->on('pacientes');
         });
     }
 
@@ -33,6 +33,6 @@ class CreateEstadoDeSaudesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estado_de_saudes');
+        Schema::dropIfExists('estado_saudes');
     }
 }

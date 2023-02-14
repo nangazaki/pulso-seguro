@@ -42,22 +42,25 @@ class PacienteController extends Controller
     {
         $request->validate($this->paciente->rules(), $this->paciente->feedback());
         $imagem = $request->file('imagem');
-        $imagem_urn = $imagem->store('imagens', 'public');
+        $imagem_urn = $imagem->store('imagens/pacientes', 'public');
 
         $paciente = $this->paciente->create([
-            'nome' => $request->nome, 
-            'sobrenome' => $request->sobrenome, 
-            'email' => $request->email, 
-            'telefone' => $request->telefone, 
-            'password' => $request->password, 
-            'idade' => $request->idade, 
-            'genero' => $request->genero, 
-            'N_BI' => $request->N_BI, 
-            'bairro' => $request->bairro,   
-            'municipio' => $request->municipio, 
+            'imagem' => $imagem_urn,
+            'name' => $request->name,
+            'sobrenome' => $request->sobrenome,
+            'email' => $request->email,
+            'password' => $request->password,
+            'usuario' => $request->usuario,
+            'telefone' => $request->telefone,
+
+            'dataNascimento' => $request->dataNascimento,
+            'genero' => $request->genero,
+            'nBI' => $request->nBI,
+
             'provincia' => $request->provincia,
-            'medico_id' => $request->medico_id, 
-            'imagem' => $imagem_urn
+            'municipio' => $request->municipio,
+            'bairro' => $request->bairro,
+            'rua' => $request->rua
         ]);
         return response()->json($paciente);
     }
@@ -70,7 +73,7 @@ class PacienteController extends Controller
      */
     public function show($id)
     {
-        $paciente = $this->paciente->find($id);
+        $paciente = $this->paciente;
         if($paciente == null){
             return response()->json(['erro' => 'recurso pesquisado não existe'], 404);
         }
@@ -126,24 +129,13 @@ class PacienteController extends Controller
         }
 
         $imagem = $request->file('imagem');
-        $imagem_urn = $imagem->store('imagens', 'public');
+        $imagem_urn = $imagem->store('imagens/pacientes', 'public');
 
         
-        $paciente->update([
-            'nome' => $request->nome, 
-            'sobrenome' => $request->sobrenome, 
-            'email' => $request->email, 
-            'telefone' => $request->telefone, 
-            'password' => $request->password, 
-            'idade' => $request->idade, 
-            'genero' => $request->genero, 
-            'N_BI' => $request->N_BI, 
-            'bairro' => $request->bairro,   
-            'municipio' => $request->municipio, 
-            'provincia' => $request->provincia, 
-            'medico_id' => $request->medico_id, 
-            'imagem' => $imagem_urn
-        ]);
+        $paciente->fill($request->all());
+        $paciente->imagem = $imagem_urn;
+        $paciente->save();
+
         return response()->json($paciente, 200);
     }
 

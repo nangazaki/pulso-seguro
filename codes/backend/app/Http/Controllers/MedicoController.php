@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Medico;
+
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class MedicoController extends Controller
 {
@@ -12,13 +13,15 @@ class MedicoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(Medico $medico){
+    public function __construct(User $medico){
         $this->medico = $medico;
-    }
 
+    }
+        
     public function index()
     {
         $medico = $this->medico->all();
+        $medico = $medico->where('isAdmin', 0);
         return response()->json($medico, 200);
     }
 
@@ -40,25 +43,31 @@ class MedicoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->medico->rules(), $this->medico->feedback());
+        $request->validate($this->medico->rulesMedico(), $this->medico->feedback());
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens', 'public');
 
         $medico = $this->medico->create([
-            'nome' => $request->nome, 
-            'sobrenome' => $request->sobrenome, 
-            'email' => $request->email, 
-            'telefone' => $request->telefone, 
-            'password' => $request->password, 
-            'idade' => $request->idade, 
-            'genero' => $request->genero, 
-            'N_BI' => $request->N_BI, 
-            'bairro' => $request->bairro, 
-            'N_da_carteira' => $request->N_da_carteira, 
-            'especializacao' => $request->especializacao, 
-            'municipio' => $request->municipio, 
-            'provincia' => $request->provincia,  
-            'imagem' => $imagem_urn
+            'imagem' => $imagem_urn,
+            'name' => $request->name,
+            'sobrenome' => $request->sobrenome,
+            'email' => $request->email,
+            'password' => $request->password,
+            'usuario' => $request->usuario,
+            'telefone' => $request->telefone,
+            
+            'especialidade' => $request->especialidade,
+            'idCarteira' => $request->idCarteira,
+            'dataNascimento' => $request->dataNascimento,
+            'genero' => $request->genero,
+            'nBI' => $request->nBI,
+
+            'provincia' => $request->provincia,
+            'municipio' => $request->municipio,
+            'bairro' => $request->bairro,
+            'rua' => $request->rua,
+
+            'isAdmin' => 0
         ]);
         return response()->json($medico);
     }
@@ -66,25 +75,21 @@ class MedicoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Integer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $medico = $this->medico->find($id);
-        if($medico == null){
-            return response()->json(['erro' => 'recurso pesquisado não existe'], 404);
-        }
-        return response()->json($medico, 200);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Medico  $medico
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Medico $medico)
+    public function edit($id)
     {
         //
     }
@@ -93,7 +98,7 @@ class MedicoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Integer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -103,11 +108,15 @@ class MedicoController extends Controller
             return response()->json(['erro' => 'impossível realizar a actualização. recurso não encontrado'], 404);
         }
 
+        if($medico['isAdmin'] == 1){
+            return response()->json(['erro' => 'recurso pesquisado não existe'], 404);
+        }
+
         if($request->method() == 'PATCH'){
 
             $regras = array();
 
-            foreach($medico->rules() as $input => $regra){
+            foreach($medico->rulesMedico() as $input => $regra){
 
                 if(array_key_exists($input, $request->all())){
 
@@ -118,7 +127,7 @@ class MedicoController extends Controller
             $request->validate($regras, $medico->feedback());
         }else{
 
-            $request->validate($medico->rules(), $medico->feedback());
+            $request->validate($medico->rulesMedico(), $medico->feedback());
 
         }
 
@@ -130,41 +139,21 @@ class MedicoController extends Controller
         $imagem_urn = $imagem->store('imagens', 'public');
 
         
-        $medico->update([
-            'nome' => $request->nome, 
-            'sobrenome' => $request->sobrenome, 
-            'email' => $request->email, 
-            'telefone' => $request->telefone, 
-            'password' => $request->password, 
-            'idade' => $request->idade, 
-            'genero' => $request->genero, 
-            'N_BI' => $request->N_BI, 
-            'bairro' => $request->bairro, 
-            'N_da_carteira' => $request->N_da_carteira, 
-            'especializacao' => $request->especializacao, 
-            'municipio' => $request->municipio, 
-            'provincia' => $request->provincia,  
-            'imagem' => $imagem_urn
-        ]);
+        $medico->fill($request->all());
+        $medico->imagem = $imagem_urn;
+        $medico->save();
+
         return response()->json($medico, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Integer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $medico = $this->medico->find($id);
-        if($medico == null){
-            return response()->json(['erro' => 'não existe o recurso que se pretende excluir'], 404);
-        }
-
-        Storage::disk('public')->delete($medico->imagem);
-
-        $medico->delete();
-        return response()->json(['recurso excluido com sucesso']);
+        //
     }
 }

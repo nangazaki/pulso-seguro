@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,9 +18,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiresource('Admin', 'App\Http\Controllers\AdminController');
+Route::apiresource('admins', 'App\Http\Controllers\AdminController');
 Route::apiresource('medicos', 'App\Http\Controllers\MedicoController');
 Route::apiresource('pacientes', 'App\Http\Controllers\PacienteController');
-Route::apiresource('diagnostico', 'App\Http\Controllers\EstadoDeSaudeController');
-
-
+Route::apiresource('status', 'App\Http\Controllers\EstadoSaudeController');
+Route::post('login', 'App\Http\Controllers\AuthController@login');
+Route::post('logout', 'App\Http\Controllers\AuthController@logout');
