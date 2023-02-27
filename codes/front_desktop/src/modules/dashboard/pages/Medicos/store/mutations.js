@@ -1,7 +1,7 @@
 import * as types from './mutation-types'
 
 export default {
-    [types.SET_DOCTORS_LIST] (state, payload) {
+    [types.DOCTORS_LIST] (state, payload) {
         state.doctorsList = payload
     },
     [types.SET_DOCTOR_SELECTED] (state, payload) {

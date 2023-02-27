@@ -10,7 +10,7 @@
       <div class="">
         <div class="mb-6">
           <router-link :to="`/lista-pacientes/perfil-paciente/${paciente.id}`" class="font-montserrat text-lg text-primaria-claro">
-            {{ paciente.nome }} {{ paciente.Sobrenome }}
+            {{ paciente.name }} {{ paciente.sobrenome }}
           </router-link>
           
           <div class="mt-2">

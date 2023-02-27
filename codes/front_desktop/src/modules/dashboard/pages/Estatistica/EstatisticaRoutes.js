@@ -1,7 +1,8 @@
 export default [
-    {
-        path: '/estatisticas',
-        name: 'Esstatísticas',
-        component: () => import('./views/EstatisticasView.vue')
-    }
+  {
+    path: '/estatisticas',
+    name: 'Esstatísticas',
+    component: () => import('./views/EstatisticasView.vue'),
+    meta: { auth: true }
+  }
 ]

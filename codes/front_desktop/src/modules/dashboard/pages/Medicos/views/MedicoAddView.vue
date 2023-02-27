@@ -4,18 +4,21 @@
     <HeaderComp />
 
     <div>
-      <form type="post" @submit.prevent="adicionarMedico($event)" class="w-ful flex gap-8">
+      <Form @submit="onSubmit" :validation-schema="schema"
+        class="w-ful flex gap-8">
         <div class="bg-branco-claro w-[280px] h-[500px] rounded-lg p-4 card-shadow">
           <span class="font-montserrat pl-2 text-2xl text-cinza-1">Adicionar Médico</span>
 
           <div class="w-full mt-8 overflow-hidden">
             <img
               class="w-40 h-40 mb-4 rounded-full object-cover"
-              :src="`${form.imagem ? preview : 'https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png' }`"
+              :src="`${imagem ? preview : 'https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png' }`"
               alt="Foto de perfil"
             />
             <div>
-              <input type="file" accept="image/*" @change="previewImage" class="mb-4" />
+              <Field name="file" class="mb-4" v-slot="{ previewImage }">
+                <input type="file" accept="image/*" @change="previewImage" />
+              </Field>
               <span class="text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
             </div>
           </div>
@@ -25,102 +28,94 @@
           <div class="pb-4 mb-8 border-b">
             <span class="font-montserrat text-xl block mb-4">Informações pessoais</span>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px] flex-wrap">
+              <div class="form-add flex-wrap">
                 <label class="block text-base text-cinza-3 mb-1">Nome:</label>
-                <input
-                  type="text"
-                  v-model="form.nome"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="name"
+                  class="form-add-info"
                   placeholder="Nome"
                 />
+                <ErrorMessage name="name" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Sobrenome:</label>
-                <input
-                  type="text"
-                  v-model="form.sobrenome"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="sobrenome"
+                  class="form-add-info"
                   placeholder="Sobrenome"
                 />
+                <ErrorMessage name="sobrenome" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Província:</label>
-                <input
-                  type="text"
-                  v-model="form.provincia"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="provincia"
+                  class="form-add-info"
                   placeholder="Província"
                 />
+                <ErrorMessage name="provincia" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Município:</label>
-                <input
-                  type="text"
-                  v-model="form.municipio"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="municipio"
+                  class="form-add-info"
                   placeholder="Município"
                 />
+                <ErrorMessage name="municipio" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Bairro:</label>
-                <input
-                  type="text"
-                  v-model="form.bairro"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="bairro"
+                  class="form-add-info"
                   placeholder="Bairro"
                 />
+                <ErrorMessage name="bairro" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Rua:</label>
-                <input
-                  type="text"
-                  v-model="form.rua"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text"  name="rua"
+                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md texe-sm"
                   placeholder="Rua"
                 />
+                <ErrorMessage name="rua" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">B.I:</label>
-                <input
-                  type="text"
-                  v-model="form.bilhete"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text"  name="nBI"
+                  class="form-add-info"
                   placeholder="Bilhete de identidade"
                 />
+                <ErrorMessage name="nBI" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Nº de Telefone:</label>
-                <input
-                  type="tel"
-                  v-model="form.tel"
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm"
+                <Field type="tel"  name="telefone"
+                  class="form-add-info"
                   placeholder="Número de telefone"
                 />
+                <ErrorMessage name="telefone" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Data de Nascimento:</label>
-                <input
-                  type="date"
-                  v-model="form.nascimento"
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3"
+                <Field type="date" name="dataNascimento"
+                  class="form-add-info"
                   placeholder="Data de nascimento"
                 />
+                <ErrorMessage name="dataNascimento" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Gênero:</label>
-                <select v-model="form.genero" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
+                <Field name="genero" as="select" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
                   <option value="">Selecione o gênero</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Feminino">Feminino</option>
-                </select>
+                </Field>
+                <ErrorMessage name="genero" />
               </div>
             </div>
           </div>
@@ -128,23 +123,23 @@
           <div class="pb-4 mb-8 border-b">
             <span class="font-montserrat text-xl block mb-4">Informações Profissional</span>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
-                <label class="block text-base text-cinza-3 mb-1">Especialização:</label>
-                <input
-                  type="text"
-                  v-model="form.especialização"
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3"
-                  placeholder="Especialização"
-                />
+              <div class="form-add">
+                <label class="block text-base text-cinza-3 mb-1">Especialidade:</label>
+                <Field name="especialidade" as="select" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
+                  <option value="">Selecione a Especialidade</option>
+                  <option value="Cardiologia">Cardiologia</option>
+                  <option value="Hipertensão Arterial">Hipertensão Arterial</option>
+                </Field>
+                <ErrorMessage name="especialidade" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Nº da Carteira:</label>
-                <input 
-                  type="number" 
-                  v-model="form.carteira" 
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3" 
+                <Field 
+                  type="text" name="idCarteira"  
+                  class="form-add-info" 
                   placeholder="Nº da carteira"
                 />
+                <ErrorMessage name="idCarteira" />
               </div>
             </div>
           </div>
@@ -152,43 +147,39 @@
           <div class="mb-8">
             <span class="font-montserrat text-xl block mb-4">Informações de acesso</span>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Nome do usuário:</label>
-                <input
-                  type="text"
-                  v-model="form.username"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="usuario"
+                  class="form-add-info"
                   placeholder="Nome de usuário"
                 />
+                <ErrorMessage name="usuario" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">E-mail:</label>
-                <input
-                  type="email"
-                  v-model="form.email"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="email" name="email"
+                  class="form-add-info"
                   placeholder="E-mail"
                 />
+                <ErrorMessage name="email" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Senha:</label>
-                <input
-                  type="password"
-                  v-model="form.senha"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="password"  name="password"
+                  class="form-add-info"
                   placeholder="Senha"
                 />
+                <ErrorMessage name="password" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Repita a senha:</label>
-                <input
-                  type="password"
-                  v-model="form.repetirSenha"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="password"  name="password2"
+                  class="form-add-info"
                   placeholder="Senha"
                 />
+                <ErrorMessage name="password2" />
               </div>
             </div>
           </div>
@@ -202,13 +193,16 @@
             </button>
           </div>
         </div>
-      </form>
+      </Form>
     </div>
   </main>
 </template>
 
 <script>
-import api from "@/service/api";
+import * as yup from "yup"
+import { dataDoctor } from "@/helpers/index"
+import { Form, Field, ErrorMessage } from "vee-validate"
+
 import NavbarComp from "@/components/NavbarComp.vue";
 import HeaderComp from "@/components/HeaderComp.vue";
 
@@ -216,32 +210,14 @@ export default {
   data() {
     return {
       preview: null,
-      form: {
-        imagem: "",
-        nome: "",
-        sobrenome: "",
-        provincia: "",
-        municipio: "",
-        bairro: "",
-        rua: "",
-        bilhete: "",
-        tel: "",
-        nascimento: "",
-        genero: "",
-        especializacao: "",
-        carteira: "",
-        username: "",
-        email: "",
-        senha: "",
-        repetirSenha: ""
-      },
+      schema: yup.object(dataDoctor),
+      imagem: ''
     };
   },
-  components: { NavbarComp, HeaderComp },
+  components: { NavbarComp, HeaderComp, Form, Field, ErrorMessage },
   methods: {
-    adicionarMedico() {
-      console.log(this.form);
-      api.post("/add-medico", {});
+    onSubmit(values){
+      console.log(values)
     },
     fecharMenu() {
       this.isVisible = false;

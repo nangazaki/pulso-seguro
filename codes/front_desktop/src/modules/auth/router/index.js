@@ -1,5 +1,9 @@
 const Login = () => import('../views/LoginView.vue');
 
 export default [
-    { path: '/login', component: Login }
+    { 
+        name: 'login',
+        path: '/login', 
+        component: Login 
+    }
 ]

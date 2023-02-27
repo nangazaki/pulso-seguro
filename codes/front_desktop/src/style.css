@@ -9,6 +9,30 @@
   outline: none;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f2f2f2;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #419e6e;
+}
+
+::-moz-selection {
+  background-color: #419e6e;
+  color: #F8F8F8;
+}
+
+::selection {
+  background-color: #419e6e;
+  color: #F8F8F8;
+}
+
+
 @layer utilities {
   main {
     height: 100vh;
@@ -106,7 +130,7 @@
     background-color: #d3323223;
   }
 
-  .paciente-form {
+  .form-add-info {
     width: 100%;
     height: 40px;
     padding: 8px;

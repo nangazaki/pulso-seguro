@@ -76,15 +76,18 @@
       </div>
     </div>
   </div>
+  <ModalComp />
 </template>
 <script>
+import ModalComp from '@/components/ModalComp.vue';
 
 export default {
-  props: {
-    doctor: {
-      type: Object,
-      required: true,
+    props: {
+        doctor: {
+            type: Object,
+            required: true,
+        },
     },
-  },
+    components: { ModalComp }
 };
 </script>

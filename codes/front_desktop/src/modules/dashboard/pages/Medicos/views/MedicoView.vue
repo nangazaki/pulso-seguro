@@ -42,35 +42,41 @@
     </div>
 
     <div class="flex gap-8 mb-8">
-      <MedicoItem v-for="doctor in doctorsList"
-        :key="doctor.id"
+      <MedicoItem v-for="(doctor, index) in doctorsList"
+        :key="index"
         :doctor="doctor" 
       />
     </div>
+    {{ doctorsList }}
   </main>
 </template>
   
 <script>
+import api from "@/service";
+import { config } from "@/modules/auth/storage";
+
 import NavbarComp from "@/components/NavbarComp.vue";
 import HeaderComp from "@/components/HeaderComp.vue";
 import MedicoItem from "../components/MedicoItem.vue";
-import { mapActions, mapState } from "vuex"
 
 export default {
   data() {
     return {
       option: 1,
+      doctorsList: ''
     };
   },
   components: { NavbarComp, HeaderComp, MedicoItem},
   mounted() {
-    this.ActionSetDoctorsList()
-  },
-  computed: {
-    ...mapState('medicos', ['doctorsList'])
+    this.getMedicos()
   },
   methods: {
-    ...mapActions('medicos', ['ActionSetDoctorsList'])
+    getMedicos(){
+      api.get("/medicos", config).then(res => {
+        this.doctorsList = res.data
+        console.log(this.doctorsList)
+      })
+    }
   },
 };
 

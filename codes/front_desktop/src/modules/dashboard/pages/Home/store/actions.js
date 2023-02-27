@@ -1,4 +1,4 @@
-import api from '@/service/api'
+import { api } from '@/service'
 import * as types from './mutation-types'
 
 export const toggleModal = ({ commit }, payload) => {

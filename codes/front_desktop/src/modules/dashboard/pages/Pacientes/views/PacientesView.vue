@@ -6,30 +6,8 @@
     <h1 class="mb-8 pl-2 text-2xl text-cinza-1">Lista de Pacientes</h1>
 
     <div class="w-full flex gap-8 mb-16">
-      <div class="bg-branco-claro w-1/2 rounded-lg p-4 card-shadow">
-        <div class="col-xl-6 mb-5">
-          <h2 class="text-primaria-claro font-montserrat">Pacientes por idade</h2>
-          <div class="relative flex flex-col break-words">
-            <div class="">
-              <div class="h-72">
-                <Bar :data="dataBar" :options="optionsBar" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="bg-branco-claro w-1/2 rounded-lg p-4 card-shadow">
-        <div class="col-xl-6 mb-5">
-          <h2 class="text-primaria-claro font-montserrat">Pacientes por gênero</h2>
-          <div class="relative flex flex-col break-words">
-            <div class="">
-              <div class="h-72">
-                <Doughnut :data="dataDoughnut" :options="optionsDoughnut" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <chartPacienteIdade />
+      <chartPacienteGenero />
     </div>
 
     <div class="flex flex-col gap-8 mb-8">
@@ -79,31 +57,26 @@
 </template>
   
 <script>
+import { mapActions, mapState } from "vuex";
+
 import NavbarComp from "@/components/NavbarComp.vue";
 import HeaderComp from "@/components/HeaderComp.vue";
 import PacienteItem from "../components/PacienteItem.vue";
-import { Chart as ChartJS, ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js'
-import { Doughnut, Bar } from "vue-chartjs"
-import * as chartConfig from '../../chartJS/chartConfig'
-import { mapActions, mapState } from "vuex";
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend)
+import chartPacienteIdade from "../components/chartPacienteIdade.vue"
+import chartPacienteGenero from "../components/chartPacienteGenero.vue"
 
 export default {
-  data() {
-    return {
-      ...chartConfig,
-    };
+  components: { 
+    NavbarComp, HeaderComp, PacienteItem, chartPacienteIdade, chartPacienteGenero 
   },
-  components: { NavbarComp, HeaderComp, PacienteItem, Doughnut, Bar },
   mounted() {
-    this.ActionSetPacientsList()
+    this.ActionGetPacientsList()
   },
   computed: {
     ...mapState('pacientes', ['pacientsList'])
   },
   methods: {
-    ...mapActions('pacientes', ['ActionSetPacientsList'])
+    ...mapActions('pacientes', ['ActionGetPacientsList'])
   },
 };
 </script>

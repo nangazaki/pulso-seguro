@@ -44,32 +44,43 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { Form, Field, ErrorMessage } from "vee-validate"
-import * as yup from 'yup';
+import { mapActions, mapState } from "vuex";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
+import { getLocalToken } from '../storage';
 
 export default {
+  components: { Form, Field, ErrorMessage },
+
   data() {
     return {
       schema: yup.object({
-        email: yup.string('Ooops! O seu email é inválido').required('O campo Email é obrigatório *').email('Ooops! O seu email é inválido'),
-        password: yup.string().required('O campo Palavra-passe é obrigatório *').min(6, 'A Senha não pode ter menos de 6 letras'),
+        email: yup
+          .string("Ooops! O seu email é inválido")
+          .required("O campo Email é obrigatório *")
+          .email("Ooops! O seu email é inválido"),
+        password: yup
+          .string()
+          .required("O campo Palavra-passe é obrigatório *")
+          .min(6, "A Senha não pode ter menos de 6 letras"),
       }),
     };
   },
-  
-  components: { Form, Field, ErrorMessage },
-  
+  computed: {
+    ...mapState("auth", ["token"]),
+  },
   methods: {
     ...mapActions("auth", ["ActionLogin"]),
-    
+
     async onSubmit(values) {
-      try { 
-        this.ActionLogin(values)
-        this.$router.push('dashboard') 
+      try {
+        await this.ActionLogin(values)
+
+        getLocalToken() ? this.$router.push('dashboard') : ''
       } catch(err) {
-        alert(err)
+         console.log(err)
       }
+      
     },
   },
 };

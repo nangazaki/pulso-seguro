@@ -6,6 +6,7 @@ export default [
     {
         path: '/dashboard',
         name: 'Dashboard',
-        component: () => import('./HomeView.vue')
+        component: () => import('./HomeView.vue'),
+        meta: { auth: true }
     }
 ]

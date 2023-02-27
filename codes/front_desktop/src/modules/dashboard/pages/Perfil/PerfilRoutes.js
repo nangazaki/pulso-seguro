@@ -1,12 +1,19 @@
+import MeuPerfilView from "./views/MeuPerfilView.vue"
+import AddAdmView from "./views/AddAdmView.vue"
+
 export default [
   {
     path: '/meu-perfil',
     name: 'meu-perfil',
-    component: () => import('./views/PerfilView.vue')
+    component: MeuPerfilView,
+    meta: { auth: true }
+
   },
   {
-    path: '/adicionar-medico',
-    name: 'Adicionar Médico',
-    component: () => import('./views/AddAdmView.vue')
+    path: '/admin/adicionar-admin',
+    name: 'adcionar-admin',
+    component: AddAdmView,
+    meta: { auth: true }
+
   },
 ]

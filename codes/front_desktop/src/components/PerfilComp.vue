@@ -14,9 +14,9 @@
           :class="[animationCSS]"
       >
         <div class="py-1 text-left" role="none">
-          <router-link to="/meu-perfil/" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Perfil</router-link>
-          <router-link to="#" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Configurações</router-link>
-          <router-link to="/adicionar-medico" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Adicionar Admin</router-link>
+          <router-link to="/meu-perfil" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Perfil</router-link>
+          <router-link to="/configuracoes-gerais" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Configurações</router-link>
+          <router-link to="admin/adicionar-admin" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Adicionar Admin</router-link>
           <span class="block w-full h-[1px] bg-[#f0f0f0]"></span>
           <form method="POST" action="#" role="none">
             <button type="submit" class="text-cinza-3 block w-full px-4 py-2 text-left text-sm transition duration-200 hover:text-cinza-2">Terminar sessão</button>

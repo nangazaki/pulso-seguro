@@ -1,26 +1,24 @@
 <template>
-    <NavbarComp />
-    <main class="h-screen w-full p-8 overflow-auto">
-      <HeaderComp />
-  
-      <span class="font-montserrat pl-2 text-2xl text-cinza-1 mb-8 block">
-        Editar informações do Médico
-      </span>
-      
-      <form
-        type="post"
-        @submit.prevent="adicionarMedico(doctorSelected)"
-        class="w-ful flex gap-8"
-      >
+  <NavbarComp />
+  <main class="h-screen w-full p-8 overflow-auto">
+    <HeaderComp />
+
+    <div>
+      <Form @submit="onSubmit" :validation-schema="schema"
+        class="w-ful flex gap-8">
         <div class="bg-branco-claro w-[280px] h-[500px] rounded-lg p-4 card-shadow">
+          <span class="font-montserrat pl-2 text-2xl text-cinza-1">Editar Médico</span>
+
           <div class="w-full mt-8 overflow-hidden">
             <img
               class="w-40 h-40 mb-4 rounded-full object-cover"
-              :src="`${doctorSelected.imagem ? doctorSelected.imagem.name : doctorSelected.imagem.name }`"
+              :src="`${doctor.imagem ? doctor.imagem  : '' }`"
               alt="Foto de perfil"
             />
             <div>
-              <input type="file" accept="image/*" @change="previewImage" class="mb-4" />
+              <Field name="file" class="mb-4" v-slot="{ previewImage }">
+                <input type="file" accept="image/*" @change="previewImage" />
+              </Field>
               <span class="text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
             </div>
           </div>
@@ -30,102 +28,94 @@
           <div class="pb-4 mb-8 border-b">
             <span class="font-montserrat text-xl block mb-4">Informações pessoais</span>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px] flex-wrap">
+              <div class="form-add flex-wrap">
                 <label class="block text-base text-cinza-3 mb-1">Nome:</label>
-                <input
-                  type="text"
-                  v-model="doctorSelected.nome"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="name" v-model="doctor.name"
+                  class="form-add-info"
                   placeholder="Nome"
                 />
+                <ErrorMessage name="name" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Sobrenome:</label>
-                <input
-                  type="text"
-                  v-model="doctorSelected.sobrenome"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="sobrenome" v-model="doctor.sobrenome"
+                  class="form-add-info"
                   placeholder="Sobrenome"
                 />
+                <ErrorMessage name="sobrenome" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Província:</label>
-                <input
-                  type="text"
-                  v-model="doctorSelected.Provincia"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="provincia" v-model="doctor.provincia"
+                  class="form-add-info"
                   placeholder="Província"
                 />
+                <ErrorMessage name="provincia" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Município:</label>
-                <input
-                  type="text"
-                  v-model="doctorSelected.municipio"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="municipio" v-model="doctor.municipio"
+                  class="form-add-info"
                   placeholder="Município"
                 />
+                <ErrorMessage name="municipio" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Bairro:</label>
-                <input
-                  type="text"
-                  v-model="doctorSelected.bairro"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="bairro" v-model="doctor.bairro"
+                  class="form-add-info"
                   placeholder="Bairro"
                 />
+                <ErrorMessage name="bairro" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Rua:</label>
-                <input
-                  type="text"
-                  v-model="doctorSelected.rua"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text"  name="rua" v-model="doctor.rua"
+                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md texe-sm"
                   placeholder="Rua"
                 />
+                <ErrorMessage name="rua" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">B.I:</label>
-                <input
-                  type="text"
-                  v-model="doctorSelected.N_BI"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text"  name="nBI" v-model="doctor.nBI"
+                  class="form-add-info"
                   placeholder="Bilhete de identidade"
                 />
+                <ErrorMessage name="nBI" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Nº de Telefone:</label>
-                <input
-                  type="tel"
-                  v-model="doctorSelected.telefone"
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm"
+                <Field type="tel"  name="telefone" v-model="doctor.telefone"
+                  class="form-add-info"
                   placeholder="Número de telefone"
                 />
+                <ErrorMessage name="telefone" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Data de Nascimento:</label>
-                <input
-                  type="date"
-                  v-model="doctorSelected.nascimento"
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3"
+                <Field type="date" name="dataNascimento" 
+                  class="form-add-info"
                   placeholder="Data de nascimento"
                 />
+                <ErrorMessage name="dataNascimento" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Gênero:</label>
-                <select v-model="doctorSelected.genero" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
+                <Field name="genero" as="select" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3" v-model="doctor.genero">
                   <option value="">Selecione o gênero</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Feminino">Feminino</option>
-                </select>
+                </Field>
+                <ErrorMessage name="genero" />
               </div>
             </div>
           </div>
@@ -133,23 +123,23 @@
           <div class="pb-4 mb-8 border-b">
             <span class="font-montserrat text-xl block mb-4">Informações Profissional</span>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
-                <label class="block text-base text-cinza-3 mb-1">Especialização:</label>
-                <input
-                  type="text"
-                  v-model="doctorSelected.especializacao"
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3"
-                  placeholder="Especialização"
-                />
+              <div class="form-add">
+                <label class="block text-base text-cinza-3 mb-1">Especialidade:</label>
+                <Field name="especialidade" as="select" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
+                  <option value="">Selecione a Especialidade</option>
+                  <option value="Cardiologia">Cardiologia</option>
+                  <option value="Hipertensão Arterial">Hipertensão Arterial</option>
+                </Field>
+                <ErrorMessage name="especialidade" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Nº da Carteira:</label>
-                <input 
-                  type="number" 
-                  v-model="doctorSelected.N_da_carteira" 
-                  class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md text-sm text-cinza-3" 
+                <Field 
+                  type="text" name="idCarteira" v-model="doctor.idCarteira"
+                  class="form-add-info" 
                   placeholder="Nº da carteira"
                 />
+                <ErrorMessage name="idCarteira" />
               </div>
             </div>
           </div>
@@ -157,105 +147,106 @@
           <div class="mb-8">
             <span class="font-montserrat text-xl block mb-4">Informações de acesso</span>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Nome do usuário:</label>
-                <input
-                  type="text"
-                  v-model="doctorSelected.username"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="text" name="usuario" v-model="doctor.usuario"
+                  class="form-add-info"
                   placeholder="Nome de usuário"
                 />
+                <ErrorMessage name="usuario" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">E-mail:</label>
-                <input
-                  type="email"
-                  v-model="doctorSelected.email"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="email" name="email" v-model="doctor.email"
+                  class="form-add-info"
                   placeholder="E-mail"
                 />
+                <ErrorMessage name="email" />
               </div>
             </div>
             <div class="mb-4 flex gap-4">
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Senha:</label>
-                <input
-                  type="password"
-                  v-model="doctorSelected.password"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="password"  name="password" 
+                  class="form-add-info"
                   placeholder="Senha"
                 />
+                <ErrorMessage name="password" />
               </div>
-              <div class="w-full min-w-[330px]">
+              <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Repita a senha:</label>
-                <input
-                  type="password"
-                  v-model="doctorSelected.password"
-                  class="w-full h-10 p-2 border border-cinza-4 rounded-md text-sm"
+                <Field type="password"  name="password2"
+                  class="form-add-info"
                   placeholder="Senha"
                 />
+                <ErrorMessage name="password2" />
               </div>
             </div>
           </div>
 
           <div>
             <button class=" px-4 py-2 bg-primaria-claro text-branco-claro rounded-md mr-4">
-              Salvar
+              Adicionar Novo Doctor
             </button>
             <button class="px-4 py-2 bg-cinza-5 text-cinza-3 rounded-md mr-4" @click="fecharMenu">
               Cancelar
             </button>
           </div>
         </div>
-      </form>
-    </main>
-  </template>
-  
-  <script>
-  import { mapActions, mapState } from "vuex"
-  import NavbarComp from "@/components/NavbarComp.vue";
-  import HeaderComp from "@/components/HeaderComp.vue";
-  
-  export default {
-    data() {
-      return {
-        preview: null,
-      };
-    },
-    components: { NavbarComp, HeaderComp },
-    computed: {
-      ...mapState('medicos', ['doctorSelected']),
-    },
-    mounted() {
-      this.ActionSetDoctorSelected(this.$route.params.id)
-    },
-    methods: {
-      ...mapActions('medicos', ['ActionSetDoctorSelected', 'ActionPutDoctorSelected']),
+      </Form>
+    </div>
+  </main>
+</template>
 
-      adicionarMedico(doctor){
-        this.ActionPutDoctorSelected(doctor).then(res => {
-          console.log(res.status)
-        })
-        console.log(doctor)
-      },
+<script>
+import * as yup from "yup"
+import api from "@/service";
+import { dataDoctor } from "@/helpers/index"
+import { config } from "@/modules/auth/storage";
+import { Form, Field, ErrorMessage } from "vee-validate"
 
-      fecharMenu() {
-        this.$router.back();
-      },
+import NavbarComp from "@/components/NavbarComp.vue";
+import HeaderComp from "@/components/HeaderComp.vue";
 
-      previewImage (event) {
-        let input = event.target;
-        
-        if (input.files) {
-          let reader = new FileReader();
-          reader.onload = (e) => {
-            this.preview = e.target.result;
-          }
-          
-          this.doctorSelected.imagem=input.files[0];
-          reader.readAsDataURL(input.files[0]);
+export default {
+  data() {
+    return {
+      preview: null,
+      schema: yup.object(dataDoctor),
+      imagem: '',
+      doctor: {}
+    };
+  },
+  components: { NavbarComp, HeaderComp, Form, Field, ErrorMessage },
+  mounted() {
+    this.getDoctor()
+  },
+  methods: {
+    getDoctor(){
+      api.get(`medicos/${this.$route.params.id}`, config).then(res => {
+      this.doctor = res.data
+        console.log(res)
+    })},
+    onSubmit(values){
+      api.post('medicos', values, config).then(res => {
+      console.log(values)
+      console.log(res)
+    })},
+    fecharMenu() {
+      this.isVisible = false;
+      this.$router.back();
+    },
+    previewImage (event) {
+      let input = event.target;
+      if (input.files) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
         }
-      },
+        this.form.imagem=input.files[0];
+        reader.readAsDataURL(input.files[0]);
+      }
     },
-  };
+  },
+};
 </script>

@@ -1,20 +1,25 @@
-import api from '@/service/api'
+import api from '@/service'
 import * as types from './mutation-types'
+import { config } from '@/modules/auth/storage'
 
-export const ActionSetPacientsList = ({ commit }) => (
-  api.get("/api/pacientes").then(res => {
-    commit(types.SET_PACIENTS_LIST, res.data)
+export const ActionGetPacientsList = ({ dispatch }) => (
+  api.get("pacientes", config).then(res => {
+    dispatch('ActionSetPacientList', res.data)
   })
 )
 
+export const ActionSetPacientList = ({ commit }, payload) => {
+  commit(types.SET_PACIENTS_LIST, payload)
+}
+
 export const ActionSetPacientSelected = ({ commit }, payload) => (
-  api.get(`/api/pacientes/${payload}`).then(res => {
+  api.get(`pacientes/${payload}`, config).then(res => {
     commit(types.SET_PACIENT_SELECTED, res.data)
   })
 )
 
-export const ActionPostPacient = ({ payload }) => (
-  api.post('/api/pacientes', payload).then(
-    
-  )
+export const ActionPostPacient = (payload) => (
+  api.post('pacientes', payload, config).then((res) => {
+    console.log(res.status)
+  })
 )

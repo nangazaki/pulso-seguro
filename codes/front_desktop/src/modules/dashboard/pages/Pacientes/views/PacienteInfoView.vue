@@ -4,7 +4,7 @@
     <HeaderComp />
 
     <span class="font-montserrat pl-2 text-2xl text-cinza-1 mb-8 block">
-      Perfil do Paciente <span class="font-medium">{{ pacientSelected.nome }} {{ pacientSelected.sobrenome }}</span>
+      Perfil do Paciente <span class="font-medium">{{ pacientSelected.name }} {{ pacientSelected.sobrenome }}</span>
     </span>
 
     <div class="w-full flex gap-8 my-8">
@@ -17,7 +17,7 @@
               alt="thumb"
             />
           </div>
-          <span class="font-montserrat text-lg mb-0">{{ pacientSelected.nome }} {{ pacientSelected.sobrenome }}.</span>
+          <span class="font-montserrat text-lg mb-0">{{ pacientSelected.name }} {{ pacientSelected.sobrenome }}</span>
         </div>
         <div class="mb-6">
             <span class="font-montserrat text-cinza-3 uppercase text-sm mb-4">Informações de contacto</span>

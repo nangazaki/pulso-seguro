@@ -52,7 +52,7 @@
 
     <div :class="`relative top-56 w-full h-auto flex items-center mb-4 rounded-lg ${this.isOpen ? '' : 'justify-center'}`">
       <li class="w-full h-10 inline-flex mb-4 rounded-lg overflow-hidden duration-300 ease hover:active">
-        <router-link to="/" class="p-3 pr-40 flex items-center">
+        <router-link to="/" @click="logout" class="p-3 pr-40 flex items-center">
           <i class="bx bx-exit" :class="`text-xl`"></i>
           <span :class="`text-base ml-2 ${this.isOpen ? '' : 'hidden'}`">
             Sair
@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex"
+
 export default {
   data() {
     return {
@@ -75,9 +77,15 @@ export default {
     };
   },
   methods: {
+    ...mapActions('auth', ['ActionSignOut']),
+
     toggleMenu() {
       this.isOpen = !this.isOpen;
     },
+    logout() {
+      this.ActionSignOut()
+      this.$router.push('login')
+    }
   },
 };
 </script>
