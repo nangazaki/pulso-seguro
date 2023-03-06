@@ -186,7 +186,7 @@
 
           <div>
             <button class=" px-4 py-2 bg-primaria-claro text-branco-claro rounded-md mr-4">
-              Adicionar Novo Doctor
+              Confirmar
             </button>
             <button class="px-4 py-2 bg-cinza-5 text-cinza-3 rounded-md mr-4" @click="fecharMenu">
               Cancelar
@@ -209,6 +209,7 @@ import NavbarComp from "@/components/NavbarComp.vue";
 import HeaderComp from "@/components/HeaderComp.vue";
 
 export default {
+  components: { NavbarComp, HeaderComp, Form, Field, ErrorMessage },
   data() {
     return {
       preview: null,
@@ -217,7 +218,6 @@ export default {
       doctor: {}
     };
   },
-  components: { NavbarComp, HeaderComp, Form, Field, ErrorMessage },
   mounted() {
     this.getDoctor()
   },

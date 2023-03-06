@@ -1,14 +1,13 @@
 <template>
-  <div class="w-[360px] h-auto flex flex-col min-w-0 bg-white rounded-xl overflow-hidden card-shadow">
+  <div class="max-w-[360px] w-full h-auto flex flex-col min-w-0 mb-8 bg-white rounded-xl overflow-hidden card-shadow">
     <router-link :to="`/lista-medicos/perfil-medico/${doctor.id}`">
-      <img :src="doctor.imagem" class="w-full h-60 object-cover" alt="card image">
+      <img :src="`/storage/${doctor.imagem}`" class="w-full h-60 object-cover" alt="card image">
     </router-link>
     <div class="p-6">
       <router-link :to="`/lista-medicos/perfil-medico/${doctor.id}`" class="font-montserrat text-base text-primaria-claro">
         {{ doctor.name }} {{ doctor.sobrenome }}
       </router-link>
-      <div class="font-nunito text-cinza-3 mb-4">{{ doctor.especialidade }}</div>
-      
+      <div class="font-montserrat text-cinza-3 mb-4">{{ doctor.especialidade }}</div>
       <div class="">
         <div class="mb-6">
           <span class="font-montserrat text-cinza-3 uppercase text-sm mb-4">Informações de contacto</span>
@@ -56,7 +55,7 @@
               </svg>
             </router-link>
             
-            <button title="Eliminar" @click="ActionAbrirModal({isVisible: true, doctorID: doctor.id})"
+            <button title="Eliminar" @click="open"
               class="w-[40%] flex items-center justify-center gap-2 rounded-md border border-red-500 py-1 px-2 text-red-500 transition duration-300 hover:bg-red-500 hover:text-white"
             >
               <span>Eliminar</span>
@@ -76,18 +75,31 @@
       </div>
     </div>
   </div>
-  <ModalComp />
 </template>
+
 <script>
-import ModalComp from '@/components/ModalComp.vue';
+import { mapActions } from 'vuex';
 
 export default {
-    props: {
-        doctor: {
-            type: Object,
-            required: true,
-        },
+  props: {
+    doctor: {
+      type: Object,
+      required: true,
     },
-    components: { ModalComp }
+  },
+  methods: {
+    ...mapActions('medicos', ['selectDoctorDelete']),
+
+    open() {
+      let values = {
+        visible: true,
+        doctor: {
+          id: this.doctor.id,
+          name: `${this.doctor.name} ${this.doctor.sobrenome}`
+        }
+      }
+      this.selectDoctorDelete(values)
+    }
+  }
 };
 </script>

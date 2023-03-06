@@ -4,6 +4,7 @@
     <HeaderComp />
 
     <div>
+      <AlertComp />
       <Form @submit="onSubmit" :validation-schema="schema"
         class="w-ful flex gap-8">
         <div class="bg-branco-claro w-[280px] h-[500px] rounded-lg p-4 card-shadow">
@@ -12,13 +13,11 @@
           <div class="w-full mt-8 overflow-hidden">
             <img
               class="w-40 h-40 mb-4 rounded-full object-cover"
-              :src="`${imagem ? preview : 'https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png' }`"
+              :src="`${preview ? preview : 'https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png' }`"
               alt="Foto de perfil"
             />
             <div>
-              <Field name="file" class="mb-4" v-slot="{ previewImage }">
-                <input type="file" accept="image/*" @change="previewImage" />
-              </Field>
+              <Field type="file" name="image" @change="previewImage" />
               <span class="text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
             </div>
           </div>
@@ -112,8 +111,8 @@
                 <label class="block text-base text-cinza-3 mb-1">Gênero:</label>
                 <Field name="genero" as="select" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
                   <option value="">Selecione o gênero</option>
-                  <option value="Masculino">Masculino</option>
-                  <option value="Feminino">Feminino</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="feminino">Feminino</option>
                 </Field>
                 <ErrorMessage name="genero" />
               </div>
@@ -175,11 +174,11 @@
               </div>
               <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Repita a senha:</label>
-                <Field type="password"  name="password2"
+                <Field type="password"  name="passwordConfirmation"
                   class="form-add-info"
-                  placeholder="Senha"
+                  placeholder="Confirme a senha"
                 />
-                <ErrorMessage name="password2" />
+                <ErrorMessage name="passwordConfirmation" />
               </div>
             </div>
           </div>
@@ -206,6 +205,10 @@ import { Form, Field, ErrorMessage } from "vee-validate"
 import NavbarComp from "@/components/NavbarComp.vue";
 import HeaderComp from "@/components/HeaderComp.vue";
 
+import api from '@/service';
+import { configPost } from '@/modules/auth/storage';
+import AlertComp from '../components/AlertComp.vue';
+
 export default {
   data() {
     return {
@@ -214,10 +217,38 @@ export default {
       imagem: ''
     };
   },
-  components: { NavbarComp, HeaderComp, Form, Field, ErrorMessage },
+  components: { NavbarComp, HeaderComp, Form, Field, ErrorMessage, AlertComp },
   methods: {
-    onSubmit(values){
-      console.log(values)
+    async onSubmit(values){
+      let { name, sobrenome, provincia,
+            municipio, bairro, rua, nBI, telefone,
+            dataNascimento, genero, especialidade,
+            idCarteira, usuario, email, password } = values
+
+      let formData = new FormData()
+      formData.append('name', name)
+      formData.append('sobrenome', sobrenome)
+      formData.append('imagem', this.imagem)
+      formData.append('provincia', provincia)
+      formData.append('municipio', municipio)
+      formData.append('bairro', bairro)
+      formData.append('rua', rua)
+      formData.append('nBI', nBI)
+      formData.append('telefone', telefone)
+      formData.append('dataNascimento', dataNascimento)
+      formData.append('genero', genero)
+      formData.append('especialidade', especialidade)
+      formData.append('idCarteira', idCarteira)
+      formData.append('usuario', usuario)
+      formData.append('email', email)
+      formData.append('password', password)
+
+      await api.post('medicos', formData, configPost)
+      .then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     fecharMenu() {
       this.isVisible = false;
@@ -230,8 +261,9 @@ export default {
         reader.onload = (e) => {
           this.preview = e.target.result;
         }
-        this.form.imagem=input.files[0];
+        
         reader.readAsDataURL(input.files[0]);
+        this.imagem = input.files[0]
       }
     },
   },
