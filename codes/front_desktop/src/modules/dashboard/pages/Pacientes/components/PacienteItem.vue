@@ -48,7 +48,7 @@
               </svg>
             </router-link>
             
-            <button title="Eliminar" @click="ActionAbrirModal({isVisible: true, pacienteID: paciente.id})"
+            <button title="Eliminar" @click="open"
               class="w-[40%] flex items-center justify-center gap-2 rounded-md border border-red-500 py-1 px-2 text-red-500 transition duration-300 hover:bg-red-500 hover:text-white"
             >
               <span>Eliminar</span>
@@ -70,6 +70,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 
 export default {
   props: {
@@ -78,5 +79,19 @@ export default {
       required: true,
     },
   },
+  methods: {
+    ...mapActions('pacientes', ['selectPacientDelete']),
+
+    open() {
+      let values = {
+        visible: true,
+        paciente: {
+          id: this.paciente.id,
+          name: `${this.paciente.name} ${this.paciente.sobrenome}`
+        }
+      }
+      this.selectPacientDelete(values)
+    }
+  }
 };
 </script>

@@ -56,7 +56,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="acorn-icons acorn-icons-health text-primaria-claro"><path d="M9.5 3.00001V3.00001C9.83758 3.00001 10.0064 3.00001 10.1455 3.01964C11.0759 3.15098 11.7895 3.91236 11.8602 4.84939C11.8708 4.98944 11.8599 5.15788 11.838 5.49475L11.5634 9.72329C11.4072 12.1288 9.41057 14 7 14V14C4.58942 14 2.59278 12.1288 2.43658 9.72329L2.162 5.49475C2.14012 5.15788 2.12918 4.98944 2.13976 4.84939C2.21053 3.91236 2.92408 3.15098 3.85455 3.01964C3.99363 3.00001 4.16242 3.00001 4.5 3.00001V3.00001"></path><path d="M7 14V14C7 14.93 7 15.395 7.10222 15.7765C7.37962 16.8117 8.18827 17.6204 9.22354 17.8978C9.60504 18 10.07 18 11 18H11.75C13.383 18 14.1995 18 14.8269 17.6906C15.4192 17.3985 15.8985 16.9192 16.1906 16.3269C16.5 15.6995 16.5 14.883 16.5 13.25L16.5 10.5"></path><path d="M18 8.5C18 9.32842 17.3284 10 16.5 9.99999V9.99999C15.6716 9.99998 15 9.32842 15 8.49999V8.49999C15 7.67157 15.6716 7 16.5 7V7C17.3284 7 18 7.67157 18 8.5V8.5Z"></path><path d="M5 2 5 4M9 2 9 4"></path></svg>
                 </div>
               </div>
-              <div class="col text-alternate align-middle">Antoine Spears</div>
+              <div class="col text-alternate align-middle"></div>
             </div>
         </div>
       </div>
@@ -124,10 +124,10 @@ export default {
     this.ActionSetPacientSelected(this.$route.params.id)
   },
   computed: {
-    ...mapState('pacientes', ['pacientSelected'])
+    ...mapState('pacientes', ['pacientSelected', 'doctorOfPacient'])
   },
   methods: {
-    ...mapActions('pacientes', ['ActionSetPacientSelected'])
+    ...mapActions('pacientes', ['ActionSetPacientSelected', 'ActionGetDoctorOfPacient']),
   },
   components: { NavbarComp, HeaderComp },
 };

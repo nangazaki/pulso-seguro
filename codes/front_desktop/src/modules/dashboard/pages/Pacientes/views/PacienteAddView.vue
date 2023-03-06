@@ -12,13 +12,11 @@
           <div class="w-full mt-8 overflow-hidden">
             <img
               class="w-40 h-40 mb-4 rounded-full object-cover"
-              :src="`${imagem ? preview : 'https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png' }`"
+              :src="`${preview ? preview : 'https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png' }`"
               alt="Foto de perfil"
             />
             <div>
-              <Field name="file" class="mb-4" v-slot="{ previewImage }">
-                <input type="file" accept="image/*" @change="previewImage" />
-              </Field>
+              <Field type="file" name="imagem" @change="previewImage" />
               <span class="text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
             </div>
           </div>
@@ -165,20 +163,24 @@
             <div class="mb-4 flex gap-4">
               <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Nome do Doctor:</label>
-                <Field type="text" name="doctorNome" 
-                class="form-add-info" 
-                placeholder="Nome de usuário"
-                />
+                <Field name="doctorNome" as="select" v-model="option" class="w-full h-10 p-2 bg-branco-claro border border-cinza-4 rounded-md text-sm text-cinza-3">
+                  <option disabled value="">Selecione o nome do Doctor</option>
+                  <option v-for="(doctor, i) in doctorsList"
+                    :key="i" v-bind:value="doctor.id"
+                  >
+                   Dr. {{ doctor.name }} {{ doctor.sobrenome }}
+                  </option>
+                </Field>
                 <ErrorMessage name="doctorNome" />
               </div>
               <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">ID:</label>
                 <Field
-                  type="number" name="doctorID"
+                  type="number" name="medico_id" v-model="option" 
                   class="form-add-info"
-                  placeholder="ID Doctor"
+                  placeholder="Doctor ID" disabled
                 />
-                <ErrorMessage name="doctorID" />
+                <ErrorMessage name="medico_id" />
               </div>
             </div>
           </div>
@@ -199,7 +201,7 @@
 
 <script>
 import * as yup from "yup"
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import { dataPaciente } from "@/helpers/index"
 import { Form, Field, ErrorMessage } from "vee-validate"
 
@@ -207,18 +209,48 @@ import NavbarComp from "@/components/NavbarComp.vue";
 import HeaderComp from "@/components/HeaderComp.vue";
 
 export default {
+  components: { NavbarComp, HeaderComp, Form, Field, ErrorMessage },
   data() {
     return {
       preview: null,
       schema: yup.object(dataPaciente),
-      imagem: ''
+      option: null,
+      image: ''
     };
   },
-  components: { NavbarComp, HeaderComp, Form, Field, ErrorMessage },
+  mounted() {
+    this.ActionDoctorsList()
+  },
+  computed: {
+    ...mapState("medicos", ["doctorsList"])
+  },
   methods: {
     ...mapActions('pacientes', ['ActionPostPacient']),
-    onSubmit(values){
-      this.ActionPostPacient(values)
+    ...mapActions('medicos', ['ActionDoctorsList']),
+    async onSubmit(values){
+      let { bairro, dataNascimento, email, genero,
+            medico_id, municipio, nBI,
+            name, password, provincia, rua,
+            sobrenome, telefone, usuario } = values
+
+      let formData = new FormData()
+      formData.append('name', name)
+      formData.append('sobrenome', sobrenome)
+      formData.append('imagem', this.imagem)
+      formData.append('provincia', provincia)
+      formData.append('municipio', municipio)
+      formData.append('bairro', bairro)
+      formData.append('rua', rua)
+      formData.append('nBI', nBI)
+      formData.append('telefone', telefone)
+      formData.append('dataNascimento', dataNascimento)
+      formData.append('genero', genero)
+      formData.append('usuario', usuario)
+      formData.append('email', email)
+      formData.append('password', password)
+      formData.append('medico_id', medico_id)
+
+      await this.ActionPostPacient(formData)
     },
     fecharMenu() {
       this.isVisible = false;
@@ -231,10 +263,14 @@ export default {
         reader.onload = (e) => {
           this.preview = e.target.result;
         }
-        this.form.imagem=input.files[0];
         reader.readAsDataURL(input.files[0]);
+        this.imagem = input.files[0]
       }
     },
+    addImage(e){
+      const file = e.target.files[0]
+      this.image = file
+    }
   },
 };
 </script>

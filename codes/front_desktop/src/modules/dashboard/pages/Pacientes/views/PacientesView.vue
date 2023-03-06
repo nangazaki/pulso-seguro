@@ -46,28 +46,34 @@
         </div>
       </div>
      
-      <div class="flex gap-8 mb-8">
+      <div class="flex justify-evenly mb-8 flex-wrap">
         <PacienteItem v-for="paciente in pacientsList"
           :key="paciente.id"
           :paciente="paciente" 
         />
       </div>
     </div>
+
+    <ModalComp />
+
   </main>
 </template>
   
 <script>
 import { mapActions, mapState } from "vuex";
 
-import NavbarComp from "@/components/NavbarComp.vue";
-import HeaderComp from "@/components/HeaderComp.vue";
-import PacienteItem from "../components/PacienteItem.vue";
 import chartPacienteIdade from "../components/chartPacienteIdade.vue"
 import chartPacienteGenero from "../components/chartPacienteGenero.vue"
 
+import NavbarComp from "@/components/NavbarComp.vue";
+import HeaderComp from "@/components/HeaderComp.vue";
+import PacienteItem from "../components/PacienteItem.vue";
+import ModalComp from '../components/ModalComp.vue';
+
 export default {
   components: { 
-    NavbarComp, HeaderComp, PacienteItem, chartPacienteIdade, chartPacienteGenero 
+    NavbarComp, HeaderComp, PacienteItem, chartPacienteIdade, chartPacienteGenero,
+    ModalComp 
   },
   mounted() {
     this.ActionGetPacientsList()
