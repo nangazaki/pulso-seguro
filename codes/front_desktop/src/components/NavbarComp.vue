@@ -8,7 +8,7 @@
       <img :src="`${isOpen ? logo[1] : logo[0]}`" class="w-full" alt="Logotipo PUlso Seguro" />
     </div>
     <ul>
-      <li :class="`w-full h-10 inline-flex mb-4 rounded-lg overflow-hidden duration-300 ease hover:active text-branco-normal ${$route.fullPath.includes('adicionar-medico') ? 'active' : '' } ${$route.fullPath.includes('dashboard') ? 'active' : '' }`">
+      <li :class="`w-full h-10 inline-flex mb-4 rounded-lg overflow-hidden duration-300 ease hover:active text-branco-normal ${$route.fullPath.includes('dashboard') ? 'active' : '' }`">
         <router-link to="/dashboard" class="p-3 pr-40 flex items-center">
           <i class="bx bx-home" :class="`text-xl`"></i>
           <span :class="`text-base ml-2 ${isOpen ? '' : 'hidden'}`">

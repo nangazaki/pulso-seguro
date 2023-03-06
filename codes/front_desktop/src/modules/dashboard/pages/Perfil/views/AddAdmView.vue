@@ -13,14 +13,14 @@
           <div class="w-full mt-8 overflow-hidden">
             <img
               class="w-40 h-40 mb-4 rounded-full object-cover"
-              :src="`${imagem ? preview : 'https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png' }`"
+              :src="`${preview ? preview : 'https://templates.iqonic.design/vito/vue/dist/img/user-11.889f2489.png' }`"
               alt="Foto de perfil"
             />
             <div>
-              <Field name="file" class="mb-4" v-slot="{ previewImage }">
-                <input type="file" accept="image/*" @change="previewImage" />
-              </Field>
-              <span class="text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
+              <Field type="file" name="imagem" @change="previewImage" />
+              <span class="text-sm text-cinza-3 block">Só arquivos .jpg .png .jpeg são permitidos</span>
+
+              <ErrorMessage name="imagem" />
             </div>
           </div>
         </div>
@@ -30,11 +30,11 @@
             <div class="mb-4 flex gap-4">
               <div class="form-add flex-wrap">
                 <label class="block text-base text-cinza-3 mb-1">Nome:</label>
-                <Field type="text" name="nome"
+                <Field type="text" name="name"
                   class="form-add-info"
                   placeholder="Nome"
                 />
-                <ErrorMessage name="nome" />
+                <ErrorMessage name="name" />
               </div>
               <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Sobrenome:</label>
@@ -74,16 +74,16 @@
               </div>
               <div class="form-add">
                 <label class="block text-base text-cinza-3 mb-1">Senha:</label>
-                <Field type="text"  name="senha"
+                <Field type="password"  name="password"
                   class="w-full h-10 px-2 py-4 border border-cinza-4 rounded-md texe-sm"
-                  placeholder="Senha"
+                  placeholder="password"
                 />
-                <ErrorMessage name="senha" />
+                <ErrorMessage name="password" />
               </div>
             </div>
            </div>
           <div>
-            <button class=" px-4 py-2 bg-primaria-claro text-branco-claro rounded-md mr-4">
+            <button type="submit" class="px-4 py-2 bg-primaria-claro text-branco-claro rounded-md mr-4">
               Adicionar Administrador
             </button>
             <button class="px-4 py-2 bg-cinza-5 text-cinza-3 rounded-md mr-4" @click="fecharMenu">
@@ -118,20 +118,17 @@ export default {
       this.$router.back();
     },
     
-    async onSubmit(values){
-      console.log(values)
-    },
+  
     
     previewImage (event) {
       let input = event.target;
-      console.log(input)
       if (input.files) {
         let reader = new FileReader();
         reader.onload = (e) => {
           this.preview = e.target.result;
         }
-        this.form.imagem=input.files[0];
         reader.readAsDataURL(input.files[0]);
+        this.imagem = input.files[0]
       }
     },
   },

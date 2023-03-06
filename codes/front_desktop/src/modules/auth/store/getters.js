@@ -1,7 +1,5 @@
-import * as types from './mutation-types'
+import state from './state';
 
-export default {
-  [types.SET_TOKEN]: (state) => {
-      return state.token;
-  },
+export const getToken = () => {
+  return state.token
 };

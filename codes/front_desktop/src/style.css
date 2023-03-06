@@ -78,12 +78,28 @@
     }
   }
 
+  @keyframes modal {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -50px, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
   .drop-enter {
     animation: enter-menu .5s forwards;
   }
 
   .drop-left {
     animation: left-menu .5s forwards
+  }
+
+  .modal-enter {
+    animation: modal .8s forwards;
   }
 
   .form-control {
