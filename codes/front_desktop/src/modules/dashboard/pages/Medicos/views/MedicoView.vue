@@ -7,8 +7,8 @@
       Lista de Medicos
     </h1>
 
-    <div class="h-[40px] flex justify-between mb-10">
-      <router-link to="/lista-medicos/adicionar-medico"
+    <div :class="`h-[40px] flex ${Number(user.isAdmin) ? 'justify-between' : 'justify-end'} mb-10`">
+      <router-link v-if="Number(user.isAdmin)" to="/lista-medicos/adicionar-medico"
         class="bg-primaria-claro px-4 py-2 flex items-center gap-2 rounded-md text-branco-claro"
       >
         <span>
@@ -62,7 +62,7 @@
         :doctor="doctor"/>
     </div>
 
-    <ModalComp />
+    <ModalDelete />
   </main>
 </template>
 
@@ -71,25 +71,22 @@ import { mapActions, mapState } from "vuex";
 import NavbarComp from "@/components/NavbarComp.vue";
 import HeaderComp from "@/components/HeaderComp.vue";
 import MedicoItem from '../components/MedicoItem.vue';
-import ModalComp from '../components/ModalComp.vue';
+import ModalDelete from '../components/ModalDelete.vue';
 
 export default {
-  components: { NavbarComp, HeaderComp, MedicoItem, ModalComp },
-  
+  components: { NavbarComp, HeaderComp, MedicoItem, ModalDelete },
   data() {
     return {
       option: 1,
     };
   },
-  
   mounted() {
     this.ActionDoctorsList();
   },
-  
   computed: {
+    ...mapState('auth', ['user']),
     ...mapState("medicos", ["doctorsList"]),
   },
-  
   methods: {
     ...mapActions("medicos", ["ActionDoctorsList"]),
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-[360px] w-full h-auto flex flex-col min-w-0 mb-8 bg-white rounded-xl overflow-hidden card-shadow">
     <router-link :to="`/lista-medicos/perfil-medico/${doctor.id}`">
-      <img :src="`/storage/${doctor.imagem}`" class="w-full h-60 object-cover" alt="card image">
+      <img :src="`http://localhost:8000/storage/${doctor.imagem}`" class="w-full h-60 object-cover" alt="card image">
     </router-link>
     <div class="p-6">
       <router-link :to="`/lista-medicos/perfil-medico/${doctor.id}`" class="font-montserrat text-base text-primaria-claro">
@@ -42,7 +42,7 @@
           </div>
       </div>
         <div class="mt-4 flex flex-col items-center justify-center">
-          <div class="w-full flex justify-center gap-3 mb-3">
+          <div v-if="Number(user.isAdmin)" class="w-full flex justify-center gap-3 mb-3">
             <router-link :to="`/lista-medicos/perfil-medico/${doctor.id}/editar`" 
               class="w-[40%] flex items-center justify-center gap-2 bg-cinza-4 text-cinza-1 rounded-md py-1 px-2"
             >
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   props: {
@@ -86,6 +86,9 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  computed: {
+    ...mapState('auth', ['user'])
   },
   methods: {
     ...mapActions('medicos', ['selectDoctorDelete']),

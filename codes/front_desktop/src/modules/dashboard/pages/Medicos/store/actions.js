@@ -1,26 +1,12 @@
 import api from '@/service'
 import * as types from './mutation-types'
-import { config } from '@/modules/auth/storage'
+import { config, configPost } from '@/modules/auth/storage'
 
 export const ActionDoctorsList = ({ commit }) => (
   api.get("medicos", config).then(res => {
     commit(types.SET_DOCTORS_LIST, res.data)
   })
 )
-
-export const ActionGetPacientByDoctor = ({ commit }, payload) => (
-  api.get("pacientes", config).then(res => {
-    const pacientes = Object.values(res.data)
-    payload
-    const newPacientes = pacientes
-      .filter((paciente) => {
-        return paciente.name != ''
-      })
-
-    commit(types.SET_PACIENT_BY_DOCTOR, newPacientes)
-  })
-)
-
 
 export const ActionSetDoctorSelected = ({ commit }, payload) => (
   api.get(`/medicos/${payload}`, config).then(res => {
@@ -40,9 +26,9 @@ export const ActionSetPacientsByDoctor = ({ commit }, payload) => (
   })
 )
 
-export const ActionPostDoctor = (payload, values) => {
-  return api.post('medicos', values, config).then(res => {
-    console.log(res)
+export const ActionPostDoctor = (payload, data) => {
+  return api.post('medicos', data, configPost).then((res) => {
+    return res.status
   })
 }
 
@@ -57,3 +43,8 @@ export const cancelDoctorDelete = ({ commit }, resetValues) => {
 export const deleteDoctorDelete = (payload, id) => (
   api.delete(`medicos/${id}`, config)
 )
+
+export const setModalConfirm = ({ commit }, value) => {
+  commit(types.SET_MODAL_DOCTOR, value)
+}
+

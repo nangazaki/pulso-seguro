@@ -10,7 +10,7 @@ module.exports = {
         'background': '#F9F9F9',
 
         'primaria-claro': '#1CA35E',
-        'primaria-normal': '#51B58D',
+        'primaria-normal': '#009A69',
         'primaria-escuro': '#209A6E',
 
         'cinza-1': '#333',

@@ -74,7 +74,7 @@
 
     to {
       opacity: 0;
-      transform: translate3d(0, 30px, 0);
+      transform: translate3d(0, -50px, 0);
     }
   }
 
@@ -91,11 +91,11 @@
   }
 
   .drop-enter {
-    animation: enter-menu .5s forwards;
+    animation: enter-menu .6s forwards;
   }
 
   .drop-left {
-    animation: left-menu .5s forwards
+    animation: left-menu .6s forwards
   }
 
   .modal-enter {
@@ -125,7 +125,6 @@
   .form-control span, .form-add span {
     padding-left: 16px;
     font-size: .825rem;
-    transition: 10s ease;
     color: #d33232;
   }
 

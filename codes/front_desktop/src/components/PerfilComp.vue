@@ -2,11 +2,13 @@
     <div class="min-w-[200px] relative">
       <div class="inline-flex items-center transition ease-in" @click="toggleDrop">
         <div class="mr-3">
-          <img class="w-10 h-10 rounded-full" src="https://static.generated.photos/vue-static/face-generator/landing/wall/6.jpg">
+          <img class="w-10 h-10 rounded-full object-cover" 
+            :src="`http://localhost:8000/storage/${user.imagem}`"
+          >
         </div>
         <div>
-          <span class="font-montserrat text-lg -mb-1 text-cinza-1 block">{{ usuario.nome }}</span>
-          <span class="text-cinza-3 block">{{ usuario.cargo }}</span>
+          <span class="font-montserrat text-lg -mb-1 text-cinza-1 block">{{ user.name }} {{ user.sobrenome }}</span>
+          <span class="text-cinza-3 block">{{ Number(user.isAdmin) ? 'Admin' : 'Doctor(a)'}}</span>
         </div>
       </div>
            
@@ -16,7 +18,7 @@
         <div class="py-1 text-left" role="none">
           <router-link to="/meu-perfil" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Perfil</router-link>
           <router-link to="/configuracoes-gerais" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Configurações</router-link>
-          <router-link to="admin/adicionar-admin" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Adicionar Admin</router-link>
+          <router-link v-if="Number(user.isAdmin)" to="admin/adicionar-admin" class="text-cinza-3 block px-4 py-2 text-sm transition duration-200 hover:text-cinza-2">Adicionar Admin</router-link>
           <span class="block w-full h-[1px] bg-[#f0f0f0]"></span>
           <form method="POST" action="#" role="none">
             <button type="submit" class="text-cinza-3 block w-full px-4 py-2 text-left text-sm transition duration-200 hover:text-cinza-2">Terminar sessão</button>
@@ -27,6 +29,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   data(){
     return {
@@ -42,12 +46,13 @@ export default {
   computed: {
     animationCSS() {
       return this.showDropDown ? 'drop-enter' : 'drop-left' 
-    }
+    },
+    ...mapState('auth', ['user'])
   },
   methods: {
     toggleDrop() {
       this.showDropDown = !this.showDropDown
-    }
+    },
   }
 }
 </script>

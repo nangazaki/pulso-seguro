@@ -1,1 +1,1 @@
-export const SET_MODAL = 'DASHBOARD/SET_MODAL'
+export const SET_NAVBAR = 'DASHBOARD/SET_NAVBAR'

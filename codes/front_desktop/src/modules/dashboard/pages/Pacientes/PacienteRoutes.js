@@ -1,25 +1,25 @@
 export default [
   {
     path: '/lista-pacientes',
-    name: 'pacientes',
+    name: 'Pacientes',
     component: () => import('./views/PacientesView.vue'),
     meta: { auth: true }
   },
   {
     path: '/lista-pacientes/adicionar-paciente',
-    name: 'paciente-adicionar',
+    name: 'Adicionar-Paciente',
     component: () => import('./views/PacienteAddView.vue'),
     meta: { auth: true }
   },
   {
     path: '/lista-pacientes/perfil-paciente/:id',
-    name: 'paciente-info',
+    name: 'Informação-Paciente',
     component: () => import('./views/PacienteInfoView.vue'),
     meta: { auth: true }
   },
   {
     path: '/lista-pacientes/perfil-paciente/:id/editar',
-    name: 'paciente-info-editar',
+    name: 'Editar-Informação-Paciente',
     component: () => import('./views/PacienteInfoEditarView.vue'),
     meta: { auth: true }
   }

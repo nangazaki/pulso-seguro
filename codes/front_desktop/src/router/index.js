@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import authRoutes from '@/modules/auth/router'
 import dashboardRoutes from '@/modules/dashboard/router'
-import { getLocalToken } from '@/modules/auth/storage'
+
+import beforeEach from './beforeEach'
 
 const routes = [
   ...authRoutes,
@@ -13,13 +15,6 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.auth && !getLocalToken()) {
-    next({ name: 'login' })
-  } else {
-    next()
-  }
-
-})
+router.beforeEach(beforeEach)
 
 export default router

@@ -8,9 +8,9 @@
         <div class="mb-4 flex items-center flex-col">
           <div class="w-32 h-32 relative mb-3 rounded-full overflow-hidden">
             <img
-              :src="doctorSelected.imagem"
+            :src="`http://localhost:8000/storage/${doctorSelected.imagem}`"
               class="block w-full"
-              alt="thumb"
+              alt="Foto de perfil"
             />
           </div>
           <span class="font-montserrat text-lg mb-0">{{ doctorSelected.name }} {{ doctorSelected.sobrenome }}</span>
@@ -32,7 +32,7 @@
       <div class="w-full p-8 bg-white rounded-md card-shadow">
         <h2 class="text-primaria-claro font-montserrat mb-4">Pacientes</h2>
         <div class="flex flex-col gap-4">
-          <MedicoPaciente v-for="(paciente, i) in pacientsByDoctor" 
+          <MedicoPaciente v-for="(paciente, i) in doctorSelected.pacientes" 
             :key="i" :paciente="paciente" />
         </div>
       </div>
@@ -51,14 +51,13 @@ import MedicoPaciente from "../components/MedicoPaciente.vue";
 
 export default {
   computed: {
-    ...mapState('medicos', ['doctorSelected', 'pacientsByDoctor'])
+    ...mapState('medicos', ['doctorSelected'])
   },
   mounted() {
-    this.ActionSetDoctorSelected(this.doctorSelected.id),
-    this.ActionGetPacientByDoctor(this.doctorSelected.id)
+    this.ActionSetDoctorSelected(this.$route.params.id)
   },
   methods: {
-    ...mapActions('medicos', ['ActionSetDoctorSelected', 'ActionGetPacientByDoctor'])
+    ...mapActions('medicos', ['ActionSetDoctorSelected'])
   },
   components: { NavbarComp, HeaderComp, MedicoPaciente },
 };

@@ -1,7 +1,7 @@
 import * as types from './mutation-types'
 
 export default {
-    [types.SET_MODAL] (state, payload) {
-        state.modalDeleteDoctor = payload
+    [types.SET_NAVBAR] (state, payload) {
+        state.navbar = payload
     },
 }

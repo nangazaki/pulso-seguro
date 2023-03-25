@@ -2,6 +2,7 @@ export default {
   doctorsList: [],
   doctorSelected: {},
   pacientsByDoctor: [],
+  ModalConfirm: false,
   modalDelete: {
     visible: false,
     doctor: {

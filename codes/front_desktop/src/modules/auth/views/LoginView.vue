@@ -17,29 +17,31 @@
         </div>
 
         <div class="form-control">
-          <div class="z-10 relative w-4 h-4 top-7 left-4">
+          <div class="z-10 relative w-4 h-4 top-[30px] left-4">
             <img src="@/assets//icon-user.svg" />
           </div>
           <Field
-            name="email"
-            type="email"
-            class="email-style"
-            :rules="email"
-            placeholder="E-mail"
+            name="usuario"
+            type="text"
+            class="pl-11 appearance-none block w-full bg-gray-100 text-gray-700 
+              border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none 
+            focus:bg-white focus:border-gray-500"
+            placeholder="Nome do usuario"
           />
-          <ErrorMessage name="email" />
+          <ErrorMessage name="usuario" />
         </div>
 
         <div class="form-control">
-          <div class="z-10 relative w-4 h-4 top-7 left-4">
+          <div class="z-10 relative w-4 h-4 top-[30px] left-4">
             <img src="@/assets/icon-password.svg" />
           </div>
           <Field
             name="password"
             type="password"
-            class="email-style"
-            :rules="password"
-            placeholder="Senha"
+            class="pl-11 appearance-none block w-full bg-gray-100 text-gray-700 
+              border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none 
+            focus:bg-white focus:border-gray-500"
+            placeholder="Palavra-passe"
           />
           <ErrorMessage name="password" />
         </div>
@@ -66,23 +68,14 @@
 import * as yup from "yup";
 import { mapActions, mapState } from "vuex";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { getLocalToken } from "../storage";
+import { login } from "../../../helpers/index"
 
 export default {
   components: { Form, Field, ErrorMessage },
 
   data() {
     return {
-      schema: yup.object({
-        email: yup
-          .string("Ooops! O seu email é inválido")
-          .required("O campo Email é obrigatório *")
-          .email("Ooops! O seu email é inválido"),
-        password: yup
-          .string()
-          .required("O campo Palavra-passe é obrigatório *")
-          .min(6, "A Senha não pode ter menos de 6 letras"),
-      }),
+      schema: yup.object(login),
     };
   },
 
@@ -97,10 +90,7 @@ export default {
       try {
         await this.ActionLogin(values);
         setTimeout(() => {
-          console.log(getLocalToken())
-          if (getLocalToken()) {
-            return this.$router.push("/dashboard");
-          }
+          return this.$router.push("/dashboard");
         }, 500);
       } catch (err) {
         console.log(err);

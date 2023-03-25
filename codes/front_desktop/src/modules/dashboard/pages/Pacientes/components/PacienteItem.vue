@@ -1,7 +1,7 @@
 <template>
   <div class="w-[360px] h-auto flex flex-col min-w-0 bg-white rounded-xl overflow-hidden card-shadow">
     <router-link :to="`/lista-pacientes/perfil-paciente/${paciente.id}`">
-      <img :src="paciente.imagem" class="w-full h-60 object-cover" alt="card image">
+      <img :src="`http://localhost:8000/storage/${paciente.imagem}`" class="w-full h-60 object-cover" alt="card image">
     </router-link>
     <div class="p-6">
       

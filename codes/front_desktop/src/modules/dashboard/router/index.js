@@ -1,3 +1,4 @@
+import chatRoutes from '../pages/Chat/chatRoutes'
 import HomeRoutes from '../pages/Home/HomeRoutes'
 import PerfilRoutes from '../pages/Perfil/PerfilRoutes'
 import MedicoRoutes from '../pages/Medicos/MedicoRoutes'
@@ -5,6 +6,7 @@ import PacienteRoutes from '../pages/Pacientes/PacienteRoutes'
 import EstatisticaRoutes from '../pages/Estatistica/EstatisticaRoutes'
 
 export default [
+  ...chatRoutes,
   ...HomeRoutes,
   ...PerfilRoutes,
   ...MedicoRoutes,

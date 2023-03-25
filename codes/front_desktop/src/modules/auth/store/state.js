@@ -1,4 +1,5 @@
 export default {
     user: {},
-    token: ''
+    token: '',
+    isLogged: false
 }

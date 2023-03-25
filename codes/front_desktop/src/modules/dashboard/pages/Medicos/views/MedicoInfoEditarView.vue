@@ -12,14 +12,12 @@
           <div class="w-full mt-8 overflow-hidden">
             <img
               class="w-40 h-40 mb-4 rounded-full object-cover"
-              :src="`${doctor.imagem ? doctor.imagem  : '' }`"
+              :src="`${preview ? preview : `http://localhost:8000/storage/${doctor.imagem}` }`"
               alt="Foto de perfil"
             />
             <div>
-              <Field name="file" class="mb-4" v-slot="{ previewImage }">
-                <input type="file" accept="image/*" @change="previewImage" />
-              </Field>
-              <span class="text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
+              <input type="file" name="imagem" @change="previewImage" />
+              <span class="block text-sm text-cinza-3">Só arquivos .jpg .png .jpeg são permitidos</span>
             </div>
           </div>
         </div>
@@ -243,8 +241,9 @@ export default {
         reader.onload = (e) => {
           this.preview = e.target.result;
         }
-        this.form.imagem=input.files[0];
+        
         reader.readAsDataURL(input.files[0]);
+        this.imagem = input.files[0]
       }
     },
   },
