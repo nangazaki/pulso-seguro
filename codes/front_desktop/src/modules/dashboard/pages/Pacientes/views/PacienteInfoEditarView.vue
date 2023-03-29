@@ -325,7 +325,7 @@ export default {
       });
     },
     onSubmit(values) {
-      api.patch(`medicos/${this.$router.params.id}`, values).then((res) => {
+      api.patch(`pacientes/${this.paciente.id}`, values).then((res) => {
         console.log(values);
         console.log(res);
       });
