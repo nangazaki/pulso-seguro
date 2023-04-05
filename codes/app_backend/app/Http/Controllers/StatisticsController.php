@@ -15,10 +15,11 @@ class StatisticsController extends Controller
         $this->medico = $medico;
     }
 
-    public function Estatisticas(){
+    public function Estatisticas()
+    {
 
-        $statistics = []; 
-        
+        $statistics = [];
+
         // Start PacienteTotalMes
 
         $mes = [0, 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
@@ -34,19 +35,23 @@ class StatisticsController extends Controller
             $carbon = \Carbon\Carbon::parse($date);
             $meses[] = $carbon->month;
         }
-
+        
+	$meses[2] = $meses[2] - 1;
         foreach ($meses as $m) {
             $counts[] = $this->paciente->wheremonth('created_at', '=', $m)->count();
         }
-       
 
-        $estatistica = [$mes[$meses[0]] => $counts[0], 
-                             $mes[$meses[1]] => $counts[1], 
-                             $mes[$meses[2]] => $counts[2], 
-                             $mes[$meses[3]] => $counts[3]
-                            ];
+
+        $estatistica = [
+            $mes[$meses[0]] => $counts[0],
+            $mes[$meses[1]] => $counts[1],
+            $mes[$meses[2]] => $counts[2],
+            $mes[$meses[3]] => $counts[3]
+        ];
         
-        $statistics[0] = $estatistica;                    
+        //$estatistica = $meses;
+
+        $statistics[0] = $estatistica;
         //End PacienteTotalMes
 
         //Start PacienteTotalGenero
@@ -55,68 +60,70 @@ class StatisticsController extends Controller
         $totalMasculino = $this->paciente->where('genero', 'Masculino')->count();
         $totalFeminino = $this->paciente->where('genero', 'Feminino')->count();
 
-        $estatistica = ['Total de pacientes masculinos' => $totalMasculino, 
-                                'Total de pacientes femininos' => $totalFeminino
-                               ];
+        $estatistica = [
+            'Total de pacientes masculinos' => $totalMasculino,
+            'Total de pacientes femininos' => $totalFeminino
+        ];
 
         $statistics[1] = $estatistica;
         //End PacienteTotalGenero
-        
+
         //Start MedicoTotalGenero
 
         $totalMasculino = $this->medico->where('genero', 'Masculino')->count();
         $totalFeminino = $this->medico->where('genero', 'Feminino')->count();
 
-        $estatistica = ['Total de medicos masculinos' => $totalMasculino, 
-                              'Total de medicos femininos' => $totalFeminino
-                             ];
-        $statistics[2] = $estatistica;                     
+        $estatistica = [
+            'Total de medicos masculinos' => $totalMasculino,
+            'Total de medicos femininos' => $totalFeminino
+        ];
+        $statistics[2] = $estatistica;
 
         //End MedicoTotalGenero    
 
 
         //Start PacienteTotalFaixaEtaria
-        
-         // Array com as faixas etárias
-         $faixas_etarias = [
-            ['min' => 50, 'max' => 59],
+
+        // Array com as faixas etárias
+        $faixas_etarias = [
             ['min' => 60, 'max' => 69],
             ['min' => 70, 'max' => 79],
-            ['min' => 80, 'max' => 125]
+            ['min' => 80, 'max' => 89],
+            ['min' => 90, 'max' => 125]
         ];
-    
+
         // Array para armazenar os resultados
         $counts = [];
-    
+
         // Loop através das faixas etárias e contar pacientes cadastrados
         foreach ($faixas_etarias as $faixa) {
             // Calcula a data mínima e máxima para a faixa etária atual
             $min_date = now()->subYears($faixa['max']);
             $max_date = now()->subYears($faixa['min'] - 1);
-    
+
             // Conta o número de pacientes com data de nascimento entre as datas mínima e máxima
             $count = $this->paciente
-                        ->whereBetween('dataNascimento', [$min_date, $max_date])
-                        ->count();
-    
+                ->whereBetween('dataNascimento', [$min_date, $max_date])
+                ->count();
+
             // Adiciona o resultado ao array de contagens
-            $counts[] = ['faixa_etaria' => $faixa['min'].'-'.$faixa['max'], 'total' => $count];
+            $counts[] = ['faixa_etaria' => $faixa['min'] . '-' . $faixa['max'], 'total' => $count];
         }
         $totalEtario = [];
         // Imprime os resultados
         foreach ($counts as $item) {
-            $totalEtario[] = $item['faixa_etaria'].': '.$item['total']." pacientes cadastrados";
+            $totalEtario[] = $item['total'];
         }
 
         $estatistica = $totalEtario;
         $statistics[3] = $estatistica;
 
-       
+
         //End PacienteTotalFaixaEtaria
 
 
         //Start PacienteTotal
-        
+
 
         $totalPacientes = $this->paciente->count();
 
@@ -148,13 +155,6 @@ class StatisticsController extends Controller
 
         //End UserTotal
 
-        return response()->json($statistics); 
-
-        
-        
-        
-
-
-
+        return response()->json($statistics);
     }
 }

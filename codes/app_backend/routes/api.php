@@ -21,12 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('jwt.auth')->group(function () {
     Route::apiresource('admins', 'App\Http\Controllers\AdminController');
     Route::post('logout', 'App\Http\Controllers\AuthController@logout');
+    Route::post('me', 'App\Http\Controllers\AuthController@me');
 });
 
 Route::apiresource('medicos', 'App\Http\Controllers\MedicoController');
 Route::apiresource('pacientes', 'App\Http\Controllers\PacienteController');
 Route::apiresource('diagnosticos', 'App\Http\Controllers\EstadoDeSaudeController');
-Route::post('me', 'App\Http\Controllers\AuthController@me');
+
 
 //Estatisticas
 Route::get('estatisticas', 'App\Http\Controllers\StatisticsController@Estatisticas');

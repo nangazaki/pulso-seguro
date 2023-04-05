@@ -21,6 +21,16 @@ class PacienteController extends Controller
     public function index(Request $request)
     {
         $paciente = array();
+        
+        
+        if($request->has('atributos')){
+            $atributos = $request->atributos;
+            $paciente = $this->paciente->selectRaw($atributos)->with('estadoSaude')->get();    
+
+        }else{
+            $paciente = $this->paciente->with('estadoSaude')->get();
+
+        }
 
         if($request->has('filtro')){
             $filtros = explode(';', $request->filtro);
@@ -33,14 +43,7 @@ class PacienteController extends Controller
 
         }
 
-        if($request->has('atributos')){
-            $atributos = $request->atributos;
-            $paciente = $this->paciente->selectRaw($atributos)->with('estadoSaude')->get();    
-
-        }else{
-            $paciente = $this->paciente->with('estadoSaude')->get();
-
-        }
+        
 
         return response()->json($paciente, 200);
     }

@@ -145,7 +145,7 @@ class MedicoController extends Controller
 
             $regras = array();
 
-            foreach($medico->rules() as $input => $regra){
+            foreach($medico->rulesMedico() as $input => $regra){
 
                 if(array_key_exists($input, $request->all())){
 
@@ -156,7 +156,7 @@ class MedicoController extends Controller
             $request->validate($regras, $medico->feedback());
         }else{
 
-            $request->validate($medico->rules(), $medico->feedback());
+            $request->validate($medico->rulesMedico(), $medico->feedback());
 
         }
 

@@ -9,32 +9,33 @@ module.exports = {
       colors: {
         'background': '#F9F9F9',
 
-        'primaria-claro': '#1CA35E',
-        'primaria-normal': '#009A69',
-        'primaria-escuro': '#209A6E',
+        'primary': '#199254',
+        'secondary': '#5ace5a',
+        'tertiary': '#a0cc36',
 
-        'cinza-1': '#333',
-        'cinza-2': '#4F4F4F',
-        'cinza-3': '#828282',
-        'cinza-4': '#BDBDBD',
-        'cinza-5': '#E0E0E0',
-        'cinza-6': '#F2F2F2',
+        'primary-darker': '#167f49',
+        'secondary-darker': '#4db14d',
+        'tertiary-darker': '#8bb330',
 
-        'preto-claro': '#353436',
-        'preto-normal': '#232224',
-        'preto-escuro': '#161617',
+        'primary-rgb': '25, 146, 84',
+        'secondary-rgb': '90, 206, 90',
+        'tertiary-rgb': '160, 204, 54',
+        'quaternary-rgb': '54, 204, 145',
 
-        'branco-claro': '#FFF',
-        'branco-normal': '#F7F2FA',
-        'branco-escuro': '#EDEAEF',
+        'gradient-1': '#199254',
+        'gradient-2': '#1b9858',
+        'gradient-3': '#1c9d5b',
+        'gradient-1-lighter': '#1b9858',
+        'gradient-1-darker': '#17854c',
+        'theme-image-filter': 'hue-rotate(286deg) contrast(0.7) brightness(0.9)',
 
-        'vermelho-claro': '#F2C2C2',
-        'vermelho-normal': '#F28C8C',
-        'vermelho-escuro': '#F26F6F',
-
-        'amarelo-claro': '#FFCE52',
-        'amarelo-normal': '#D9B043',
-        'amarelo-escuro': '#FFB76B',
+        'menu-hover': '#ffffff75',
+      },
+      boxShadow: {
+        'card': '0 4px 10px #00000008'
+      },
+      screens: {
+        'desktop': '1440px',
       },
       fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],

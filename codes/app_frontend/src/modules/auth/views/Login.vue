@@ -1,22 +1,33 @@
-<script setup>
-import * as yup from 'yup'
-import { Form, Field, ErrorMessage } from 'vee-validate'
-import { login } from '@/helpers'
+<script>
+import * as yup from "yup";
+import { login } from "@/helpers";
+import { Form, Field, ErrorMessage } from "vee-validate";
 
-const schema = yup.object(login)
+export default {
+  components: { Form, Field, ErrorMessage },
+  setup() {
+    const schema = yup.object(login);
 
-return {
-  schema
-}
+    function onSubmit(values) {
+      alert(Object.entries(values));
+    }
 
+    return {
+      schema,
+      onSubmit,
+    };
+  },
+};
 </script>
 
 <template>
   <div class="bg-background w-full h-screen flex justify-center items-center">
-    <div class="bg-branco-claro relative max-w-lg my-0 mx-auto w-full p-10 
-      flex justify-center items-center rounded-2xl card-shadow"
+    <div
+      class="bg-white relative max-w-lg my-0 mx-auto w-full p-10 flex justify-center items-center rounded-2xl shadow-card"
     >
-      <Form @submit="onSubmit" :validation-schema="schema"
+      <Form
+        @submit="onSubmit"
+        :validation-schema="schema"
         class="relative max-w-sm w-full"
       >
         <div class="mb-2">
@@ -27,42 +38,42 @@ return {
           </p>
         </div>
 
-        <div class="form-control">
-          <div class="z-10 relative w-4 h-4 top-[30px] left-4">
-            <img src="@/assets//icon-user.svg" />
+        <div class="w-full h-auto">
+          <div class="block z-10 relative w-4 h-4 top-[30px] left-4 text-base">
+            <i class="ph ph-user"></i>
           </div>
-          <Field name="usuario" type="text" 
+          <Field
+            name="usuario"
+            type="text"
+            class="pl-11 appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             placeholder="Nome do usuario"
-            class="pl-11 appearance-none block w-full bg-gray-100 text-gray-700 
-              border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none 
-            focus:bg-white focus:border-gray-500" id="grid-last-name"
           />
-          <ErrorMessage name="usuario" />
+          <ErrorMessage name="usuario" class="pl-4 text-sm text-red-500" />
         </div>
 
-        <div class="form-control">
-          <div class="z-10 relative w-4 h-4 top-[30px] left-4">
-            <img src="@/assets/icon-password.svg" />
+        <div class="w-full h-auto">
+          <div class="block z-10 relative w-4 h-4 top-[30px] left-4 text-base">
+            <i class="ph ph-lock"></i>
           </div>
-          <Field name="password" type="password"
-            placeholder="Senha"
-            class="pl-11 appearance-none block w-full bg-gray-100 text-gray-700 
-              border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none 
-            focus:bg-white focus:border-gray-500" id="grid-last-name"
+          <Field
+            name="password"
+            type="password"
+            class="pl-11 appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            placeholder="Palavra-passe"
           />
-          <ErrorMessage name="password" />
+          <ErrorMessage name="password" class="pl-4 text-sm text-red-500" />
         </div>
 
-        <div class="w-full flex flex-wrap justify-between mb-8 mt-3">
+        <div class="w-full flex flex-wrap justify-between mb-8 mt-5 font-base">
           <div>
             <input type="checkbox" name="remember" class="mr-2" />
             <span>Manter-me conectado</span>
           </div>
-          <a href="#">Esqueceu a senha?</a>
+          <a href="#" class="hover:text-primary">Esqueceu a senha?</a>
         </div>
 
-        <button class="w-full h-10 bg-primaria-claro rounded 
-          text-lg text-branco-claro pointer"
+        <button
+          class="w-full py-2 text-white font-medium text-lg bg-gradient-1-lighter hover:bg-gradient-1-darker transition ease-linear duration-300 rounded pointer"
         >
           Entrar
         </button>
