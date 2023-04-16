@@ -73,12 +73,12 @@ class Paciente extends Authenticatable implements JWTSubject
             'sobrenome' => 'required',
             'email' => 'required|unique:pacientes,email,'.$this->id.'|min:6',
             'password' => 'required|min:4',
-            'usuario' => 'required|unique:pacientes|min:5',
-            'telefone' => 'required|unique:pacientes|min:9|max:9',
+            'usuario' => 'required|unique:pacientes,usuario,'.$this->id.'|min:5',
+            'telefone' => 'required|unique:pacientes,telefone,'.$this->id.'|min:9|max:9',
             'imagem' => 'required|file|mimes:png,jpg',
             'dataNascimento' => 'required',
             'genero' => 'required',
-            'nBI' => 'required|unique:pacientes|min:7',
+            'nBI' => 'required|unique:pacientes,nBI,'.$this->id.'|min:7',
             'provincia' => 'required',
             'municipio' => 'required',
             'bairro' => 'required',
@@ -88,7 +88,7 @@ class Paciente extends Authenticatable implements JWTSubject
     
     public function feedback(){
         return [
-            'required' => 'O campo :atribute é obrigatório',
+            'required' => 'O campo :attribute é obrigatório',
             'usuario.unique' => 'Já existe esse usuário',
             'telefone.unique' => 'Já existe esse telefone',
             'email.unique' => 'Já existe esse email',

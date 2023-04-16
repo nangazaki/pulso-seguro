@@ -10,7 +10,9 @@
     <div>
       <div class="w-full h-16 flex justify-center mb-16">
         <div v-if="state.navbar">
-          <img src="@/assets/logo-2.svg" alt="" />
+          <router-link to="/dashboard">
+            <img src="@/assets/logo-2.svg" alt="" />
+          </router-link>
         </div>
         <div v-else>
           <img src="@/assets/logo-icon.svg" alt="" />
@@ -38,10 +40,13 @@
       <li
         class="w-full h-10 inline-flex mb-4 rounded-lg overflow-hidden duration-300 ease hover:active"
       >
-        <router-link to="/login" class="p-3 pr-40 flex items-center">
+        <span
+          @click="signOut"
+          class="p-3 pr-40 flex items-center cursor-pointer"
+        >
           <i class="ph ph-sign-out" :class="`text-xl`"></i>
           <span class="text-base ml-2"> Sair </span>
-        </router-link>
+        </span>
       </li>
     </div>
   </div>
@@ -49,27 +54,32 @@
 
 <script>
 import { reactive } from "vue";
+import { useRouter } from "vue-router";
+import { authStore } from "../modules/auth/store";
+
 import Menu from "@/layouts/Menu.vue";
 import UsuarioMenu from "@/components/UsuarioMenu.vue";
 
 export default {
   components: { Menu, UsuarioMenu },
   setup() {
-    const logo = [
-      "@/assets/logo-icons.svg",
-      "@/assets/logo-inline-light-2.svg",
-    ];
+    const AuthStore = authStore();
+    const router = useRouter();
     let state = reactive({ navbar: false });
 
     function openNav() {
       state.navbar = !state.navbar;
     }
-
     function closeNav() {
       state.navbar = !state.navbar;
     }
 
-    return { logo, state, openNav, closeNav };
+    function signOut() {
+      AuthStore.SignOut();
+      router.push("/");
+    }
+
+    return { state, openNav, closeNav, signOut };
   },
 };
 </script>

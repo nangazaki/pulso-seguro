@@ -1,13 +1,7 @@
 export default [
   {
     path: '/dashboard/doctores',
-    name: 'Doctores',
-    component: () => import('./views/HomeDoctor.vue'),
-    meta: { auth: true }
-  },
-  {
-    path: '/dashboard/doctoress',
-    name: 'Doctores',
+    name: 'Doctores Home',
     component: () => import('./views/HomeDoctor.vue'),
     meta: { auth: true }
   },

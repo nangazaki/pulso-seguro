@@ -1,3 +1,14 @@
+<script setup>
+import { onMounted } from "vue";
+
+defineProps({
+  paciente: {
+    type: Object,
+    required: true,
+  },
+});
+</script>
+
 <template>
   <section>
     <h2 class="text-primary mb-3">Sobre</h2>
@@ -9,12 +20,14 @@
           class="w-28 h-28 relative mb-3 rounded-full overflow-hidden object-cover"
         >
           <img
-            src="https://img.freepik.com/fotos-gratis/retrato-de-homem-afro-americano_23-2149072178.jpg?w=740&t=st=1678925432~exp=1678926032~hmac=3a5c267e550607d8e22f2d3d0314179005b8feb6f556e40e24b576cf234383e0"
+            :src="`http://localhost:8000/storage/${paciente.imagem}`"
             class="w-full h-full object-cover"
             alt="thumb"
           />
         </div>
-        <span class="text-lg mb-0">Nome do Paciente</span>
+        <span class="text-lg mb-0"
+          >{{ paciente.name }} {{ paciente.sobrenome }}</span
+        >
         <span class="block text-gray-600"> Idade 89 anos </span>
       </div>
       <div class="mb-6">
@@ -24,15 +37,17 @@
         <div class="mt-2">
           <div class="flex items-center gap-2 mb-2">
             <i class="ph ph-phone" :class="`text-primary`"></i>
-            <p class="text-sm">927600056</p>
+            <p class="text-sm">{{ paciente.telefone }}</p>
           </div>
           <div class="flex items-center gap-2 mb-2">
             <i class="ph ph-envelope-simple" :class="`text-primary`"></i>
-            <p class="text-sm">nangazaki44@gmail.com</p>
+            <p class="text-sm">{{ paciente.email }}</p>
           </div>
           <div class="flex items-center gap-2 mb-2">
             <i class="ph ph-map-pin" :class="`text-primary`"></i>
-            <p class="text-sm">Luanda, Dimuca</p>
+            <p class="text-sm">
+              {{ paciente.municipio }}, {{ paciente.bairro }}
+            </p>
           </div>
         </div>
       </div>
@@ -48,9 +63,3 @@
     </div>
   </section>
 </template>
-
-<script>
-export default {
-  setup() {},
-};
-</script>

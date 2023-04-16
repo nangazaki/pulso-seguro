@@ -11,10 +11,10 @@ class AuthController extends Controller
         $credentials = $request->only(['usuario', 'password']);
 
         if ($token = auth()->guard('paciente-api')->attempt($credentials))
-            return response()->json(['token'=>$token, 'users'=>auth()->guard('paciente-api')->user()]);
+            return response()->json(['token' => $token, 'users'=>auth()->guard('paciente-api')->user()]);
 
         if ($token = auth()->guard('user-api')->attempt($credentials))
-            return response()->json(['token'=>$token, 'users'=>auth()->guard('user-api')->user()]);    
+            return response()->json(['token' => $token, 'users'=>auth()->guard('user-api')->user()]);    
         else{
             return response()->json(['error' => 'Unauthorized'], 401);
         }

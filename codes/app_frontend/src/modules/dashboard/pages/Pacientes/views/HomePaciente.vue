@@ -1,3 +1,30 @@
+<script>
+import { computed, onMounted } from "vue";
+import Footer from "@/layouts/Footer.vue";
+import Navbar from "@/layouts/Navbar.vue";
+import CardPaciente from "../components/CardPaciente.vue";
+import DeletePaciente from "../components/DeletePaciente.vue";
+
+import { authStore } from "@/store/authStore";
+import { pacienteStore } from "../store";
+
+export default {
+  components: { Navbar, Footer, DeletePaciente, CardPaciente },
+  setup() {
+    const AuthStore = authStore();
+    const PacienteStore = pacienteStore();
+    const pacientes = computed(() => PacienteStore.pacientes);
+
+    onMounted(async () => {
+      await AuthStore.RefreshSession();
+      await PacienteStore.PegarPacientes();
+    });
+
+    return { pacientes };
+  },
+};
+</script>
+
 <template>
   <Navbar />
   <DeletePaciente />
@@ -7,6 +34,7 @@
         <span class="text-sm text-gray-500">Pacientes</span>
         <h1 class="text-2xl font-light">Olá, Nome do Usuário!</h1>
       </header>
+      {{ pacientes }}
       <div class="px-8 flex gap-8">
         <div class="w-full h-[40px] flex justify-between">
           <router-link
@@ -43,26 +71,14 @@
       </div>
       <div class="max-w-[1500px] p-8 mx-auto mb-20">
         <div class="flex gap-6 flex-wrap">
-          <CardPaciente />
-          <CardPaciente />
-          <CardPaciente />
-          <CardPaciente />
-          <CardPaciente />
+          <CardPaciente
+            v-for="paciente in pacientes"
+            :key="paciente.id"
+            :paciente="paciente"
+          />
         </div>
       </div>
     </div>
     <Footer />
   </main>
 </template>
-
-<script>
-import Footer from "@/layouts/Footer.vue";
-import Navbar from "@/layouts/Navbar.vue";
-import CardPaciente from "../components/CardPaciente.vue";
-import DeletePaciente from "../components/DeletePaciente.vue";
-
-export default {
-  components: { Navbar, Footer, DeletePaciente, CardPaciente },
-  setup() {},
-};
-</script>

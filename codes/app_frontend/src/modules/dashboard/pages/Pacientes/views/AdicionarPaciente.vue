@@ -1,3 +1,32 @@
+<script>
+import * as yup from "yup";
+import { useRouter } from "vue-router";
+import { paciente } from "@/helpers/index";
+import { Form, Field, ErrorMessage } from "vee-validate";
+
+import Footer from "@/layouts/Footer.vue";
+import Navbar from "@/layouts/Navbar.vue";
+import ConfirmPaciente from "../components/ConfirmPaciente.vue";
+
+export default {
+  components: { Navbar, Footer, Form, Field, ErrorMessage, ConfirmPaciente },
+  setup() {
+    const router = useRouter();
+    const schema = yup.object(paciente);
+
+    function onSubmit(values) {
+      alert(values);
+    }
+
+    function fecharMenu() {
+      router.push("/dashboard/pacientes");
+    }
+
+    return { schema, onSubmit, fecharMenu };
+  },
+};
+</script>
+
 <template>
   <Navbar />
   <ConfirmPaciente />
@@ -301,22 +330,3 @@
     <Footer />
   </main>
 </template>
-
-<script>
-import * as yup from "yup";
-import { paciente } from "@/helpers/index";
-import { Form, Field, ErrorMessage } from "vee-validate";
-
-import Footer from "@/layouts/Footer.vue";
-import Navbar from "@/layouts/Navbar.vue";
-import ConfirmPaciente from "../components/ConfirmPaciente.vue";
-
-export default {
-  components: { Navbar, Footer, Form, Field, ErrorMessage, ConfirmPaciente },
-  setup() {
-    const schema = yup.object(paciente);
-
-    return { schema };
-  },
-};
-</script>

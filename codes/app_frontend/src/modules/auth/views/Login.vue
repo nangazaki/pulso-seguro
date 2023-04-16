@@ -1,15 +1,27 @@
 <script>
 import * as yup from "yup";
-import { login } from "@/helpers";
+import { login } from "@/utils";
+import { authStore } from "../store";
 import { Form, Field, ErrorMessage } from "vee-validate";
+import { useRouter } from "vue-router";
 
 export default {
   components: { Form, Field, ErrorMessage },
   setup() {
+    const router = useRouter();
     const schema = yup.object(login);
+    const AuthStore = authStore();
 
-    function onSubmit(values) {
-      alert(Object.entries(values));
+    async function onSubmit(user) {
+      const status = await AuthStore.Login(user);
+
+      if (status !== 200) {
+        alert("Ocorreu um erro" + status);
+      }
+
+      AuthStore.SetLogged;
+
+      router.push("/dashboard");
     }
 
     return {

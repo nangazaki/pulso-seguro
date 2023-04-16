@@ -1,3 +1,33 @@
+<script>
+import { computed } from "vue";
+import { pacienteStore } from "../store";
+
+export default {
+  setup() {
+    const PacienteStore = pacienteStore();
+
+    const paciente = computed(() => PacienteStore.modalDelete.paciente);
+    const visibility = computed(() => PacienteStore.modalDelete.visible);
+
+    function fecharModal() {
+      PacienteStore.cancelPacienteDelete();
+    }
+
+    async function deletePaciente() {
+      await PacienteStore.pacienteDelete()
+        .then(() => {
+          this.$router.go();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
+    return { paciente, visibility, fecharModal, deletePaciente };
+  },
+};
+</script>
+
 <template>
   <div
     v-if="false"
@@ -61,30 +91,3 @@
   </div>
 </template>
 
-
-<script>
-export default {
-  setup() {
-    function fecharModal() {
-      let values = {
-        visible: false,
-        pacient: {
-          id: undefined,
-          name: undefined,
-        },
-      };
-      this.cancelPacientDelete(values);
-    }
-
-    async function deletePaciente() {
-      await this.deletePacientDelete(this.modalPacient.paciente.id)
-        .then(() => {
-          this.$router.go();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  },
-};
-</script>

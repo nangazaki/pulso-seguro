@@ -1,7 +1,7 @@
 export default [
   {
     path: '/dashboard/pacientes',
-    name: 'Doctores',
+    name: 'Pacientes',
     component: () => import('./views/HomePaciente.vue'),
     meta: { auth: true }
   },

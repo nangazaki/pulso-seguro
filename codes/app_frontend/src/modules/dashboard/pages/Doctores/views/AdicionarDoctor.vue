@@ -1,6 +1,26 @@
+<script>
+import * as yup from "yup";
+import { doctor } from "@/helpers/index";
+import { Form, Field, ErrorMessage } from "vee-validate";
+
+import Footer from "@/layouts/Footer.vue";
+import Navbar from "@/layouts/Navbar.vue";
+import ConfirmDoctor from "../components/ConfirmDoctor.vue";
+
+export default {
+  components: { Navbar, Footer, Form, Field, ErrorMessage, ConfirmDoctor },
+  setup() {
+    const schema = yup.object(doctor);
+
+    return { schema };
+  },
+};
+</script>
+
 <template>
   <navbar />
   <main class="overflow-y-scroll flex flex-col justify-between">
+    <ConfirmDoctor />
     <div class="max-w-[1500px] mx-auto mb-20">
       <header class="p-8">
         <span class="text-sm text-gray-500">Adicionar Doctor</span>
@@ -293,21 +313,3 @@
     <Footer />
   </main>
 </template>
-
-<script>
-import * as yup from "yup";
-import { doctor } from "@/helpers/index";
-import { Form, Field, ErrorMessage } from "vee-validate";
-
-import Footer from "@/layouts/Footer.vue";
-import Navbar from "@/layouts/Navbar.vue";
-
-export default {
-  components: { Navbar, Footer, Form, Field, ErrorMessage },
-  setup() {
-    const schema = yup.object(doctor);
-
-    return { schema };
-  },
-};
-</script>
