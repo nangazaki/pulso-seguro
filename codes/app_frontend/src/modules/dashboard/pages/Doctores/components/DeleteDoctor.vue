@@ -1,6 +1,6 @@
 <script>
 import { computed } from "vue";
-import { doctorStore } from "../store";
+import { doctorStore } from "@/store/doctorStore";
 
 export default {
   setup() {

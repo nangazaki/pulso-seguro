@@ -1,35 +1,39 @@
 <script>
-import { onMounted, ref } from "vue";
-import { fetch_estatisticas } from "@/services";
+import { computed } from "vue";
+import { estatsStore } from "@/store/estatsStore";
 
 export default {
   setup() {
-    const estatisticas = ref([]);
+    const Estatisticas = estatsStore();
 
-    async function pegarEstatisticas() {
-      // estatisticas.value = await fetch_estatisticas();
-    }
+    const pacientes = computed(() => Estatisticas.estatisticas[4]);
+    const doctores = computed(() => Estatisticas.estatisticas[5]);
+    const total = computed(() => Estatisticas.estatisticas[6]);
 
-    onMounted(async () => {
-      await pegarEstatisticas();
-    });
-
-    return {};
+    return { pacientes, doctores, total };
   },
 };
 </script>
 
 <template>
-  <div>
+  <div class="w-full flex gap-8 mb-8">
     <div
-      v-for="(estat, i) in titles"
-      :key="i"
       class="bg-white w-1/3 h-auto rounded-lg p-4 shadow-card transition ease-linear duration-500 hover:shadow-xl"
     >
-      <h2 class="text-primary font-montserrat mb-4">
-        Total de {{ estat.title }}
-      </h2>
-      <span class="font-montserrat block text-3xl">{{ values[i] }}</span>
+      <h2 class="text-primary font-montserrat mb-4">Total de Usuarios</h2>
+      <span class="font-montserrat block text-3xl">{{ total - 1 }}</span>
+    </div>
+    <div
+      class="bg-white w-1/3 h-auto rounded-lg p-4 shadow-card transition ease-linear duration-500 hover:shadow-xl"
+    >
+      <h2 class="text-primary font-montserrat mb-4">Total de Doctores</h2>
+      <span class="font-montserrat block text-3xl">{{ doctores }}</span>
+    </div>
+    <div
+      class="bg-white w-1/3 h-auto rounded-lg p-4 shadow-card transition ease-linear duration-500 hover:shadow-xl"
+    >
+      <h2 class="text-primary font-montserrat mb-4">Total de Pacientes</h2>
+      <span class="font-montserrat block text-3xl">{{ pacientes }}</span>
     </div>
   </div>
 </template>

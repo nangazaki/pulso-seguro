@@ -25,10 +25,14 @@ defineProps({
             alt="thumb"
           />
         </div>
-        <span class="text-lg mb-0"
-          >{{ paciente.name }} {{ paciente.sobrenome }}</span
-        >
-        <span class="block text-gray-600"> Idade 89 anos </span>
+        <span class="text-lg mb-0">
+          {{ paciente.name }} {{ paciente.sobrenome }}
+        </span>
+        <span class="block text-gray-600">
+          Idade
+          {{ 2023 - new Date(paciente.dataNascimento).getFullYear() }}
+          anos
+        </span>
       </div>
       <div class="mb-6">
         <span class="text-gray-500 uppercase text-xs mb-4">

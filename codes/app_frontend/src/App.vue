@@ -1,7 +1,5 @@
 <template>
-  <div
-    :class="`${route.fullPath.includes('login') ? '' : 'layout'} bg-background`"
-  >
+  <div class="bg-background">
     <router-view />
   </div>
 </template>

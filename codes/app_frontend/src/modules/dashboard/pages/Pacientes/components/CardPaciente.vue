@@ -1,10 +1,24 @@
-<script setup>
-defineProps({
-  paciente: {
-    type: Object,
-    required: true,
+<script>
+import { pacienteStore } from "@/store/pacienteStore";
+
+export default {
+  props: {
+    paciente: {
+      type: Object,
+      required: true,
+    },
   },
-});
+  setup(props) {
+    const PacienteStore = pacienteStore();
+    const paciente = props.paciente;
+
+    function deletePaciente(paciente) {
+      PacienteStore.selectPacienteDelete(paciente);
+    }
+
+    return { deletePaciente };
+  },
+};
 </script>
 
 <template>
@@ -63,6 +77,7 @@ defineProps({
             </router-link>
 
             <button
+              @click="deletePaciente(paciente)"
               title="Eliminar"
               class="w-[40%] flex items-center justify-center gap-2 rounded-lg border border-red-500 py-[6px] px-2 text-red-500 transition duration-300 hover:bg-red-500 hover:text-white"
             >

@@ -21,15 +21,15 @@ export const doctorStore = defineStore('doctor', {
   actions: {
 
     // Metodo para Pegar os Pacientes da BD
-    async PegarPacientes() {
-      const response = await fetch_pacientes("pacientes")
-      this.pacientes = response.data
+    async PegarDoctores() {
+      const response = await fetch_pacientes("medicos")
+      this.doctores = response.data
     },
 
     // Metodos para Selecionar Paciente a ser visto
-    async SelecionarPaciente(id) {
-      const response = await fetch_pacientes(`pacientes/${id}`)
-      this.pacienteSelecionado = response.data
+    async SelecionarDoctor(id) {
+      const response = await fetch_pacientes(`medicos/${id}`)
+      this.doctorSelecionado = response.data
     },
 
     // // Metodos para Adicionar um Novo Paciente

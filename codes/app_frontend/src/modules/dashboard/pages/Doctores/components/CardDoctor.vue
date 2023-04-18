@@ -1,27 +1,21 @@
 <script>
-import { doctorStore } from "../store";
+import { doctorStore } from "@/store/doctorStore";
 
 export default {
+  props: {
+    doctor: {
+      type: Object,
+      required: true,
+    },
+  },
   setup() {
     const DoctorStore = doctorStore();
-
-    const doctor = {
-      id: 1,
-      name: "Helder",
-      sobrenome: "Cambuta",
-      imagem: "",
-      telefone: "927600056",
-      email: "heldercambuta@pulsoseguro.com",
-      provincia: "Luanda",
-      municipio: "Luanda",
-      bairro: "Dimuca",
-    };
 
     function deleteDoctor(doctor) {
       DoctorStore.selectDoctorDelete(doctor);
     }
 
-    return { doctor, deleteDoctor };
+    return { deleteDoctor };
   },
 };
 </script>
@@ -30,7 +24,7 @@ export default {
   <div
     class="w-[360px] h-auto flex flex-col min-w-0 bg-white rounded-xl overflow-hidden shadow-card"
   >
-    <router-link :to="`/lista-medicos/perfil-medico/${doctor.id}`">
+    <router-link :to="`/dashboard/doctores/${doctor.id}/info`">
       <img
         :src="`http://localhost:8000/storage/${doctor.imagem}`"
         class="w-full h-60 object-cover"
@@ -39,7 +33,7 @@ export default {
     </router-link>
     <div class="p-6">
       <router-link
-        :to="`/lista-medicos/perfil-medico/${doctor.id}`"
+        :to="`/dashboard/doctores/${doctor.id}/info`"
         class="font-montserrat text-gray-800 text-lg text-primaria-claro"
       >
         {{ doctor.name }} {{ doctor.sobrenome }}

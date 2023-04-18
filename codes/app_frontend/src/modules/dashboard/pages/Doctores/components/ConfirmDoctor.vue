@@ -6,6 +6,7 @@ export default {
 
 <template>
   <div
+    v-show="false"
     class="w-full h-screen fixed right-0 top-0 bg-[#000000b3] backdrop-blur-[2px] flex items-center justify-center transition ease-in"
   >
     <div

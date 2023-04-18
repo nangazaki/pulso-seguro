@@ -57,16 +57,19 @@ export const post_doctors = async (url, data) => {
 export const fetch_pacientes = async (url) => {
   let t = getLocalToken()
 
-  const response = await $axios.get(url, {
-    "Accept": "*/*",
-    "Access-Control-Allow-Origin": "*",
-    "Authorization": `Bearer ${t}`,
-    "Content-Type": "application/json",
-  })
+  const response = await $axios.get(url)
 
-  if (response.response.status === 401) {
-    alert('Erro')
-  }
+  // if (response.response.status === 401) {
+  //   alert('Erro')
+  // }
+
+  return response
+}
+
+export const delete_pacientes = async (id) => {
+  let t = getLocalToken()
+
+  const response = await $axios.delete(`pacientes/${id}`)
 
   return response
 }

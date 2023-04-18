@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { fetch_pacientes } from "@/services";
+import { fetch_pacientes, delete_pacientes } from "@/services";
 
 export const pacienteStore = defineStore('paciente', {
   state: () => {
@@ -16,7 +16,9 @@ export const pacienteStore = defineStore('paciente', {
   },
 
   getters: {
-
+    getModalDelete(state) {
+      return state.modalDelete
+    }
   },
 
   actions: {
@@ -29,7 +31,7 @@ export const pacienteStore = defineStore('paciente', {
 
     // Metodos para Selecionar Paciente a ser visto
     async SelecionarPaciente(id) {
-      const response = await fetch_pacientes(`pacientes/${id}`)
+      const response = await delete_pacientes(id)
       this.pacienteSelecionado = response.data
     },
 
@@ -59,8 +61,9 @@ export const pacienteStore = defineStore('paciente', {
     },
 
     // Metodo para deletar paciente
-    pacienteDelete(id) {
-      api.delete(`pacientes/${this.modalDelete.paciente.id}`, config)
+    async pacienteDelete(id) {
+      const response = await delete_pacientes(this.modalDelete.paciente.id)
+      return response.data
     },
 
 

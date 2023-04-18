@@ -1,13 +1,15 @@
 <template>
-  <Navbar />
-  <main>
-    <div>
-      <header>
-        <span>{{ route }}</span>
-      </header>
-    </div>
-    <Footer />
-  </main>
+  <div class="layout">
+    <Navbar />
+    <main class="overflow-y-scroll flex flex-col justify-between">
+      <div class="container mx-auto mb-20">
+        <header>
+          <span>{{ route }}</span>
+        </header>
+      </div>
+      <Footer />
+    </main>
+  </div>
 </template>
 
 <script>

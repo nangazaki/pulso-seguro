@@ -1,13 +1,14 @@
 <script>
 import { computed } from "vue";
-import { pacienteStore } from "../store";
+import { useRouter } from "vue-router";
+import { pacienteStore } from "@/store/pacienteStore";
 
 export default {
   setup() {
+    const router = useRouter();
     const PacienteStore = pacienteStore();
 
-    const paciente = computed(() => PacienteStore.modalDelete.paciente);
-    const visibility = computed(() => PacienteStore.modalDelete.visible);
+    const modalDelete = computed(() => PacienteStore.getModalDelete);
 
     function fecharModal() {
       PacienteStore.cancelPacienteDelete();
@@ -16,21 +17,21 @@ export default {
     async function deletePaciente() {
       await PacienteStore.pacienteDelete()
         .then(() => {
-          this.$router.go();
+          console.log("");
         })
         .catch((err) => {
           console.error(err);
         });
     }
 
-    return { paciente, visibility, fecharModal, deletePaciente };
+    return { modalDelete, fecharModal, deletePaciente };
   },
 };
 </script>
 
 <template>
   <div
-    v-if="false"
+    v-if="modalDelete.visible"
     class="w-full h-screen absolute right-0 top-0 bg-[#000000b3] backdrop-blur-[2px] flex items-center justify-center transition ease-in"
   >
     <div
@@ -69,7 +70,12 @@ export default {
           </h3>
           <p class="text-gray-500 px-8">
             Tens a certeza que queres eliminar o<br />
-            Paciente <strong>Jovany Azevedo</strong> ?
+            Paciente
+            <strong>
+              {{ modalDelete.paciente.name }}
+              {{ modalDelete.paciente.sobrenome }}
+            </strong>
+            ?
           </p>
         </div>
         <div class="p-3 mt-2 text-center space-x-4 md:block">
