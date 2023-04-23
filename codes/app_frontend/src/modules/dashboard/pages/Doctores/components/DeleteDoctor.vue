@@ -1,9 +1,11 @@
 <script>
 import { computed } from "vue";
+import { useRouter } from "vue-router";
 import { doctorStore } from "@/store/doctorStore";
 
 export default {
   setup() {
+    const router = useRouter();
     const DoctorStore = doctorStore();
 
     const doctor = computed(() => DoctorStore.modalDelete.doctor);
@@ -16,7 +18,7 @@ export default {
     async function deleteDoctor() {
       await DoctorStore.doctorDelete()
         .then(() => {
-          this.$router.go();
+          router.go();
         })
         .catch((err) => {
           console.log(err);
@@ -66,8 +68,9 @@ export default {
           </svg>
           <h3 class="text-xl font-bold py-4">Eliminar Doctor!</h3>
           <p class="text-md text-gray-500 px-8">
-            Tens a certeza que queres eliminar o<br />
-            Doctor <strong>{{ doctor.name }}</strong> ?
+            Tens a certeza que desejas eliminar o(a)<br />
+            Doctor(a)
+            <strong>{{ doctor.name }} {{ doctor.sobrenome }}</strong> ?
           </p>
         </div>
         <div class="p-3 mt-2 text-center space-x-4 md:block">

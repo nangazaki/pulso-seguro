@@ -1,21 +1,22 @@
 import axios from "axios"
 import { getLocalToken } from "@/utils/storage"
 
-const $axios = axios.create({
+export const $axios = axios.create({
   baseURL: "http://localhost:8000/api",
 })
 
 const token = getLocalToken()
 
-const headers = {
+// Configuração dos Headers
+export const headers = new Headers({
   "Accept": "application/json",
   "Content-Type": "application/json",
   "Authorization": `Bearer ${token}`,
-}
+})
 
 
 export const fetch_login = async (user) => {
-  const response = await $axios.post("/login", user, headers)
+  const response = await $axios.post("/login", user)
 
   const data = response.data
   const status = response.status
@@ -24,13 +25,7 @@ export const fetch_login = async (user) => {
 }
 
 export const fetch_me = async () => {
-  let t = getLocalToken()
-  const response = await $axios.post('me', {
-    "Accept": "*/*",
-    "Access-Control-Allow-Origin": "*",
-    "Authorization": `Bearer ${t}`,
-    "Content-Type": "application/json",
-  })
+  const response = await $axios.post('me', headers)
 
   return response
 }
@@ -44,51 +39,3 @@ export const fetch_apontamentos = async () => {
   const response = await $axios.get()
 }
 
-export const fetch_doctors = async (url) => {
-  const response = await $axios.get(url, headers)
-  return response
-}
-
-export const post_doctors = async (url, data) => {
-  const response = await $axios.get(url, data, header)
-  return response.data
-}
-
-export const fetch_pacientes = async (url) => {
-  let t = getLocalToken()
-
-  const response = await $axios.get(url)
-
-  // if (response.response.status === 401) {
-  //   alert('Erro')
-  // }
-
-  return response
-}
-
-export const delete_pacientes = async (id) => {
-  let t = getLocalToken()
-
-  const response = await $axios.delete(`pacientes/${id}`)
-
-  return response
-}
-
-
-
-export async function getData(route) {
-  const baseURL = `http://localhost:8000/api/${route}`
-  const response = await axios.get(baseURL)
-  return response.data
-}
-
-export async function getDataWithToken(route, token) {
-  const baseURL = `http://localhost:8000/api/${route}`
-  const http = {
-    "Accept": "application/json",
-    "Authorization": `Bearer ${token}`
-  }
-  const headres = new Headers(http)
-  const response = await axios.post(baseURL, headres)
-  return response.data
-}

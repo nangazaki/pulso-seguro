@@ -17,7 +17,7 @@ export default {
     async function deletePaciente() {
       await PacienteStore.pacienteDelete()
         .then(() => {
-          console.log("");
+          router.go();
         })
         .catch((err) => {
           console.error(err);
@@ -69,8 +69,8 @@ export default {
             Eliminar Paciente!
           </h3>
           <p class="text-gray-500 px-8">
-            Tens a certeza que queres eliminar o<br />
-            Paciente
+            Tens a certeza que queres eliminar o(a)<br />
+            paciente
             <strong>
               {{ modalDelete.paciente.name }}
               {{ modalDelete.paciente.sobrenome }}

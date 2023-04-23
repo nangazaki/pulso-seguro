@@ -1,21 +1,35 @@
+<script>
+import { authStore } from "@/store/authStore";
+import { computed } from "vue";
+
+export default {
+  setup() {
+    const AuthStore = authStore();
+    const menu = computed(() => AuthStore.getMenuUser);
+
+    return { menu };
+  },
+};
+</script>
+
 <template>
   <div
-    v-if="false"
+    v-if="menu"
     class="absolute inset-[0px auto auto 0px] transform-[translate3d(16px, 183px, 0px)] w-[200px] rounded-md bg-white shadow-menu"
   >
     <div class="py-1 text-sm text-gray-800" role="none">
       <router-link
-        to="/meu-perfil"
+        to="/dashboard/meu-perfil"
         class="block px-4 py-2 transition duration-200 hover:text-primary"
         >Perfil</router-link
       >
       <router-link
-        to="/configuracoes-gerais"
+        to="/dashboard/configuracoes-gerais"
         class="block px-4 py-2 transition duration-200 hover:text-primary"
         >Configurações</router-link
       >
       <router-link
-        to="admin/adicionar-admin"
+        to="/dashboard/adicionar-adm"
         class="block px-4 py-2 transition duration-200 hover:text-primary"
         >Adicionar Admin</router-link
       >

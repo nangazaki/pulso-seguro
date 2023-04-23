@@ -1,30 +1,25 @@
-<template>
-  <div class="layout">
-    <Navbar />
-    <main class="overflow-y-scroll flex flex-col justify-between">
-      <div class="max-w-[1500px] desktop:mx-auto mb-20">
-        <header class="p-8">
-          <span class="text-sm text-gray-500">Estatísticas Gerais</span>
-          <h1 class="text-2xl font-light">Olá, Nome do Usuário!</h1>
-        </header>
-        <div class="px-8">
-          <EstatisticasGerais />
-        </div>
-      </div>
-      <Footer />
-    </main>
-  </div>
-</template>
-
 <script>
-import Navbar from "@/layouts/Navbar.vue";
-import Footer from "@/layouts/Footer.vue";
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import EstatisticasGerais from "../components/EstatisticasGerais.vue";
 
 export default {
-  components: { Navbar, Footer, EstatisticasGerais },
+  components: { EstatisticasGerais, DefaultLayout },
   setup() {
     return {};
   },
 };
 </script>
+
+<template>
+  <DefaultLayout>
+    <div class="container mx-auto mb-20">
+      <header class="p-8">
+        <span class="text-sm text-gray-500">Estatísticas Gerais</span>
+        <h1 class="text-2xl font-light">Olá, Nome do Usuário!</h1>
+      </header>
+      <div class="px-8">
+        <EstatisticasGerais />
+      </div>
+    </div>
+  </DefaultLayout>
+</template>

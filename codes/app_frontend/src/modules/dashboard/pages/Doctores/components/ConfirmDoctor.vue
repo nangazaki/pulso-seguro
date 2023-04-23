@@ -1,12 +1,22 @@
 <script>
+import { doctorStore } from "@/store/doctorStore";
+import { computed, reactive } from "vue";
+
 export default {
-  setup() {},
+  setup() {
+    const state = reactive({ modalConfirm: false });
+    const DoctorStore = doctorStore();
+
+    state.modalConfirm = computed(() => DoctorStore.getModalConfirm);
+
+    return { state };
+  },
 };
 </script>
 
 <template>
   <div
-    v-show="false"
+    v-show="state.modalConfirm"
     class="w-full h-screen fixed right-0 top-0 bg-[#000000b3] backdrop-blur-[2px] flex items-center justify-center transition ease-in"
   >
     <div

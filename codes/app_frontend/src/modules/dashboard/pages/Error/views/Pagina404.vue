@@ -1,7 +1,15 @@
+<script>
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
+
+export default {
+  components: { DefaultLayout },
+  setup() {},
+};
+</script>
+
 <template>
-  <Navbar />
-  <main class="overflow-y-scroll flex flex-col justify-between">
-    <div class="max-w-[1500px] mx-auto mb-20">
+  <DefaultLayout>
+    <div class="container mx-auto mb-20">
       <div
         class="w-full h-[calc(100vh-200px)] py-8 flex items-center justify-center"
       >
@@ -42,17 +50,6 @@
         </div>
       </div>
     </div>
-
-    <Footer />
-  </main>
+  </DefaultLayout>
 </template>
 
-<script>
-import Navbar from "@/layouts/Navbar.vue";
-import Footer from "@/layouts/Footer.vue";
-
-export default {
-  components: { Navbar, Footer },
-  setup() {},
-};
-</script>

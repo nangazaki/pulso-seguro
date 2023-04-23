@@ -7,13 +7,23 @@ export const authStore = defineStore('auth', {
     return {
       user: {},
       token: "",
-      isLogged: false
+      isLogged: false,
+      navbar: false,
+      menuUser: false,
     }
   },
 
   getters: {
     hasToken(state) {
       return !!state.token
+    },
+
+    getMenuUser(state) {
+      return state.menuUser
+    },
+
+    getNavbar(state) {
+      return state.navbar
     }
   },
 
@@ -85,7 +95,15 @@ export const authStore = defineStore('auth', {
       const me = await fetch_me()
 
       console.log(me)
-    }
+    },
+
+    Navbar(act) {
+      this.navbar = act;
+    },
+
+    MenuUser(act) {
+      this.menuUser = act;
+    },
   },
 
 

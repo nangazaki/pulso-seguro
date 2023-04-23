@@ -14,35 +14,32 @@ class MedicoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function __construct(User $medico){
+    public function __construct(User $medico)
+    {
         $this->medico = $medico;
     }
 
     public function index(Request $request)
     {
         $medico = array();
-        if($request->has('atributos')){
+        if ($request->has('atributos')) {
             $atributos = $request->atributos;
-            $medico = $this->medico->selectRaw($atributos)->get();    
-
-        }else{
+            $medico = $this->medico->selectRaw($atributos)->get();
+        } else {
             $medico = $this->medico->get();
-
         }
 
-        if($request->has('filtro')){
+        if ($request->has('filtro')) {
             $filtros = explode(';', $request->filtro);
-            foreach($filtros as $key => $condicao){
+            foreach ($filtros as $key => $condicao) {
 
                 $c = explode(':', $condicao);
                 $medico = $medico->where($c[0], $c[1], $c[2]);
-
-            }    
-
+            }
         }
 
         $medico = $medico->where('isAdmin', 0);
-        return response()->json($medico, 200); 
+        return response()->json($medico, 200);
     }
 
     /**
@@ -68,9 +65,9 @@ class MedicoController extends Controller
         $imagem_urn = $imagem->store('imagens/medicos', 'public');
 
         $medico = $this->medico->create([
-            'name' => $request->name, 
-            'sobrenome' => $request->sobrenome, 
-            'email' => $request->email, 
+            'name' => $request->name,
+            'sobrenome' => $request->sobrenome,
+            'email' => $request->email,
             'password' => bcrypt($request->password),
             'usuario' => $request->usuario,
             'isAdmin' => 0,
@@ -101,11 +98,11 @@ class MedicoController extends Controller
     public function show($id)
     {
         $medico = $this->medico->with('pacientes')->find($id);
-        if($medico == null){
+        if ($medico == null) {
             return response()->json(['erro' => 'recurso pesquisado não existe'], 404);
         }
 
-        if($medico['isAdmin'] == 1){
+        if ($medico['isAdmin'] == 1) {
             return response()->json(['erro' => 'recurso pesquisado não existe'], 404);
         }
 
@@ -120,7 +117,6 @@ class MedicoController extends Controller
      */
     public function edit($id)
     {
-       
     }
 
     /**
@@ -133,41 +129,40 @@ class MedicoController extends Controller
     public function update(Request $request, $id)
     {
         $medico = $this->medico->find($id);
-        if($medico == null){
+        if ($medico == null) {
             return response()->json(['erro' => 'impossível realizar a actualização. recurso não encontrado'], 404);
         }
 
-        if($medico['isAdmin'] == 1){
+        if ($medico['isAdmin'] == 1) {
             return response()->json(['erro' => 'impossível realizar a actualização. recurso não encontrado'], 404);
         }
 
-        if($request->method() == 'PATCH'){
+        if ($request->method() == 'PATCH') {
 
             $regras = array();
 
-            foreach($medico->rulesMedico() as $input => $regra){
+            foreach ($medico->rulesMedico() as $input => $regra) {
 
-                if(array_key_exists($input, $request->all())){
+                if (array_key_exists($input, $request->all())) {
 
                     $regras[$input] = $regra;
                 }
             }
 
             $request->validate($regras, $medico->feedback());
-        }else{
+        } else {
 
             $request->validate($medico->rulesMedico(), $medico->feedback());
-
         }
 
-        if($request->file('imagem')){
+        if ($request->file('imagem')) {
             Storage::disk('public')->delete($medico->imagem);
         }
 
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens/medicos', 'public');
 
-        
+
         $medico->fill($request->all());
         $medico->imagem = $imagem_urn;
         $medico->save();
@@ -184,11 +179,11 @@ class MedicoController extends Controller
     public function destroy($id)
     {
         $medico = $this->medico->find($id);
-        if($medico == null){
+        if ($medico == null) {
             return response()->json(['erro' => 'não existe o recurso que se pretende excluir'], 404);
         }
 
-        if($medico['isAdmin'] == 1){
+        if ($medico['isAdmin'] == 1) {
             return response()->json(['erro' => 'não existe o recurso que se pretende excluir'], 404);
         }
 
