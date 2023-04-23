@@ -5,14 +5,14 @@ export const $axios = axios.create({
   baseURL: "http://localhost:8000/api",
 })
 
-const token = getLocalToken()
+export const token = getLocalToken()
 
 // Configuração dos Headers
-export const headers = new Headers({
+export const headers = {
   "Accept": "application/json",
   "Content-Type": "application/json",
   "Authorization": `Bearer ${token}`,
-})
+}
 
 
 export const fetch_login = async (user) => {
@@ -31,7 +31,7 @@ export const fetch_me = async () => {
 }
 
 export const fetch_estatisticas = async () => {
-  const response = await $axios.get('estatisticas')
+  const response = await $axios.get('estatisticas', headers)
   return response.data
 }
 

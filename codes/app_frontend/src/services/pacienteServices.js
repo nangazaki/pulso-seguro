@@ -1,4 +1,4 @@
-import { $axios } from "./index"
+import { $axios, headers } from "./index"
 
 /**
  * 
@@ -6,29 +6,28 @@ import { $axios } from "./index"
  * 
  */
 export const fetch_pacientes = async (url) => {
-  const response = await $axios.get(url)
+  const response = await $axios.get(url, headers)
 
   // if (response.response.status === 401) {
   //   alert('Erro')
   // }
-
   return response
 }
 
 export const fetch_paciente = async (id) => {
-  const response = await $axios.get(`pacientes/${id}`)
+  const response = await $axios.get(`pacientes/${id}`, headers)
 
   return response
 }
 
 export const delete_paciente = async (id) => {
-  const response = await $axios.delete(`pacientes/${id}`)
+  const response = await $axios.delete(`pacientes/${id}`, headers)
 
   return response
 }
 
 export const post_paciente = async (data) => {
-  const response = await $axios.post('/pacientes', data)
+  const response = await $axios.post('/pacientes', data, headers)
 
   return response.status
 }
