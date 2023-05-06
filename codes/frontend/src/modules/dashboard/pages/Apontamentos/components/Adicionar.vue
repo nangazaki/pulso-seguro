@@ -1,0 +1,64 @@
+<script>
+import { computed, reactive } from "vue";
+import { notasStore } from "@/store/notasStore";
+
+export default {
+  props: {},
+  setup(props) {
+    const state = reactive({ modal: false });
+    const NotasStore = notasStore();
+
+    state.modal = computed(() => NotasStore.getNewNotesModal);
+
+    function sendNote(values) {
+      console.log(values);
+    }
+
+    function closeModal() {
+      NotasStore.closeNewNotesModal();
+    }
+
+    return { state, sendNote, closeModal };
+  },
+};
+</script>
+
+<template>
+  <div
+    v-show="state.modal"
+    class="w-full h-screen fixed right-0 top-0 bg-[#000000b3] flex justify-center transition ease-in py-16"
+  >
+    <div class="p-6 max-w-[840px] w-full h-[420px] flex gap-4 modal-enter">
+      <div class="bg-white w-full overflow-hidden rounded-2xl">
+        <div class="p-8 w-full">
+          <h3 class="font-montserrat text-lg text-primary mb-2">Nova Nota</h3>
+          <form @submit.prevent="sendNote" class="">
+            <div class="relative w-full mb-4">
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="8"
+                required
+                maxlength="300"
+                class="p-4 text-base appearance-none block w-full bg-gray-100 text-gray-500 border border-gray-200 rounded-xl leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="bg-gradient-1-lighter px-6 py-2 text-md text-white font-medium shadow-sm tracking-wider border rounded-md mr-4 ease-linear hover:bg-gradient-1-darker"
+            >
+              Adicionar
+            </button>
+          </form>
+        </div>
+      </div>
+      <div
+        @click="closeModal"
+        class="bg-white w-10 h-10 cursor-pointer rounded-lg flex items-center justify-center hover:text-gradient-1-lighter"
+      >
+        <i class="ph ph-x"></i>
+      </div>
+    </div>
+  </div>
+</template>
