@@ -120,4 +120,10 @@ class User extends Authenticatable implements JWTSubject
 
         return $this->hasMany('App\Models\Paciente');
     }
+
+    public function apontamentos()
+    {
+
+        return $this->hasMany('App\Models\Apontamento');
+    }
 }

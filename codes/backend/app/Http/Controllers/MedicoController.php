@@ -97,7 +97,7 @@ class MedicoController extends Controller
      */
     public function show($id)
     {
-        $medico = $this->medico->with('pacientes')->find($id);
+        $medico = $this->medico->with('pacientes')->with('apontamentos')->find($id);
         if ($medico == null) {
             return response()->json(['erro' => 'recurso pesquisado não existe'], 404);
         }
