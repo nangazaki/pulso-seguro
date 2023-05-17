@@ -1,25 +1,24 @@
 <script>
 import { computed, reactive } from "vue";
 import { notasStore } from "@/store/notasStore";
+import { Form, Field } from "vee-validate";
 
 export default {
   props: {},
   setup(props) {
     const state = reactive({ modal: false });
     const NotasStore = notasStore();
-
     state.modal = computed(() => NotasStore.getNewNotesModal);
 
     function sendNote(values) {
       console.log(values);
     }
-
     function closeModal() {
       NotasStore.closeNewNotesModal();
     }
-
     return { state, sendNote, closeModal };
   },
+  components: { Form, Field },
 };
 </script>
 
@@ -32,9 +31,10 @@ export default {
       <div class="bg-white w-full overflow-hidden rounded-2xl">
         <div class="p-8 w-full">
           <h3 class="font-montserrat text-lg text-primary mb-2">Nova Nota</h3>
-          <form @submit.prevent="sendNote" class="">
+          <Form @submit.prevent="sendNote" class="">
             <div class="relative w-full mb-4">
-              <textarea
+              <Field
+                type="text"
                 name=""
                 id=""
                 cols="30"
@@ -42,7 +42,7 @@ export default {
                 required
                 maxlength="300"
                 class="p-4 text-base appearance-none block w-full bg-gray-100 text-gray-500 border border-gray-200 rounded-xl leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              ></textarea>
+              />
             </div>
             <button
               type="submit"
@@ -50,7 +50,7 @@ export default {
             >
               Adicionar
             </button>
-          </form>
+          </Form>
         </div>
       </div>
       <div

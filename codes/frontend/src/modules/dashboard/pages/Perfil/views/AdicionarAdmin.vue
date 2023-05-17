@@ -1,18 +1,224 @@
 <script>
+import * as yup from "yup";
+import { reactive } from "vue";
+import { useRouter } from "vue-router";
+import { doctor } from "@/utils/index";
+import Header from "@/components/Header.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import { Form, Field, ErrorMessage } from "vee-validate";
+
 export default {
-  components: { DefaultLayout },
-  setup() {},
+  components: { Header, DefaultLayout, Form, Field, ErrorMessage },
+  setup() {
+    const router = useRouter();
+    const schema = yup.object(doctor);
+    const state = reactive({ preview: null, imagem: undefined });
+
+    // Renderizar a imagem em tempo real.
+    function previewImage(event) {
+      let input = event.target;
+      if (input.files) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          state.preview = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+        state.imagem = input.files[0];
+      }
+    }
+
+    async function onSubmit(values) {
+      // const response = await DoctorStore.AdicionarDoctor(values, state.imagem);
+
+      if (response === 422) {
+        await Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ocorreu um erro ao salvar os dados, tente novamente!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+
+      await Swal.fire({
+        icon: "success",
+        title: "Doctor Adicionado!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      fecharMenu();
+    }
+
+    function fecharMenu() {
+      router.push("/dashboard/doctores");
+    }
+
+    return { state, schema, onSubmit, previewImage, fecharMenu };
+  },
 };
 </script>
 
 <template>
   <DefaultLayout>
     <div class="container mx-auto mb-20">
-      <header class="p-8">
-        <span class="text-sm text-gray-500">Geral > Adicionar Adm</span>
-        <h1 class="text-2xl font-light">Olá, Nome do Usuário!</h1>
-      </header>
+      <Header page="Adicionar ADM" />
+      <div class="px-8 pb-8 flex gap-8">
+        <Form
+          @submit="onSubmit"
+          :validation-schema="schema"
+          class="w-ful flex gap-8"
+        >
+          <div class="bg-white w-[280px] h-[500px] rounded-xl p-4 shadow-card">
+            <div class="w-full mt-8 overflow-hidden">
+              <div class="w-full flex justify-center mb-4">
+                <img
+                  class="w-40 h-40 rounded-full object-cover"
+                  :src="`${
+                    state.preview
+                      ? state.preview
+                      : 'https://img.freepik.com/fotos-gratis/retrato-de-homem-afro-americano_23-2149072178.jpg?w=740&t=st=1678925432~exp=1678926032~hmac=3a5c267e550607d8e22f2d3d0314179005b8feb6f556e40e24b576cf234383e0'
+                  }`"
+                  alt="Foto de perfil"
+                />
+              </div>
+              <div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="imagem"
+                  @change="previewImage"
+                />
+                <span class="text-sm text-gray-500"
+                  >Só arquivos .jpg .png .jpeg são permitidos</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white w-full h-auto rounded-xl p-8 shadow-card mb-8">
+            <div class="pb-4 mb-8 border-b">
+              <span class="text-md uppercase block mb-4 text-primary">
+                Informações pessoais
+              </span>
+              <div class="mb-4 flex gap-4">
+                <div class="form-add flex-wrap">
+                  <label class="block text-base text-gray-500 mb-1">
+                    Nome:
+                  </label>
+                  <Field
+                    type="text"
+                    name="name"
+                    class="text-sm appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="Nome"
+                  />
+                  <ErrorMessage name="name" />
+                </div>
+                <div class="form-add">
+                  <label class="block text-base text-gray-500 mb-1"
+                    >Sobrenome:</label
+                  >
+                  <Field
+                    type="text"
+                    name="sobrenome"
+                    class="text-sm appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="Sobrenome"
+                  />
+                  <ErrorMessage name="sobrenome" />
+                </div>
+              </div>
+              <div class="mb-4 flex gap-4">
+                <div class="form-add">
+                  <label class="block text-base text-gray-500 mb-1"
+                    >E-mail:</label
+                  >
+                  <Field
+                    type="email"
+                    name="email"
+                    class="text-sm appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="E-mail"
+                  />
+                  <ErrorMessage name="email" />
+                </div>
+                <div class="form-add">
+                  <label class="block text-base text-gray-500 mb-1"
+                    >Nº de Telefone:</label
+                  >
+                  <Field
+                    type="tel"
+                    name="telefone"
+                    class="text-sm appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="Número de telefone"
+                  />
+                  <ErrorMessage name="telefone" />
+                </div>
+              </div>
+            </div>
+
+            <div class="pb-4 mb-8 border-b">
+              <span class="text-md uppercase block mb-4 text-primary"
+                >Informações de acesso</span
+              >
+              <div class="mb-4 flex gap-4">
+                <div class="form-add">
+                  <label class="block text-base text-gray-500 mb-1"
+                    >Nome do usuário:</label
+                  >
+                  <Field
+                    type="text"
+                    name="usuario"
+                    class="text-sm appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="Nome de usuário"
+                  />
+                  <ErrorMessage name="usuario" />
+                </div>
+                <div class="form-add"></div>
+              </div>
+              <div class="mb-4 flex gap-4">
+                <div class="form-add">
+                  <label class="block text-base text-gray-500 mb-1"
+                    >Senha:</label
+                  >
+                  <Field
+                    type="password"
+                    name="password"
+                    class="text-sm appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="Senha"
+                  />
+                  <ErrorMessage name="password" />
+                </div>
+                <div class="form-add">
+                  <label class="block text-base text-gray-500 mb-1"
+                    >Repita a senha:</label
+                  >
+                  <Field
+                    type="password"
+                    name="passwordConfirmation"
+                    class="text-sm appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="Senha"
+                  />
+                  <ErrorMessage name="passwordConfirmation" />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <button
+                class="bg-gradient-1-lighter px-6 py-2 text-md text-white font-medium shadow-sm tracking-wider border rounded-md mr-4 ease-linear hover:bg-gradient-1-darker"
+              >
+                Adicionar ADM
+              </button>
+              <button
+                class="bg-white px-6 py-2 text-md shadow-sm font-medium tracking-wider border text-gray-600 rounded-md hover:bg-gray-100"
+                @click="fecharMenu"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </Form>
+      </div>
     </div>
   </DefaultLayout>
-</template>
+</template>~

@@ -2,7 +2,7 @@ import axios from "axios"
 import { getLocalToken } from "@/utils/storage"
 
 export const $axios = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: import.meta.env.VITE_API_URL,
 })
 
 const token = getLocalToken()
