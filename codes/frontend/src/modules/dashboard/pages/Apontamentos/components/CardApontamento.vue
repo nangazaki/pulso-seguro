@@ -6,7 +6,9 @@ export default {
       // required: true,
     },
   },
-  setup() {},
+  setup(porps) {
+    const date = Date(props.apontamento.created_at);
+  },
 };
 </script>
 
@@ -24,11 +26,10 @@ export default {
       </div>
       <div class="flex-grow-1">
         <div class="w-full">
-          <div>30.04.2023 - 10:30</div>
+          <div>{{}}</div>
           <div>Cardiologia</div>
           <div>
-            Está é uma nota de teste, preciso enquadrar bem nessa poha para que
-            os clientes se acustumen ao sistema...
+            {{ apontamento.apontamento }}
           </div>
         </div>
       </div>

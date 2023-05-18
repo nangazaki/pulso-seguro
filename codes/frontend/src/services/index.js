@@ -45,6 +45,12 @@ export const fetch_estatisticas = async () => {
   return response.data
 }
 
+export const post_apontamento = async (apontamento) => {
+  const response = await $axios.post("/apontamentos", apontamento)
+
+  return response
+}
+
 export const fetch_apontamentos = async () => {
   const response = await $axios.get()
 }

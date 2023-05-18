@@ -1,5 +1,6 @@
 <script>
 import { useRoute } from "vue-router";
+import { computed, onMounted } from "vue";
 
 import { notasStore } from "@/store/notasStore";
 
@@ -13,11 +14,17 @@ export default {
   setup() {
     const NotasStore = notasStore();
 
+    onMounted(async () => {
+      await NotasStore.PegarNotas();
+    });
+
+    const notas = computed(() => NotasStore.getNotes);
+
     function modalNovaNota() {
       NotasStore.openNewNotesModal();
     }
 
-    return { modalNovaNota };
+    return { modalNovaNota, notas };
   },
 };
 </script>
@@ -39,10 +46,11 @@ export default {
         </div>
       </div>
       <div class="px-8 w-full flex gap-4 flex-wrap">
-        <CardApontamento />
-        <CardApontamento />
-        <CardApontamento />
-        <CardApontamento />
+        <CardApontamento
+          v-for="nota in notas"
+          :key="nota.apontamento"
+          :apontamento="nota"
+        />
       </div>
     </div>
   </DefaultLayout>

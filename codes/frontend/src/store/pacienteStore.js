@@ -26,6 +26,10 @@ export const pacienteStore = defineStore('paciente', {
       this.pacientes = response.data
     },
 
+    AdicionarPacientes(pacientes) {
+      this.pacientes = pacientes
+    },
+
     // Metodo para Selecionar Paciente a ser visto
     async SelecionarPaciente(id) {
       const response = await fetch_paciente(id)

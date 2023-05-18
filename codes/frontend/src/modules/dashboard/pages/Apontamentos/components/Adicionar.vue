@@ -1,24 +1,38 @@
 <script>
+import * as yup from "yup";
 import { computed, reactive } from "vue";
 import { notasStore } from "@/store/notasStore";
-import { Form, Field } from "vee-validate";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import { useRouter } from "vue-router";
 
 export default {
   props: {},
-  setup(props) {
+  setup() {
+    const schema = yup.object({
+      apontamento: yup
+        .string()
+        .required("É obrigatório preencher o campo *")
+        .min(6, "A nota deve possuir no mínimo 6 caracters")
+        .max(150, "Número de caracters execedido!"),
+    });
     const state = reactive({ modal: false });
     const NotasStore = notasStore();
     state.modal = computed(() => NotasStore.getNewNotesModal);
 
-    function sendNote(values) {
-      console.log(values);
+    async function sendNote(values) {
+      const response = await NotasStore.AdicionarNota(values);
+
+      if (response.status === 200) {
+        console.log(response);
+        useRouter().go();
+      }
     }
     function closeModal() {
       NotasStore.closeNewNotesModal();
     }
-    return { state, sendNote, closeModal };
+    return { state, sendNote, closeModal, schema };
   },
-  components: { Form, Field },
+  components: { Form, Field, ErrorMessage },
 };
 </script>
 
@@ -31,18 +45,17 @@ export default {
       <div class="bg-white w-full overflow-hidden rounded-2xl">
         <div class="p-8 w-full">
           <h3 class="font-montserrat text-lg text-primary mb-2">Nova Nota</h3>
-          <Form @submit.prevent="sendNote" class="">
+          <Form @submit="sendNote" :validation-schema="schema" class="">
             <div class="relative w-full mb-4">
               <Field
-                type="text"
-                name=""
-                id=""
+                as="textarea"
+                name="apontamento"
                 cols="30"
                 rows="8"
-                required
-                maxlength="300"
+                placeholder="Este é um exemplo de uma nota. Tu podes escrever aqui a tua nota."
                 class="p-4 text-base appearance-none block w-full bg-gray-100 text-gray-500 border border-gray-200 rounded-xl leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               />
+              <ErrorMessage name="apontamento" class="text-red-500 text-sm" />
             </div>
             <button
               type="submit"
