@@ -8,6 +8,7 @@ import { useRouter } from "vue-router";
 export default {
   props: {},
   setup() {
+    const router = useRouter();
     const schema = yup.object({
       apontamento: yup
         .string()
@@ -23,8 +24,7 @@ export default {
       const response = await NotasStore.AdicionarNota(values);
 
       if (response.status === 200) {
-        console.log(response);
-        useRouter().go();
+        router.go();
       }
     }
     function closeModal() {

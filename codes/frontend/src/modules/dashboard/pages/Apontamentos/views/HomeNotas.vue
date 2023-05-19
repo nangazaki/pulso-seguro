@@ -1,7 +1,5 @@
 <script>
-import { useRoute } from "vue-router";
 import { computed, onMounted } from "vue";
-
 import { notasStore } from "@/store/notasStore";
 
 import Header from "@/components/Header.vue";
