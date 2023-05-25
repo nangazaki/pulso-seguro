@@ -30,7 +30,7 @@ Route::get('estatisticas', 'App\Http\Controllers\StatisticsController@Estatistic
 Route::apiresource('apontamentos', 'App\Http\Controllers\ApontamentoController');
 Route::get('pdfPaciente', 'App\Http\Controllers\PdfController@pdf_paciente');
 Route::get('pdfDoctores', 'App\Http\Controllers\PdfController@pdf_doctor');
-
+Route::get('pdfEstatisticas', 'App\Http\Controllers\PdfController@pdf_estatistica');
 
 Route::post('login', 'App\Http\Controllers\AuthController@login');
 Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
