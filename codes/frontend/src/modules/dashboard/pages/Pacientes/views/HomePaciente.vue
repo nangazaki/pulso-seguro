@@ -13,12 +13,18 @@ export default {
   components: { CardPaciente, DefaultLayout, Header, Search },
   setup() {
     const PacienteStore = pacienteStore();
+
     const pacientes = computed(() => PacienteStore.pacientes);
     const user = computed(() => authStore().getUser);
     const isAdmin = computed(() => authStore().getIsAdmin);
 
     onMounted(async () => {
-      await PacienteStore.PegarPacientes();
+      if (isAdmin.value) {
+        await PacienteStore.PegarPacientes();
+        return;
+      }
+
+      PacienteStore.AdicionarPacientes(user.value.pacientes);
     });
 
     function openModal() {
@@ -78,16 +84,9 @@ export default {
         </div>
       </div>
       <div class="p-8 mb-20">
-        <div v-if="isAdmin" class="flex gap-6 flex-wrap">
+        <div class="flex gap-6 flex-wrap">
           <CardPaciente
             v-for="paciente in pacientes"
-            :key="paciente.id"
-            :paciente="paciente"
-          />
-        </div>
-        <div v-else class="flex gap-6 flex-wrap">
-          <CardPaciente
-            v-for="paciente in user.pacientes"
             :key="paciente.id"
             :paciente="paciente"
           />

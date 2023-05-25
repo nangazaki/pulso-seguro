@@ -1,7 +1,7 @@
 import { authStore } from "@/store/authStore"
 
 export default async (to, from, next) => {
-  document.title = `${to.name} - Pulso Seguro`
+  document.title = `${to.name} | Pulso Seguro`
 
   if (to.name !== 'Login' && !authStore().hasToken) {
     try {

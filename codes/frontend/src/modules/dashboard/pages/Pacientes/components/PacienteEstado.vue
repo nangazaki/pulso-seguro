@@ -1,17 +1,42 @@
 <script>
+import { reactive } from "vue";
 import Monitor from "./Monitor.vue";
+import { useRoute } from "vue-router";
 
 export default {
   components: { Monitor },
-  setup() {},
+  setup() {
+    const route = useRoute();
+    const state = reactive({ bpm: 0 });
+
+    const client = mqtt.connect("wss://io.adafruit.com", {
+      username: "ClaudioCanga",
+      password: "aio_MZxg82KiRS0x01N8XT0CRq8NTI2U",
+    });
+
+    client.on("connect", () => {
+      console.log("Conectado ao Adafruit IO");
+      client.subscribe(`ClaudioCanga/feeds/bpm${route.params.id}`);
+    });
+
+    client.on("message", (topic, message) => {
+      const dados = JSON.parse(message.toString());
+      console.log(dados);
+      state.bpm = dados;
+    });
+
+    return { state };
+  },
 };
 </script>
 
 <template>
   <section class="w-full">
-    <h2 class="text-primary mb-3">Estado</h2>
-    <div class="w-full h-72 mb-6 bg-white rounded-xl shadow-card">
-      <!-- <Monitor /> -->
+    <div class="mb-6">
+      <h2 class="text-primary mb-3">Estado</h2>
+      <div class="w-full h-75 bg-white rounded-xl shadow-card">
+        <Monitor />
+      </div>
     </div>
     <div class="flex gap-6 flex-nowrap">
       <div class="w-[230px] h-full select-none px-1">
@@ -59,7 +84,7 @@ export default {
             <div
               class="text-gradient-1-lighter font-montserrat text-2xl font-light"
             >
-              60 - 100
+              {{ state.bpm }}
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import axios from "axios"
 import { getLocalToken } from "@/utils/storage"
 
 export const $axios = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: import.meta.env.VITE_API_URL,
 })
 
 const token = getLocalToken()
@@ -43,6 +43,12 @@ export const refresh_session = async () => {
 export const fetch_estatisticas = async () => {
   const response = await $axios.get('estatisticas', headers)
   return response.data
+}
+
+export const post_apontamento = async (apontamento) => {
+  const response = await $axios.post("/apontamentos", apontamento)
+
+  return response
 }
 
 export const fetch_apontamentos = async () => {

@@ -1,4 +1,6 @@
 <script>
+import { reactive } from "vue";
+
 export default {
   props: {
     apontamento: {
@@ -6,13 +8,24 @@ export default {
       // required: true,
     },
   },
-  setup() {},
+  setup(props) {
+    const date = new Date(props.apontamento.created_at);
+    const state = reactive({
+      data: undefined,
+    });
+
+    state.data = `${date.toLocaleDateString(
+      "pt-PT"
+    )}, ${date.getHours()}h${date.getMinutes()}`;
+
+    return { state };
+  },
 };
 </script>
 
 <template>
   <div
-    class="bg-white min-w-0 w-full h-[180px] lg:w-[49%] p-6 overflow-hidden rounded-lg shadow-card"
+    class="bg-white min-w-0 w-full h-[180px] lg:w-[49%] p-6 overflow-hidden rounded-lg shadow-card transition ease-linear duration-500 hover:shadow-xl"
   >
     <div class="w-full flex gap-4">
       <div class="w-auto flex-grow-0 flex-shrink-0">
@@ -24,11 +37,10 @@ export default {
       </div>
       <div class="flex-grow-1">
         <div class="w-full">
-          <div>30.04.2023 - 10:30</div>
+          <div>{{ state.data }}</div>
           <div>Cardiologia</div>
           <div>
-            Está é uma nota de teste, preciso enquadrar bem nessa poha para que
-            os clientes se acustumen ao sistema...
+            {{ apontamento.apontamento }}
           </div>
         </div>
       </div>

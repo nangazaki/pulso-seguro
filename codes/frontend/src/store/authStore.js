@@ -33,6 +33,10 @@ export const authStore = defineStore('auth', {
 
     getNavbar(state) {
       return state.navbar
+    },
+
+    getApontamentos(state) {
+      return state.user.apontamentos
     }
   },
 

@@ -1,49 +1,27 @@
 <script>
-import { onMounted, onUnmounted, reactive } from "vue";
-import { useRoute } from "vue-router";
+import { computed, onMounted, onUnmounted } from "vue";
 
 import Chart from "chart.js/auto";
+import { estatsStore } from "@/store/estatsStore";
 
 let myChart;
 myChart;
 
 export default {
   setup() {
-    const route = useRoute();
-    const state = reactive({ dados: [0, 100, 0] });
+    const adicionados = computed(() => estatsStore().getAdicionados);
 
-    const client = mqtt.connect("wss://io.adafruit.com", {
-      username: "ClaudioCanga",
-      password: "aio_MZxg82KiRS0x01N8XT0CRq8NTI2U",
-    });
+    const addValues = Object.values(adicionados.value[0]);
 
-    client.on("connect", () => {
-      console.log("Conectado ao Adafruit IO");
-      client.subscribe(`ClaudioCanga/feeds/bpm${route.params.id}`);
-    });
-
-    client.on("message", (topic, message) => {
-      const dados = JSON.parse(message.toString());
-      console.log(dados);
-      addDadosNoChart(dados);
-    });
-
-    function addDadosNoChart(data) {
-      state.dados = [...state.dados, data];
-      myChart.data.labels.push("BPM");
-      myChart.update();
-    }
-
-    // Iniciar Chart
     async function iniciarChart() {
       const line = document.getElementById("line");
 
       const data = {
-        labels: ["BPM", "BPM", "BPM"],
+        labels: ["Fevereiro", "Março", "Abril", "Maio"],
         datasets: [
           {
-            label: "BPM",
-            data: state.dados,
+            label: "Pacientes Adicionados",
+            data: await addValues,
             borderColor: ["#1ca35e", "#64e564"],
             backgroundColor: ["rgba(28,163,94,0.1)", "rgba(100,229,100,0.1)"],
             borderWidth: 2,
@@ -70,14 +48,15 @@ export default {
       myChart.destroy();
     });
 
-    return {};
+    return { addValues };
   },
 };
 </script>
 
 <template>
-  <div class="bg-white w-full rounded-xl p-4 shadow-card">
+  <div class="bg-white w-2/3 rounded-xl p-4 shadow-card">
     <div class="col-xl-6 mb-5">
+      <span class="text-primary font-montserrat"> Pacientes Adicionados </span>
       <div class="flex flex-col items-center">
         <div class="h-72">
           <canvas class="!w-full !h-full" id="line"></canvas>
