@@ -36,10 +36,8 @@
 
   <table>
     <td>Nome</td>
-    <td>Sobrenome</td>
     <td>Telefone</td>
     <td>E-mail</td>
-    <td>Usuário</td>
     <td>Província</td>
     <td>Doctor</td>
     @foreach ($paciente as $pacientes)
@@ -50,11 +48,9 @@
     @endphp
 
     <tr>
-      <td>{{$pacientes->name}}</td>
-      <td>{{$pacientes->sobrenome}}</td>
+      <td>{{$pacientes->name}} {{$pacientes->sobrenome}}</td>
       <td>{{$pacientes->telefone}}</td>
       <td>{{$pacientes->email}}</td>
-      <td>{{$pacientes->usuario}}</td>
       <td>{{$pacientes->provincia}}</td>
       <td>{{$medico[$variavel]->name}} {{$medico[$variavel]->sobrenome}} </td>
     <tr>

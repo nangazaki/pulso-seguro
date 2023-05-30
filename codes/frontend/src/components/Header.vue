@@ -1,12 +1,11 @@
 <script>
-import { authStore } from "@/store/authStore";
 import { computed } from "vue";
-import { string } from "yup";
+import { authStore } from "@/store/authStore";
 
 export default {
   props: {
     page: {
-      type: string,
+      type: String,
       required: true,
     },
   },
@@ -20,10 +19,13 @@ export default {
 </script>
 
 <template>
-  <header class="p-8">
-    <span class="text-sm text-gray-500">{{ page }}</span>
-    <h1 class="text-2xl font-light">
-      Olá, {{ user.name }} {{ user.sobrenome }}!
-    </h1>
+  <header class="p-8 flex justify-between items-center">
+    <div>
+      <span class="text-sm text-gray-500">{{ page }}</span>
+      <h1 class="text-2xl font-light">
+        Olá, {{ user.name }} {{ user.sobrenome }}!
+      </h1>
+    </div>
+    <div class="h-14 px-6 bg-white rounded-xl">Notificacao</div>
   </header>
 </template>

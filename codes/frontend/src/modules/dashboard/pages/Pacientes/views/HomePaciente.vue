@@ -31,10 +31,6 @@ export default {
       PacienteStore.openModalPesquisar();
     }
 
-    async function DonwloadPDF() {
-      await PacienteStore.downloadpdf();
-    }
-
     return { pacientes, openModal, isAdmin, user };
   },
 };
@@ -64,7 +60,7 @@ export default {
             </div>
 
             <a
-              href="http://localhost:8000/api/pdfPaciente"
+              href="http://localhost:8000/api/dashboard/pacientes/pdf"
               target="_blank"
               download
               class="py-2 px-4 bg-white flex gap-2 justify-center items-center rounded-lg cursor-pointer shadow-card hover:text-gradient-1-lighter"
