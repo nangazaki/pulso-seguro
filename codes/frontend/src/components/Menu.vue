@@ -7,8 +7,9 @@ export default {
   setup() {
     const route = useRoute();
     const navbar = computed(() => authStore().getNavbar);
+    const isAdmin = computed(() => authStore().getIsAdmin);
 
-    return { route, navbar };
+    return { route, navbar, isAdmin };
   },
 };
 </script>
@@ -42,6 +43,7 @@ export default {
       </li>
 
       <li
+        v-if="!Number(isAdmin)"
         :class="`${
           route.fullPath.includes('apontamentos') ? 'active' : ''
         } w-full h-10 inline-flex mb-3 rounded-lg overflow-hidden duration-300 ease hover:active text-branco-normal`"

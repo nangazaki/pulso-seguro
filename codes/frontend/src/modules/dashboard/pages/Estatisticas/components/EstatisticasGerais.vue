@@ -1,5 +1,5 @@
 <script>
-import { computed, onMounted, onUnmounted } from "vue";
+import { computed, onMounted, onUnmounted, reactive } from "vue";
 
 import Chart from "chart.js/auto";
 import { estatsStore } from "@/store/estatsStore";
@@ -9,19 +9,21 @@ myChart;
 
 export default {
   setup() {
-    const adicionados = computed(() => estatsStore().getAdicionados);
+    const state = reactive({ mes: null });
 
-    const addValues = Object.values(adicionados.value[0]);
+    state.mes = computed(() => estatsStore().getAdicionados);
+
+    console.log(state.mes);
 
     async function iniciarChart() {
       const line = document.getElementById("line");
 
       const data = {
-        labels: ["Fevereiro", "Março", "Abril", "Maio"],
+        labels: ["Março", "Abril", "Maio", "Junho"],
         datasets: [
           {
             label: "Pacientes Adicionados",
-            data: await addValues,
+            data: state.mes,
             borderColor: ["#1ca35e", "#64e564"],
             backgroundColor: ["rgba(28,163,94,0.1)", "rgba(100,229,100,0.1)"],
             borderWidth: 2,
@@ -41,6 +43,8 @@ export default {
     }
 
     onMounted(async () => {
+      const adicionados = await estatsStore().ReturnPorMes();
+      console.log(adicionados);
       await iniciarChart();
     });
 
@@ -48,7 +52,7 @@ export default {
       myChart.destroy();
     });
 
-    return { addValues };
+    return { state };
   },
 };
 </script>

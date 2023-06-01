@@ -56,22 +56,24 @@ export const fetch_apontamentos = async () => {
 }
 
 export const search_pacientes = async (paciente_name) => {
-  const { data } = await $axios.get(`/pacientes?filtro=name:=:${paciente_name}`).catch(() => {
+  const response = await $axios.get(`/pacientes?filtro=name:=:${paciente_name}`).catch(() => {
     return 422;
   })
 
+  console.log(response)
 
-  return data
+  return response.data[0]
 }
 
 export const search_doctores = async (doctor_name) => {
-  const response = await $axios.get(`/medicos?filtro=name:=:${doctor_name}`).catch(() => {
-    return 422;
-  })
+  const response = await $axios.get(`/medicos?filtro=name:=:${doctor_name}`)
+    .catch(() => {
+      return 422;
+    })
 
 
 
-  console.log(response.data)
+  console.log(response)
 
   const { data } = response
 

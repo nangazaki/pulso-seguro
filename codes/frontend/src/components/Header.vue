@@ -2,6 +2,8 @@
 import { computed } from "vue";
 import { authStore } from "@/store/authStore";
 
+import Notificacao from "./Notificacao.vue";
+
 export default {
   props: {
     page: {
@@ -12,9 +14,11 @@ export default {
   setup() {
     const AuthStore = authStore();
     const user = computed(() => AuthStore.getUser);
+    const notifications = computed(() => AuthStore.getNotifications);
 
-    return { user };
+    return { user, notifications };
   },
+  components: { Notificacao },
 };
 </script>
 
@@ -26,6 +30,8 @@ export default {
         Olá, {{ user.name }} {{ user.sobrenome }}!
       </h1>
     </div>
-    <div class="h-14 px-6 bg-white rounded-xl">Notificacao</div>
+    <div>
+      <Notificacao :notifications="notifications" />
+    </div>
   </header>
 </template>

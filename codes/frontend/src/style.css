@@ -159,27 +159,6 @@
     animation: modal .8s forwards;
   }
 
-  .form-control {
-    width: 100%;
-    height: auto;
-    transition: 5s ease;
-  }
-
-  .form-control .email-style {
-    position: relative;
-    height: 40px;
-    width: 100%;
-    padding: 12px 16px 12px 44px;
-    border-radius: 4px;
-    line-height: 1;
-    color: #4F4F4F;
-  }
-
-  .form-control .email-style::placeholder {
-    color: #828282;
-  }
-
-  .form-control span,
   .form-add span {
     padding-left: 16px;
     font-size: .825rem;
@@ -189,16 +168,6 @@
   .form-add {
     width: 100%;
     min-width: 330px;
-  }
-
-  .isInputValid {
-    border-color: #51B58D;
-    background-color: #51b58d18;
-  }
-
-  .isInputInvalid {
-    border-color: #d33232;
-    background-color: #d3323223;
   }
 
   .form-add-info {
@@ -241,5 +210,41 @@
     100% {
       transform: scale(0.8);
     }
+  }
+
+  /* Notification */
+  .unread {
+    @apply bg-zinc-100 font-semibold;
+  }
+
+  .unread::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #db5353
+  }
+
+  .read {
+    @apply bg-white font-normal;
+  }
+
+  .notification-alert {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    background-color: #db5353;
+    color: white;
+    font-weight: 600;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
   }
 }

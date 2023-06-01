@@ -1,5 +1,5 @@
 <script>
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import { estatsStore } from "@/store/estatsStore";
 
 import DefaultLayout from "@/layouts/DefaultLayout.vue";

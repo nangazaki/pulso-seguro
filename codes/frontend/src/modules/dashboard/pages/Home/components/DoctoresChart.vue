@@ -45,7 +45,6 @@ export default {
 
     onUnmounted(() => {
       myChart.destroy();
-      console.log(myChart);
     });
 
     return { doctoresGenero };
