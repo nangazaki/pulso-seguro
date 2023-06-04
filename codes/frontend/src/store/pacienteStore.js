@@ -6,6 +6,7 @@ export const pacienteStore = defineStore('paciente', {
   state: () => {
     return {
       pacientes: [],
+      current_page: undefined,
       pacienteSelecionado: {},
       doctorPaciente: null,
       pesquisar: false
@@ -15,15 +16,26 @@ export const pacienteStore = defineStore('paciente', {
   getters: {
     getPesquisarPacientes(state) {
       return state.pesquisar
+    },
+    getCurrentPage(state) {
+      return state.current_page
     }
   },
 
   actions: {
 
     // Metodo para Pegar os Pacientes da BD
-    async PegarPacientes() {
-      const response = await fetch_pacientes("pacientes")
-      this.pacientes = response.data
+    async PegarPacientes(page) {
+      let pag = 1;
+
+      if (page !== undefined) {
+        pag = page;
+      }
+
+      const response = await fetch_pacientes(`pacientes?page=${pag}`)
+
+      this.current_page = response.data.current_page
+      this.pacientes = response.data.data
     },
 
     AdicionarPacientes(pacientes) {

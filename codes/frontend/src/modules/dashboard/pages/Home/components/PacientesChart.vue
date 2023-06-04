@@ -11,7 +11,7 @@ export default {
     const pacientesIdade = computed(() => Estatisticas.pacientesIdade);
 
     async function iniciarChart() {
-      const ctxBar = document.getElementById("chart-bar");
+      const ctxBar = document.getElementById("chart-bar").getContext("2d");
 
       const data = {
         labels: ["60-69", "70-79", "80-89", "+90"],
@@ -43,8 +43,10 @@ export default {
       });
     }
 
-    onMounted(async () => {
-      iniciarChart();
+    onMounted(() => {
+      setTimeout(async () => {
+        await iniciarChart();
+      }, 1500);
     });
 
     onUnmounted(() => {

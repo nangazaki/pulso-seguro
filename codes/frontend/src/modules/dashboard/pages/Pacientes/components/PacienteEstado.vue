@@ -7,7 +7,7 @@ export default {
   components: { Monitor },
   setup() {
     const route = useRoute();
-    const state = reactive({ bpm: 0 });
+    const state = reactive({ bpm: 0, temperatura: 0 });
 
     const client = mqtt.connect("wss://io.adafruit.com", {
       username: "ClaudioCanga",
@@ -41,11 +41,12 @@ export default {
     <div class="flex gap-6 flex-nowrap">
       <div class="w-[230px] h-full select-none px-1">
         <div
-          class="relative cursor-pointer shadow-card bg-white flex flex-col rounded-xl border border-white hover:border-gradient-1-lighter"
+          :class="`relative shadow-card bg-white flex flex-col rounded-xl !border-b-4 ${
+            state.temperatura >= 36 && state.temperatura <= 37.6
+              ? 'border-gradient-1'
+              : 'border-red-600'
+          }`"
         >
-          <span class="absolute top-6 right-4">
-            <i class="ph ph-check"></i>
-          </span>
           <div class="p-8 flex flex-col justify-between items-center">
             <div
               class="w-16 h-16 rounded-full flex justify-center items-center border border-gradient-1-lighter"
@@ -59,18 +60,19 @@ export default {
             <div
               class="text-gradient-1-lighter font-montserrat text-2xl font-light"
             >
-              36.1 - 37.2
+              {{ state.temperatura }}
             </div>
           </div>
         </div>
       </div>
-      <div class="w-[230px] h-full select-none px-1">
+      <div class="w-[230px] h-full select-none px-1 overflow-hidden">
         <div
-          class="relative cursor-pointer shadow-card bg-white flex flex-col rounded-xl border border-white hover:border-gradient-1-lighter"
+          :class="`relative shadow-card bg-white flex flex-col rounded-xl !border-b-4 ${
+            state.bpm >= 60 && state.bpm <= 100
+              ? 'border-gradient-1'
+              : 'border-red-600'
+          }`"
         >
-          <span class="absolute top-6 right-4 z-10">
-            <i class="ph ph-check"></i>
-          </span>
           <div class="p-8 flex flex-col justify-between items-center">
             <div
               class="w-16 h-16 rounded-full flex justify-center items-center border border-gradient-1-lighter"
@@ -91,11 +93,12 @@ export default {
       </div>
       <div class="w-[230px] h-full select-none px-1">
         <div
-          class="relative cursor-pointer shadow-card bg-white flex flex-col rounded-xl border border-white hover:border-gradient-1-lighter"
+          :class="`relative shadow-card bg-white flex flex-col rounded-xl !border-b-4 ${
+            state.bpm >= 60 && state.bpm <= 100
+              ? 'border-gradient-1'
+              : 'border-red-600'
+          }`"
         >
-          <span class="absolute top-6 right-4 z-10">
-            <i class="ph ph-check"></i>
-          </span>
           <div class="p-8 flex flex-col justify-between items-center">
             <div
               class="w-16 h-16 rounded-full flex justify-center items-center border border-gradient-1-lighter"

@@ -15,7 +15,12 @@ export default {
   setup(props) {
     const DoctorStore = doctorStore();
     const PacienteStore = pacienteStore();
-    const state = reactive({ input: null, result: null, isVisible: null });
+    const state = reactive({
+      input: null,
+      result: null,
+      isVisible: null,
+      showResult: false,
+    });
 
     if (props.def === "Doctor") {
       state.isVisible = computed(() => DoctorStore.getPesquisarDoctors);
@@ -35,12 +40,12 @@ export default {
     async function Pesquisar() {
       if (props.def === "Doctor") {
         state.result = await search_doctores(state.input);
+        state.showResult = true;
         return;
       }
 
       state.result = await search_pacientes(state.input);
-
-      console.log(state.result);
+      state.showResult = true;
     }
 
     return { Pesquisar, closeModal, state };
@@ -87,8 +92,34 @@ export default {
           </form>
         </div>
         <div class="px-4 py-6 w-full">
-          {{ state.result }}
-          <div></div>
+          <div v-if="state.showResult" class="w-full">
+            <div class="flex justify-between">
+              <div class="flex gap-6">
+                <div class="w-12 h-12 rounded-full overflow-hidden">
+                  <img
+                    :src="`http://localhost:8000/storage/${state.result.imagem}`"
+                    class="w-full h-full object-cover"
+                    alt=""
+                  />
+                </div>
+                <div>
+                  <p class="text-cinza-1">
+                    {{ state.result.name }} {{ state.result.sobrenome }}
+                  </p>
+                  <p class="text-sm text-cinza-3">
+                    {{ state.result.telefone }}
+                  </p>
+                </div>
+              </div>
+              <router-link :to="`/dashboard/pacientes/${state.result.id}/info`">
+                <button
+                  class="rounded-md px-4 py-2 border border-primary text-primary transition duration-300 hover:bg-gradient-1-lighter hover:text-white"
+                >
+                  Ver perfil do paciente
+                </button>
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
       <div

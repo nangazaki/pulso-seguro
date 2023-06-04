@@ -35,16 +35,14 @@
   <h1>Lista de Doctores</h1>
 
   <table>
-    <td>Nome</td>
-    <td>Sobrenome</td>
+    <td>Nome Completo</td>
     <td>Telefone</td>
     <td>E-mail</td>
     <td>Usuário</td>
     <td>Província</td>
     @foreach ($medico as $medico)
     <tr>
-      <td>{{$medico->name}}</td>
-      <td>{{$medico->sobrenome}}</td>
+      <td>{{$medico->name}} {{$medico->sobrenome}}</td>
       <td>{{$medico->telefone}}</td>
       <td>{{$medico->email}}</td>
       <td>{{$medico->usuario}}</td>

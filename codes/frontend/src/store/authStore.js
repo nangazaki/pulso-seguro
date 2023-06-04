@@ -1,16 +1,42 @@
 import { defineStore } from "pinia";
 import { fetch_login, fetch_me } from "@/services";
-import { fetch_doctor } from "@/services/doctorServices"
+import { fetch_doctor, patch_doctor } from "@/services/doctorServices"
+
 import { getLocalToken, getLocalUser, setLocalToken, setLocalUser, removeToken } from '@/utils/storage'
 
 export const authStore = defineStore('auth', {
   state: () => {
     return {
       user: {},
+      notifications: [
+        {
+          id: 1,
+          message:
+            "Paciente 'Nome do Paciente' está a ter uma queda na temperatura, convém o monitorar.",
+          lida: true,
+        },
+        {
+          id: 2,
+          message:
+            "Paciente 'Nome do Paciente' está a ter uma queda no batimento cardíaco, convém o monitorar.",
+          lida: false,
+        },
+        {
+          id: 3,
+          message:
+            "Paciente 'Nome do Paciente' está a ter uma queda na temperatura, convém o monitorar.",
+          lida: false,
+        },
+      ],
+      modalNotification: false,
       token: "",
       isLogged: false,
       navbar: false,
       menuUser: false,
+      menuConfigUser: [
+        'editar-informações-pessoais', 'editar-informações-acesso'
+      ],
+      menuConfigUserSelected: 'editar-informações-pessoais'
     }
   },
 
@@ -35,8 +61,32 @@ export const authStore = defineStore('auth', {
       return state.navbar
     },
 
+    getModalNotification(state) {
+      return state.modalNotification
+    },
+
     getApontamentos(state) {
       return state.user.apontamentos
+    },
+
+    getNotifications(state) {
+      return state.notifications
+    },
+
+    getHasNotifications(state) {
+      const count = state.notifications.reduce((count, notification) => {
+        if (!notification.lida) {
+          return count + 1;
+        }
+
+        return 0;
+      }, 0);
+
+      return count;
+    },
+
+    getConfigSelected(state) {
+      return state.menuConfigUserSelected;
     }
   },
 
@@ -113,7 +163,101 @@ export const authStore = defineStore('auth', {
     MenuUser(act) {
       this.menuUser = act;
     },
+
+    hasNotifications() {
+      const countNotifications = this.notifications.reduce((count, notification) => {
+        if (!notification.lida) {
+          return count + 1;
+        }
+
+        return 0;
+      }, 0);
+
+      return countNotifications;
+    },
+
+    openNotification(id) {
+      const position = id - 1;
+
+      if (this.notifications[position].lida == false) {
+        this.notifications[position].lida = true;
+      }
+    },
+
+    openModalNotification(action) {
+      this.modalNotification = action
+    },
+
+    selectMenuConfig(id) {
+      this.menuConfigUserSelected = this.menuConfigUser[id]
+    },
+
+    async updatePersonalData(data, user) {
+      user.name = data.name
+      user.sobrenome = data.sobrenome
+      user.provincia = data.provincia
+      user.municipio = data.municipio
+      user.bairro = data.bairro
+      user.rua = data.rua
+      user.nBI = data.nBI
+      user.telefone = data.telefone
+      user.dataNascimento = data.dataNascimento
+      user.genero = data.genero
+
+      const formData = new FormData();
+
+      formData.append("_method", "patch");
+      formData.append("name", user.name);
+      formData.append("sobrenome", user.sobrenome);
+      formData.append("provincia", user.provincia);
+      formData.append("municipio", user.municipio);
+      formData.append("bairro", user.bairro);
+      formData.append("rua", user.rua);
+      formData.append("nBI", user.nBI);
+      formData.append("telefone", user.telefone);
+      formData.append("dataNascimento", user.dataNascimento);
+      formData.append("genero", user.genero);
+      formData.append("especialidade", user.especialidade);
+      formData.append("idCarteira", user.idCarteira);
+      formData.append("usuario", user.usuario);
+      formData.append("email", user.email);
+
+      const response = await patch_doctor(user.id, formData)
+
+      console.log(response)
+
+      return response
+    },
+
+    async updatePersonalDataAccess(data, user) {
+      user.email = data.email
+      user.usuario = data.usuario
+      user.password = data.password
+
+      const formData = new FormData();
+
+      formData.append("_method", "patch");
+      formData.append("name", user.name);
+      formData.append("sobrenome", user.sobrenome);
+      formData.append("provincia", user.provincia);
+      formData.append("municipio", user.municipio);
+      formData.append("bairro", user.bairro);
+      formData.append("rua", user.rua);
+      formData.append("nBI", user.nBI);
+      formData.append("telefone", user.telefone);
+      formData.append("dataNascimento", user.dataNascimento);
+      formData.append("genero", user.genero);
+      formData.append("especialidade", user.especialidade);
+      formData.append("idCarteira", user.idCarteira);
+      formData.append("usuario", user.usuario);
+      formData.append("email", user.email);
+      formData.append("password", user.password)
+
+      const response = await patch_doctor(user.id, formData)
+
+      console.log(response)
+
+      return response
+    }
   },
-
-
 })

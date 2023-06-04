@@ -6,7 +6,19 @@ export default {
   setup() {
     const doctor = computed(() => authStore().getUser);
 
-    return { doctor };
+    function openConfig() {
+      const option = event.srcElement.id;
+
+      if (option === "menu-1") {
+        authStore().selectMenuConfig(0);
+      }
+
+      if (option === "menu-2") {
+        authStore().selectMenuConfig(1);
+      }
+    }
+
+    return { doctor, openConfig };
   },
 };
 </script>
@@ -15,7 +27,7 @@ export default {
   <section>
     <h2 class="text-primary mb-3">Sobre</h2>
     <div
-      class="w-[300px] px-8 py-6 bg-white text-gray-800 rounded-xl shadow-card"
+      class="w-[300px] px-8 py-6 bg-white text-gray-800 rounded-xl mb-4 shadow-card"
     >
       <div class="mb-6 flex items-center flex-col text-center">
         <div class="w-28 h-28 mb-3 rounded-full overflow-hidden object-cover">
@@ -78,6 +90,32 @@ export default {
         <div class="flex items-center gap-2 mt-2">
           <i class="ph ph-user" :class="`text-primary`"></i>
           <p class="text-sm">10 Pacientes</p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="w-[300px] px-8 py-6 bg-white text-gray-800 rounded-xl shadow-card"
+    >
+      <div class="mb-6">
+        <span class="text-gray-500 uppercase text-xs mb-4">
+          Configuções do usuario
+        </span>
+        <div class="mt-2">
+          <div
+            @click="openConfig"
+            class="flex items-center gap-2 mb-2 hover:text-primary cursor-pointer"
+          >
+            <i class="ph ph-phone" :class="`text-primary`"></i>
+            <p id="menu-1" class="text-sm">Editar informações pessoais</p>
+          </div>
+          <div
+            @click="openConfig"
+            class="flex items-center gap-2 mb-2 hover:text-primary cursor-pointer"
+          >
+            <i class="ph ph-phone" :class="`text-primary`"></i>
+            <p id="menu-2" class="text-sm">Editar informações de acesso</p>
+          </div>
         </div>
       </div>
     </div>

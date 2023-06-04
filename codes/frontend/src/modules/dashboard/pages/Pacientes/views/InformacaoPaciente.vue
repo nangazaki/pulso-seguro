@@ -14,8 +14,11 @@ export default {
     const route = useRoute();
     const PacienteStore = pacienteStore();
 
-    onMounted(async () => {
-      await PacienteStore.SelecionarPaciente(route.params.id);
+    onMounted(() => {
+      console.log(route.params.id);
+      setTimeout(async () => {
+        await PacienteStore.SelecionarPaciente(route.params.id);
+      }, 1500);
     });
 
     const paciente = computed(() => PacienteStore.pacienteSelecionado);

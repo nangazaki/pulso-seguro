@@ -1,5 +1,5 @@
 <script>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, reactive } from "vue";
 
 import { authStore } from "@/store/authStore";
 import { pacienteStore } from "@/store/pacienteStore";
@@ -14,28 +14,43 @@ export default {
   setup() {
     const PacienteStore = pacienteStore();
 
+    const state = reactive({ page: 1 });
     const pacientes = computed(() => PacienteStore.pacientes);
     const user = computed(() => authStore().getUser);
     const isAdmin = computed(() => authStore().getIsAdmin);
 
     onMounted(async () => {
       if (isAdmin.value) {
-        await PacienteStore.PegarPacientes();
+        await PacienteStore.PegarPacientes(state.page);
         return;
       }
 
       PacienteStore.AdicionarPacientes(user.value.pacientes);
     });
 
+    async function nextPage() {
+      state.page += 1;
+      await PacienteStore.PegarPacientes(state.page);
+    }
+
+    async function previousPage() {
+      state.page -= 1;
+      await PacienteStore.PegarPacientes(state.page);
+    }
+
     function openModal() {
       PacienteStore.openModalPesquisar();
     }
 
-    async function DonwloadPDF() {
-      await PacienteStore.downloadpdf();
-    }
-
-    return { pacientes, openModal, isAdmin, user };
+    return {
+      pacientes,
+      openModal,
+      isAdmin,
+      user,
+      state,
+      nextPage,
+      previousPage,
+    };
   },
 };
 </script>
@@ -45,8 +60,10 @@ export default {
     <div class="w-full 2xl:container 2xl:mx-auto mb-20">
       <Header page="Pacientes" />
       <Search />
-      <div class="px-8 flex gap-8">
-        <div class="w-full h-[40px] flex justify-between">
+      <div class="px-8 flex mb-6">
+        <div
+          class="w-full h-[40px] flex flex-col sm:flex-row gap-4 justify-between"
+        >
           <router-link
             to="pacientes/adicionar"
             class="bg-gradient-1-lighter px-4 py-2 flex items-center gap-2 rounded-lg text-white ease-linear hover:bg-gradient-1-darker"
@@ -64,7 +81,7 @@ export default {
             </div>
 
             <a
-              href="http://localhost:8000/api/pdfPaciente"
+              href="http://localhost:8000/api/dashboard/pacientes/pdf"
               target="_blank"
               download
               class="py-2 px-4 bg-white flex gap-2 justify-center items-center rounded-lg cursor-pointer shadow-card hover:text-gradient-1-lighter"
@@ -72,14 +89,6 @@ export default {
               Exportar PDF
               <i class="ph ph-download-simple"></i>
             </a>
-
-            <select class="w-20 h-full bg-white p-2 rounded-md shadow-card">
-              <option selected>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
           </div>
         </div>
       </div>
@@ -90,6 +99,57 @@ export default {
             :key="paciente.id"
             :paciente="paciente"
           />
+        </div>
+
+        <div
+          v-if="Number(isAdmin)"
+          class="w-full mt-20 flex justify-center gap-1"
+        >
+          <button
+            @click="previousPage"
+            class="py-1 px-2 rounded-md bg-neutral-200 cursor-pointer hover:bg-neutral-300"
+          >
+            Anterior
+          </button>
+          <button
+            :class="`py-1 px-2 rounded-md cursor-pointer hover:bg-neutral-300 ${
+              state.page == 1 ? 'bg-neutral-400' : 'bg-neutral-200'
+            }`"
+          >
+            1
+          </button>
+          <button
+            :class="`py-1 px-2 rounded-md cursor-pointer hover:bg-neutral-300 ${
+              state.page == 2 ? 'bg-neutral-400' : 'bg-neutral-200'
+            }`"
+          >
+            2
+          </button>
+          <button
+            :class="`py-1 px-2 rounded-md cursor-pointer hover:bg-neutral-300 ${
+              state.page == 3 ? 'bg-neutral-400' : 'bg-neutral-200'
+            }`"
+          >
+            3
+          </button>
+          <button
+            :class="`py-1 px-2 rounded-md cursor-pointer hover:bg-neutral-300 ${
+              state.page == 4 ? 'bg-neutral-400' : 'bg-neutral-200'
+            }`"
+          >
+            4
+          </button>
+          <button
+            class="py-1 px-2 rounded-md bg-neutral-200 cursor-pointer hover:bg-neutral-300"
+          >
+            ...
+          </button>
+          <button
+            @click="nextPage"
+            class="py-1 px-2 rounded-md bg-neutral-200 cursor-pointer hover:bg-neutral-300"
+          >
+            Próximo
+          </button>
         </div>
       </div>
     </div>

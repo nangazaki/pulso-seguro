@@ -10,7 +10,7 @@ myChart;
 export default {
   setup() {
     const route = useRoute();
-    const state = reactive({ dados: [0, 100, 0] });
+    const state = reactive({ dados: [] });
 
     const client = mqtt.connect("wss://io.adafruit.com", {
       username: "ClaudioCanga",
@@ -29,6 +29,7 @@ export default {
     });
 
     function addDadosNoChart(data) {
+      myChart.update();
       state.dados = [...state.dados, data];
       myChart.data.labels.push("BPM");
       myChart.update();
@@ -39,7 +40,7 @@ export default {
       const line = document.getElementById("line");
 
       const data = {
-        labels: ["BPM", "BPM", "BPM"],
+        labels: [],
         datasets: [
           {
             label: "BPM",
@@ -62,8 +63,10 @@ export default {
       });
     }
 
-    onMounted(async () => {
-      await iniciarChart();
+    onMounted(() => {
+      setTimeout(async () => {
+        await iniciarChart();
+      }, 1500);
     });
 
     onUnmounted(() => {

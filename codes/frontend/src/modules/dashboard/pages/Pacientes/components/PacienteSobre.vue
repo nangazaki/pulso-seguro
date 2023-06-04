@@ -1,14 +1,16 @@
-<script setup>
-defineProps({
-  paciente: {
-    type: Object,
-    required: true,
+<script>
+export default {
+  props: {
+    paciente: {
+      type: Object,
+      required: true,
+    },
+    doctor: {
+      type: String,
+      required: true,
+    },
   },
-  doctor: {
-    type: Object,
-    required: true,
-  },
-});
+};
 </script>
 
 <template>
