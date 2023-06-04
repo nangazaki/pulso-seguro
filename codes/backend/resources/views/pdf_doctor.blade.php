@@ -27,7 +27,7 @@
 
 <body>
   <div style="margin-bottom: 32px;">
-    <img src="/pulso.png" />
+    <img src="{{$data['image']}}" />
     <p>Pulso Seguro</p>
     <p>Instito de Telecomunicações - ITEL</p>
   </div>

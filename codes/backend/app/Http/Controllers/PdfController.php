@@ -21,7 +21,12 @@ class PdfController extends Controller
     $paciente = Paciente::all();
     $medico = User::all();
 
-    $pdf = PDF::loadView('pdf_paciente', compact('paciente', 'medico'));
+    $data = [
+        'title' => 'Exemplo de PDF com imagens',
+        'image' => public_path('pulso.png')
+    ];
+
+    $pdf = PDF::loadView('pdf_paciente', compact('paciente', 'medico', 'data'));
 
     return $pdf->setPaper('a4')->stream('Todos Pacintes');
   }
@@ -30,7 +35,12 @@ class PdfController extends Controller
   {
     $medico = User::all();
 
-    $pdf = PDF::loadView('pdf_doctor', compact('medico'));
+    $data = [
+        'title' => 'Exemplo de PDF com imagens',
+        'image' => public_path('pulso.png')
+    ];
+
+    $pdf = PDF::loadView('pdf_doctor', compact('medico', 'data'));
 
     return $pdf->setPaper('a4')->stream('Todos Medicos');
   }
