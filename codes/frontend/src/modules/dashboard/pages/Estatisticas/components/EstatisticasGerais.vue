@@ -42,10 +42,10 @@ export default {
       });
     }
 
-    onMounted(async () => {
-      const adicionados = await estatsStore().ReturnPorMes();
-      console.log(adicionados);
-      await iniciarChart();
+    onMounted(() => {
+      setTimeout(async () => {
+        await iniciarChart();
+      }, 1500);
     });
 
     onUnmounted(() => {

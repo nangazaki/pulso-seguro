@@ -1,3 +1,16 @@
+<template>
+  <div v-if="doctoresGenero" class="bg-white w-1/2 rounded-xl p-4 shadow-card">
+    <div class="col-xl-6 mb-5">
+      <span class="text-primary font-montserrat"> Doctores por Gênero </span>
+      <div class="flex flex-col items-center">
+        <div class="h-72">
+          <canvas id="doughnut"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script>
 import { computed, onMounted, onUnmounted } from "vue";
 
@@ -14,6 +27,7 @@ export default {
 
     async function iniciarChart() {
       const doughnut = document.getElementById("doughnut");
+      console.log(doughnut);
 
       const data = {
         labels: ["Homens", "Mulheres"],
@@ -39,8 +53,10 @@ export default {
       });
     }
 
-    onMounted(async () => {
-      await iniciarChart();
+    onMounted(() => {
+      setTimeout(async () => {
+        await iniciarChart();
+      }, 1500);
     });
 
     onUnmounted(() => {
@@ -51,16 +67,3 @@ export default {
   },
 };
 </script>
-
-<template>
-  <div v-if="doctoresGenero" class="bg-white w-1/2 rounded-xl p-4 shadow-card">
-    <div class="col-xl-6 mb-5">
-      <span class="text-primary font-montserrat"> Doctores por Gênero </span>
-      <div class="flex flex-col items-center">
-        <div class="h-72">
-          <canvas id="doughnut"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>

@@ -5,7 +5,6 @@ import { estatsStore } from "@/store/estatsStore";
 import Estatisticas from "../components/Estatisticas.vue";
 import PacientesChart from "../components/PacientesChart.vue";
 import DoctoresChart from "../components/DoctoresChart.vue";
-import DoughnutChart from "../components/DoughnutChart.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import Header from "@/components/Header.vue";
 import Teste from "../components/Teste.vue";
@@ -15,7 +14,6 @@ export default {
     Estatisticas,
     PacientesChart,
     DoctoresChart,
-    DoughnutChart,
     DefaultLayout,
     Header,
     Teste,
