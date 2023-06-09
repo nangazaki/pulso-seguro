@@ -28,7 +28,8 @@ Route::apiresource('diagnosticos', 'App\Http\Controllers\EstadoDeSaudeController
 Route::get('estatisticas', 'App\Http\Controllers\StatisticsController@Estatisticas');
 
 Route::apiresource('apontamentos', 'App\Http\Controllers\ApontamentoController');
-Route::get('dashboard/pacientes/pdf', 'App\Http\Controllers\PdfController@pdf_paciente');
+Route::get('dashboard/pacientes/pdf', 'App\Http\Controllers\PdfController@pdf_pacientes');
+Route::get('dashboard/paciente/pdf/{id_paciente}', 'App\Http\Controllers\PdfController@pdf_paciente');
 Route::get('dashboard/doctores/pdf', 'App\Http\Controllers\PdfController@pdf_doctor');
 Route::get('dashboard/estatisticas/pdf', 'App\Http\Controllers\PdfController@pdf_estatistica');
 

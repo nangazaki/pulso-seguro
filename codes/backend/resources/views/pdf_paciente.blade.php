@@ -4,7 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pulso Seguro - Lista de Pacientes</title>
+   @foreach ($paciente as $pacientes)
+  <title>(Mês: {{$mesActual}})-Pulso Seguro - diagnosticos - {{$pacientes->name}} {{$pacientes->sobrenome}}</title>
+  @endforeach
   <style>
     table,
     td,
@@ -22,6 +24,7 @@
     td {
       padding: 6px;
     }
+   
   </style>
 </head>
 
@@ -32,29 +35,32 @@
     <p>Instito de Telecomunicações - ITEL</p>
   </div>
 
-  <h1>Lista de Pacientes</h1>
+   @foreach ($paciente as $pacientes)
+  <h1>Paciente: {{$pacientes->name}} {{$pacientes->sobrenome}}</h1>
+  @endforeach
 
   <table>
-    <td>Nome</td>
-    <td>Telefone</td>
-    <td>E-mail</td>
-    <td>Província</td>
-    <td>Doctor</td>
-    @foreach ($paciente as $pacientes)
-    @php
-    $variavel = $pacientes->user_id;
-    $variavel = intval($variavel);
-    $variavel = $variavel-1
-    @endphp
+    <td>Temperatura</td>
+    <td>Pulso Cardíaco</td>
+    @foreach ($estadoSaude as $estadoSaudes)
 
     <tr>
-      <td>{{$pacientes->name}} {{$pacientes->sobrenome}}</td>
-      <td>{{$pacientes->telefone}}</td>
-      <td>{{$pacientes->email}}</td>
-      <td>{{$pacientes->provincia}}</td>
-      <td>{{$medico[$variavel]->name}} {{$medico[$variavel]->sobrenome}} </td>
+      <td>{{$estadoSaudes->temperatura}}</td>
+      <td>{{$estadoSaudes->batcardiaco}}</td>
     <tr>
       @endforeach
+    <tr>
+      <td>Máximo: {{$temperaturaMax}}</td>
+      <td>Máximo: {{$batcardiacoMax}}</td>
+    <tr> 
+    <tr>
+      <td>Mínimo: {{$temperaturaMin}}</td>
+      <td>Mínimo: {{$batcardiacoMin}}</td>
+    <tr> 
+    <tr>
+      <td>Média: {{$temperaturaTotal}}</td>
+      <td>Média: {{$batcardiacoTotal}}</td>
+    <tr>  
   </table>
 </body>
 
