@@ -7,6 +7,8 @@
 #include "MAX30105.h"
 #include <Adafruit_GFX.h>
 #include <Adafruit_MLX90614.h>
+#include <ESP8266HTTPClient.h>
+#include <base64.h>
 
 // Substitua com as suas credenciais do Adafruit IO
 #define WIFI_SSID "Pulso Seguro"
@@ -28,10 +30,26 @@ Adafruit_MQTT_Client mqtt(&client, MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID, MQTT_
 // Crie o objeto Adafruit_MQTT_Publish para publicar dados no Adafruit IO
 Adafruit_MQTT_Publish bpm = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/bpm1");
 Adafruit_MQTT_Publish temObjecto = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/temObjecto1");
-Adafruit_MQTT_Publish temAmbiental = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/temAmbiental1");
+//Adafruit_MQTT_Publish temAmbiental = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/temAmbiental1");
 
 Adafruit_MLX90614 mlx;
 MAX30105 particleSensor;
+
+// Defina as configurações do Twilio
+#define TWILIO_ACCOUNT_SID "YOUR_TWILIO_ACCOUNT_SID"
+#define TWILIO_AUTH_TOKEN "YOUR_TWILIO_AUTH_TOKEN"
+#define TWILIO_PHONE_NUMBER "+1234567890"
+#define RECIPIENT_PHONE_NUMBER "+923345679"
+
+// Variáveis para controle de tempo
+unsigned long startTime = 0;
+unsigned long elapsedTime = 0;
+bool sendMessage = false;
+
+void EnvioDatos();
+
+float objectTemp;
+uint32_t irValue;
 
 void setup() {
   Serial.begin(9600);
@@ -67,19 +85,21 @@ void setup() {
   // Inscreva-se nos feeds do Adafruit IO
   Adafruit_MQTT_Subscribe bpm_sub = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/bpm1");
   Adafruit_MQTT_Subscribe temObjecto_sub = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/temObjecto1");
-  Adafruit_MQTT_Subscribe temAmbiental_sub = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/temAmbiental1");
+  //Adafruit_MQTT_Subscribe temAmbiental_sub = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/temAmbiental1");
   mqtt.subscribe(&bpm_sub);
   mqtt.subscribe(&temObjecto_sub);
-  mqtt.subscribe(&temAmbiental_sub);
+  //mqtt.subscribe(&temAmbiental_sub);
+
+  startTime = millis();
 }
 
 void loop() {
   // Leia a temperatura do sensor MLX90614
   float ambientTemp = mlx.readAmbientTempC();
-  float objectTemp = mlx.readObjectTempC();
+  objectTemp = mlx.readObjectTempC();
 
   // Leia a frequência cardíaca do sensor MAX30102
-  uint32_t irValue = particleSensor.getIR();
+  irValue = particleSensor.getIR();
   irValue = irValue / 1000;
 
   // Publique os valores nos feeds correspondentes do Adafruit IO
@@ -103,5 +123,40 @@ void loop() {
     Serial.println("falha ao publicar");
   }*/
 
-  delay(1000); // Aguarde 1 segundo antes de ler novamente
+  // Verifique se o valor está no intervalo especificado
+    elapsedTime = millis() - startTime;
+    if (elapsedTime >= 240000) {
+      EnvioDatos();
+    }
+
+  delay(3000); // Aguarde 3 segundo antes de ler novamente
+}
+
+void EnvioDatos(){
+  if (WiFi.status() == WL_CONNECTED){ 
+     HTTPClient http;  // creo el objeto http
+     String datos_a_enviar = "temperatura=" + String(objectTemp) + "&batcardiaco=" + String(irValue);  
+
+     http.begin(client,"http://127.0.0.1/diagnosticos");
+     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); // defino texto plano..
+
+     int codigo_respuesta = http.POST(datos_a_enviar);
+
+     if (codigo_respuesta>0){
+      Serial.println("Código HTTP: "+ String(codigo_respuesta));
+        if (codigo_respuesta == 200){
+          String cuerpo_respuesta = http.getString();
+          Serial.println("El servidor respondió: ");
+          Serial.println(cuerpo_respuesta);
+        }
+     } else {
+        Serial.print("Error enviado POST, código: ");
+        Serial.println(codigo_respuesta);
+     }
+
+       http.end();  // libero recursos
+       
+  } else {
+     Serial.println("Error en la conexion WIFI");
+  }
 }
