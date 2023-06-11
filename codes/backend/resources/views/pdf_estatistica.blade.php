@@ -23,27 +23,27 @@
       padding: 6px;
     }
 
-    #Gpaciente{
+    #Gpaciente {
       width: 100%;
       border: 1px solid;
     }
 
-    #p1{
+    #p1 {
       width: 50px;
       height: 10px;
-      border: 1px solid;
-      position: ;
+      border: 1px solid red;
     }
 
-    #p2{
+    #p2 {
       width: 50px;
       height: 10px;
       border: 1px solid;
     }
-     #p{
+
+    #p {
       width: 50px;
       height: 10px;
-      
+
       background: black;
       border: 1px solid;
     }
@@ -63,7 +63,8 @@
   <h3>Homem</h3>
   <p id="p"></p>
   <div id='Gpaciente'>
-    <p id="p1"></p><p id="p2"></p>
+    <p id="p1"></p>
+    <p id="p2"></p>
   </div>
 </body>
 

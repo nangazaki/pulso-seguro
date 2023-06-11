@@ -11,161 +11,108 @@ use PDF;
 class PdfController extends Controller
 {
 
-<<<<<<< HEAD
     public function __construct(Paciente $paciente, User $medico)
     {
         $this->paciente = $paciente;
         $this->medico = $medico;
     }
-||||||| 2bdc6b0
-  public function __construct(Paciente $paciente, User $medico)
-  {
-      $this->paciente = $paciente;
-      $this->medico = $medico;
-  }
-  
-  public function pdf_paciente()
-  {
-    $paciente = Paciente::all();
-    $medico = User::all();
-=======
-  public function __construct(Paciente $paciente, User $medico)
-  {
-      $this->paciente = $paciente;
-      $this->medico = $medico;
-  }
-  
-  public function pdf_pacientes()
-  {
-    $paciente = Paciente::all();
-    $medico = User::all();
->>>>>>> f232a18dc790e39bd765dd7faf0172e7cd43060a
 
-<<<<<<< HEAD
-    public function pdf_paciente()
+    public function pdf_pacientes()
     {
         $paciente = Paciente::all();
         $medico = User::all();
-||||||| 2bdc6b0
-    $data = [
-        'title' => 'Exemplo de PDF com imagens',
-        'image' => public_path('pulso.png')
-    ];
-=======
-    $mes = [0, 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-    $dates = now()->startOfMonth();
-        
-    $carbon = \Carbon\Carbon::parse($dates);
-    $meses = $carbon->month;
-    $mesActual = $mes[$meses];
-        
-    $data = [
-        'title' => 'Exemplo de PDF com imagens',
-        'image' => public_path('pulso.png')
-    ];
+        $mes = [0, 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-    $data = [
-        'title' => 'Exemplo de PDF com imagens',
-        'image' => public_path('pulso.png')
-    ];
->>>>>>> f232a18dc790e39bd765dd7faf0172e7cd43060a
+        $dates = now()->startOfMonth();
 
-<<<<<<< HEAD
+        $carbon = \Carbon\Carbon::parse($dates);
+        $meses = $carbon->month;
+        $mesActual = $mes[$meses];
+
         $data = [
             'title' => 'Exemplo de PDF com imagens',
             'image' => public_path('pulso.png')
         ];
-||||||| 2bdc6b0
-    $pdf = PDF::loadView('pdf_paciente', compact('paciente', 'medico', 'data'));
-=======
-    $pdf = PDF::loadView('pdf_pacientes', compact('paciente', 'medico', 'mesActual', 'data'));
 
-    return $pdf->setPaper('a4')->stream('Todos Pacintes');
-  }
+        $data = [
+            'title' => 'Exemplo de PDF com imagens',
+            'image' => public_path('pulso.png')
+        ];
 
-  public function pdf_paciente($id)
-  {
-    $paciente = Paciente::all();
-    $estadoSaude = EstadoSaude::all();
-    $estadoSaude = $estadoSaude->where('paciente_id', $id);
-    $paciente = $paciente->where('id', $id);
+        $pdf = PDF::loadView('pdf_pacientes', compact('paciente', 'medico', 'mesActual', 'data'));
 
-    $mes = [0, 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-
-    $dates = now()->startOfMonth();
-        
-    $carbon = \Carbon\Carbon::parse($dates);
-    $meses = $carbon->month;
-    $mesActual = $mes[$meses];
-    $temperaturaTotal = 0;
-    $batcardiacoTotal = 0;
-    $n = 0;
-    $batcardiacoMax = 0;
-    $batcardiacoMin = 0;
-    $temperaturaMax = 0;
-    $temperaturaMin = 0;
-    foreach($estadoSaude as $temperatura){
-        $temperaturaTotal = $temperaturaTotal + $temperatura['temperatura'];
-        $n = $n + 1;
-    }
-
-    foreach($estadoSaude as $batcardiaco){
-        $batcardiacoTotal = $batcardiacoTotal + $batcardiaco['batcardiaco']; 
-    }
-    if($n == 0){
-        $n = 1;
-    }
-    $batcardiacoTotal = $batcardiacoTotal/$n;
-    $batcardiacoTotal = number_format($batcardiacoTotal, 1);
-    $batcardiacoMax = $estadoSaude->max('batcardiaco');
-    $batcardiacoMin = $estadoSaude->min('batcardiaco');
-
-    $temperaturaTotal = $temperaturaTotal/$n;
-    $temperaturaTotal = number_format($temperaturaTotal, 1);
-    $temperaturaMax = $estadoSaude->max('temperatura');
-    $temperaturaMin = $estadoSaude->min('temperatura');
-
-    $estadoSaude = $estadoSaude->sortByDesc('id')->take(20);
-        
-    $data = [
-        'title' => 'Exemplo de PDF com imagens',
-        'image' => public_path('pulso.png')
-    ];
-
-    $pdf = PDF::loadView('pdf_paciente', compact(
-                        'paciente', 
-                        'batcardiacoTotal', 
-                        'temperaturaTotal', 
-                        'estadoSaude',
-                        'batcardiacoMin',
-                        'batcardiacoMax',
-                        'temperaturaMin',
-                        'temperaturaMax', 
-                        'mesActual', 
-                        'data'));
->>>>>>> f232a18dc790e39bd765dd7faf0172e7cd43060a
-
-        $pdf = PDF::loadView('pdf_paciente', compact('paciente', 'medico', 'data'));
-
-<<<<<<< HEAD
         return $pdf->setPaper('a4')->stream('Todos Pacintes');
     }
-||||||| 2bdc6b0
-  public function pdf_doctor()
-  {
-    $medico = User::all();
-=======
-  public function pdf_doctor()
-  {
-    $medico = User::all();
-    $medico = $medico->where('isAdmin', 0);
->>>>>>> f232a18dc790e39bd765dd7faf0172e7cd43060a
+
+    public function pdf_paciente($id)
+    {
+        $paciente = Paciente::all();
+        $estadoSaude = EstadoSaude::all();
+        $estadoSaude = $estadoSaude->where('paciente_id', $id);
+        $paciente = $paciente->where('id', $id);
+
+        $mes = [0, 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+        $dates = now()->startOfMonth();
+
+        $carbon = \Carbon\Carbon::parse($dates);
+        $meses = $carbon->month;
+        $mesActual = $mes[$meses];
+        $temperaturaTotal = 0;
+        $batcardiacoTotal = 0;
+        $n = 0;
+        $batcardiacoMax = 0;
+        $batcardiacoMin = 0;
+        $temperaturaMax = 0;
+        $temperaturaMin = 0;
+        foreach ($estadoSaude as $temperatura) {
+            $temperaturaTotal = $temperaturaTotal + $temperatura['temperatura'];
+            $n = $n + 1;
+        }
+
+        foreach ($estadoSaude as $batcardiaco) {
+            $batcardiacoTotal = $batcardiacoTotal + $batcardiaco['batcardiaco'];
+        }
+        if ($n == 0) {
+            $n = 1;
+        }
+        $batcardiacoTotal = $batcardiacoTotal / $n;
+        $batcardiacoTotal = number_format($batcardiacoTotal, 1);
+        $batcardiacoMax = $estadoSaude->max('batcardiaco');
+        $batcardiacoMin = $estadoSaude->min('batcardiaco');
+
+        $temperaturaTotal = $temperaturaTotal / $n;
+        $temperaturaTotal = number_format($temperaturaTotal, 1);
+        $temperaturaMax = $estadoSaude->max('temperatura');
+        $temperaturaMin = $estadoSaude->min('temperatura');
+
+        $estadoSaude = $estadoSaude->sortByDesc('id')->take(20);
+
+        $data = [
+            'title' => 'Exemplo de PDF com imagens',
+            'image' => public_path('pulso.png')
+        ];
+
+        $pdf = PDF::loadView('pdf_paciente', compact(
+            'paciente',
+            'batcardiacoTotal',
+            'temperaturaTotal',
+            'estadoSaude',
+            'batcardiacoMin',
+            'batcardiacoMax',
+            'temperaturaMin',
+            'temperaturaMax',
+            'mesActual',
+            'data'
+        ));
+        return $pdf->setPaper('a4')->stream('Paciente');
+    }
 
     public function pdf_doctor()
     {
         $medico = User::all();
-
+        $medico = $medico->where('isAdmin', 0);
         $data = [
             'title' => 'Exemplo de PDF com imagens',
             'image' => public_path('pulso.png')
