@@ -11,24 +11,6 @@ use PDF;
 class PdfController extends Controller
 {
 
-<<<<<<< HEAD
-    public function __construct(Paciente $paciente, User $medico)
-    {
-        $this->paciente = $paciente;
-        $this->medico = $medico;
-    }
-||||||| 2bdc6b0
-  public function __construct(Paciente $paciente, User $medico)
-  {
-      $this->paciente = $paciente;
-      $this->medico = $medico;
-  }
-  
-  public function pdf_paciente()
-  {
-    $paciente = Paciente::all();
-    $medico = User::all();
-=======
   public function __construct(Paciente $paciente, User $medico)
   {
       $this->paciente = $paciente;
@@ -39,19 +21,7 @@ class PdfController extends Controller
   {
     $paciente = Paciente::all();
     $medico = User::all();
->>>>>>> f232a18dc790e39bd765dd7faf0172e7cd43060a
 
-<<<<<<< HEAD
-    public function pdf_paciente()
-    {
-        $paciente = Paciente::all();
-        $medico = User::all();
-||||||| 2bdc6b0
-    $data = [
-        'title' => 'Exemplo de PDF com imagens',
-        'image' => public_path('pulso.png')
-    ];
-=======
     $mes = [0, 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
     $dates = now()->startOfMonth();
@@ -69,16 +39,7 @@ class PdfController extends Controller
         'title' => 'Exemplo de PDF com imagens',
         'image' => public_path('pulso.png')
     ];
->>>>>>> f232a18dc790e39bd765dd7faf0172e7cd43060a
 
-<<<<<<< HEAD
-        $data = [
-            'title' => 'Exemplo de PDF com imagens',
-            'image' => public_path('pulso.png')
-        ];
-||||||| 2bdc6b0
-    $pdf = PDF::loadView('pdf_paciente', compact('paciente', 'medico', 'data'));
-=======
     $pdf = PDF::loadView('pdf_pacientes', compact('paciente', 'medico', 'mesActual', 'data'));
 
     return $pdf->setPaper('a4')->stream('Todos Pacintes');
@@ -144,41 +105,28 @@ class PdfController extends Controller
                         'temperaturaMax', 
                         'mesActual', 
                         'data'));
->>>>>>> f232a18dc790e39bd765dd7faf0172e7cd43060a
 
-        $pdf = PDF::loadView('pdf_paciente', compact('paciente', 'medico', 'data'));
+    return $pdf->setPaper('a4')->stream('Todos Pacintes');
+  }
 
-<<<<<<< HEAD
-        return $pdf->setPaper('a4')->stream('Todos Pacintes');
-    }
-||||||| 2bdc6b0
-  public function pdf_doctor()
-  {
-    $medico = User::all();
-=======
   public function pdf_doctor()
   {
     $medico = User::all();
     $medico = $medico->where('isAdmin', 0);
->>>>>>> f232a18dc790e39bd765dd7faf0172e7cd43060a
 
-    public function pdf_doctor()
-    {
-        $medico = User::all();
+    $data = [
+        'title' => 'Exemplo de PDF com imagens',
+        'image' => public_path('pulso.png')
+    ];
 
-        $data = [
-            'title' => 'Exemplo de PDF com imagens',
-            'image' => public_path('pulso.png')
-        ];
+    $pdf = PDF::loadView('pdf_doctor', compact('medico', 'data'));
 
-        $pdf = PDF::loadView('pdf_doctor', compact('medico', 'data'));
+    return $pdf->setPaper('a4')->stream('Todos Medicos');
+  }
 
-        return $pdf->setPaper('a4')->stream('Todos Medicos');
-    }
-
-    public function pdf_estatistica()
-    {
-        $statistics = [];
+  public function pdf_estatistica()
+  {
+    $statistics = [];
 
         // Start PacienteTotalMes
 
@@ -317,5 +265,6 @@ class PdfController extends Controller
         $pdf = PDF::loadView('pdf_estatistica', compact('statistics'));
 
         return $pdf->setPaper('a4')->stream('Todas Estatistica');
-    }
+  }
+
 }
