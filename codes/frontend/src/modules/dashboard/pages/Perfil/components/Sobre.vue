@@ -5,6 +5,7 @@ import { authStore } from "@/store/authStore";
 export default {
   setup() {
     const doctor = computed(() => authStore().getUser);
+    const isAdmin = computed(() => authStore().getIsAdmin);
 
     function openConfig() {
       const option = event.srcElement.id;
@@ -18,7 +19,7 @@ export default {
       }
     }
 
-    return { doctor, openConfig };
+    return { isAdmin, doctor, openConfig };
   },
 };
 </script>
@@ -95,7 +96,7 @@ export default {
     </div>
 
     <div
-      class="w-[300px] px-8 py-6 bg-white text-gray-800 rounded-xl shadow-card"
+      class="w-[300px] px-8 py-6 mb-6 bg-white text-gray-800 rounded-xl shadow-card"
     >
       <div class="mb-6">
         <span class="text-gray-500 uppercase text-xs mb-4">
@@ -115,6 +116,34 @@ export default {
           >
             <i class="ph ph-phone" :class="`text-primary`"></i>
             <p id="menu-2" class="text-sm">Editar informações de acesso</p>
+          </div>
+        </div>
+      </div>
+      <div v-if="Number(isAdmin)" class="mb-6">
+        <span class="text-gray-500 uppercase text-xs mb-4">
+          Exportar Relatórios
+        </span>
+        <div class="mt-2">
+          <div
+            @click="openConfig"
+            class="flex items-center gap-2 mb-2 hover:text-primary cursor-pointer"
+          >
+            <i class="ph ph-phone" :class="`text-primary`"></i>
+            <p id="menu-1" class="text-sm">Relatótio Geral</p>
+          </div>
+          <div
+            @click="openConfig"
+            class="flex items-center gap-2 mb-2 hover:text-primary cursor-pointer"
+          >
+            <i class="ph ph-phone" :class="`text-primary`"></i>
+            <p id="menu-2" class="text-sm">Relatório de Doctores</p>
+          </div>
+          <div
+            @click="openConfig"
+            class="flex items-center gap-2 mb-2 hover:text-primary cursor-pointer"
+          >
+            <i class="ph ph-phone" :class="`text-primary`"></i>
+            <p id="menu-2" class="text-sm">Relatório de Pacientes</p>
           </div>
         </div>
       </div>

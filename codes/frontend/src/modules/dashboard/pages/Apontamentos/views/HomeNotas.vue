@@ -1,5 +1,6 @@
 <script>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, reactive } from "vue";
+import { authStore } from "@/store/authStore";
 import { notasStore } from "@/store/notasStore";
 
 import Header from "@/components/Header.vue";
@@ -10,19 +11,21 @@ import CardApontamento from "../components/CardApontamento.vue";
 export default {
   components: { DefaultLayout, Header, CardApontamento, Adicionar },
   setup() {
-    const NotasStore = notasStore();
+    const state = reactive({ notas: undefined, user: undefined });
+    state.user = computed(() => authStore().getUser);
+    state.notas = computed(() => notasStore().getNotes);
 
     onMounted(async () => {
-      await NotasStore.PegarNotas();
+      setTimeout(async () => {
+        await notasStore().PegarNotas();
+      }, 1000);
     });
 
-    const notas = computed(() => NotasStore.getNotes);
-
     function modalNovaNota() {
-      NotasStore.openNewNotesModal();
+      notasStore().openNewNotesModal();
     }
 
-    return { modalNovaNota, notas };
+    return { modalNovaNota, state };
   },
 };
 </script>
@@ -45,9 +48,10 @@ export default {
       </div>
       <div class="px-8 w-full flex gap-4 flex-wrap">
         <CardApontamento
-          v-for="nota in notas"
+          v-for="nota in state.notas"
           :key="nota.apontamento"
           :apontamento="nota"
+          :user_id="state.user.id"
         />
       </div>
     </div>

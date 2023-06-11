@@ -10,44 +10,44 @@ use PDF;
 class PdfController extends Controller
 {
 
-  public function __construct(Paciente $paciente, User $medico)
-  {
-      $this->paciente = $paciente;
-      $this->medico = $medico;
-  }
-  
-  public function pdf_paciente()
-  {
-    $paciente = Paciente::all();
-    $medico = User::all();
+    public function __construct(Paciente $paciente, User $medico)
+    {
+        $this->paciente = $paciente;
+        $this->medico = $medico;
+    }
 
-    $data = [
-        'title' => 'Exemplo de PDF com imagens',
-        'image' => public_path('pulso.png')
-    ];
+    public function pdf_paciente()
+    {
+        $paciente = Paciente::all();
+        $medico = User::all();
 
-    $pdf = PDF::loadView('pdf_paciente', compact('paciente', 'medico', 'data'));
+        $data = [
+            'title' => 'Exemplo de PDF com imagens',
+            'image' => public_path('pulso.png')
+        ];
 
-    return $pdf->setPaper('a4')->stream('Todos Pacintes');
-  }
+        $pdf = PDF::loadView('pdf_paciente', compact('paciente', 'medico', 'data'));
 
-  public function pdf_doctor()
-  {
-    $medico = User::all();
+        return $pdf->setPaper('a4')->stream('Todos Pacintes');
+    }
 
-    $data = [
-        'title' => 'Exemplo de PDF com imagens',
-        'image' => public_path('pulso.png')
-    ];
+    public function pdf_doctor()
+    {
+        $medico = User::all();
 
-    $pdf = PDF::loadView('pdf_doctor', compact('medico', 'data'));
+        $data = [
+            'title' => 'Exemplo de PDF com imagens',
+            'image' => public_path('pulso.png')
+        ];
 
-    return $pdf->setPaper('a4')->stream('Todos Medicos');
-  }
+        $pdf = PDF::loadView('pdf_doctor', compact('medico', 'data'));
 
-  public function pdf_estatistica()
-  {
-    $statistics = [];
+        return $pdf->setPaper('a4')->stream('Todos Medicos');
+    }
+
+    public function pdf_estatistica()
+    {
+        $statistics = [];
 
         // Start PacienteTotalMes
 
@@ -186,6 +186,5 @@ class PdfController extends Controller
         $pdf = PDF::loadView('pdf_estatistica', compact('statistics'));
 
         return $pdf->setPaper('a4')->stream('Todas Estatistica');
-  }
-
+    }
 }

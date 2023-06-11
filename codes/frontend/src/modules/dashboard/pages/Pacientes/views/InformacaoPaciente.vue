@@ -15,7 +15,6 @@ export default {
     const PacienteStore = pacienteStore();
 
     onMounted(() => {
-      console.log(route.params.id);
       setTimeout(async () => {
         await PacienteStore.SelecionarPaciente(route.params.id);
       }, 1500);

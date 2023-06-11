@@ -1,14 +1,21 @@
 <script>
 import { authStore } from "@/store/authStore";
+import { useRouter } from "vue-router";
 import { computed } from "vue";
 
 export default {
   setup() {
     const AuthStore = authStore();
+    const router = useRouter();
     const menu = computed(() => AuthStore.getMenuUser);
     const isAdmin = computed(() => AuthStore.getIsAdmin);
 
-    return { menu, isAdmin };
+    function signOut() {
+      AuthStore.SignOut();
+      router.push("/");
+    }
+
+    return { menu, isAdmin, signOut };
   },
 };
 </script>
@@ -38,6 +45,7 @@ export default {
       >
       <span class="block w-full h-[1px] bg-[#f0f0f0]"></span>
       <button
+        @click="signOut"
         type="button"
         class="block w-full px-4 py-2 text-left transition duration-200 hover:text-primary"
       >

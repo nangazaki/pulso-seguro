@@ -110,12 +110,8 @@ export default {
               <div class="w-full mt-8 overflow-hidden">
                 <div class="w-full flex justify-center mb-4">
                   <img
-                    class="w-40 h-40 rounded-full object-cover"
-                    :src="`${
-                      state.preview
-                        ? state.preview
-                        : 'https://img.freepik.com/fotos-gratis/retrato-de-homem-afro-americano_23-2149072178.jpg?w=740&t=st=1678925432~exp=1678926032~hmac=3a5c267e550607d8e22f2d3d0314179005b8feb6f556e40e24b576cf234383e0'
-                    }`"
+                    class="w-40 h-40 border rounded-full object-cover"
+                    :src="`${state.preview ? state.preview : '/upload.png'}`"
                     alt="Foto de perfil"
                   />
                 </div>

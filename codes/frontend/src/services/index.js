@@ -52,7 +52,9 @@ export const post_apontamento = async (apontamento) => {
 }
 
 export const fetch_apontamentos = async () => {
-  const response = await $axios.get()
+  const response = await $axios.get("/apontamentos")
+
+  return response.data
 }
 
 export const search_pacientes = async (paciente_name) => {

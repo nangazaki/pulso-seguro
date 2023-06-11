@@ -1,5 +1,5 @@
 <script>
-import { computed } from "vue";
+import { computed, reactive } from "vue";
 import { authStore } from "@/store/authStore";
 
 export default {
@@ -12,6 +12,28 @@ export default {
   setup() {
     const isVisible = computed(() => authStore().getModalNotification);
     const notificationsCount = computed(() => authStore().hasNotifications());
+    const state = reactive({ temp: null, bat: null, press: null });
+    const client = mqtt.connect("wss://io.adafruit.com", {
+      username: "ClaudioCanga",
+      password: "aio_MZxg82KiRS0x01N8XT0CRq8NTI2U",
+    });
+    client.on("connect", () => {
+      client.subscribe(`ClaudioCanga/feeds/bpm1`);
+      client.subscribe(`ClaudioCanga/feeds/temObjecto$1`);
+      console.log("Conectado!");
+    });
+    client.on("message", (topic, message) => {
+      if (topic == `ClaudioCanga/feeds/bpm1`) {
+        const dados = JSON.parse(message.toString());
+        authStore().addNotificationBpm(dados);
+      }
+    });
+    client.on("message", (topic, message) => {
+      if (topic == `ClaudioCanga/feeds/temObjecto1`) {
+        const dados = JSON.parse(message.toString());
+        authStore().addNotificationTemp(dados);
+      }
+    });
 
     function showModalNotification() {
       authStore().openModalNotification(!isVisible.value);
@@ -44,7 +66,7 @@ export default {
     </div>
     <div
       v-if="isVisible"
-      class="absolute top-14 w-64 text-sm bg-white rounded-xl shadow-card enter-menu overflow-hidden"
+      class="absolute top-14 w-64 max-h-[452px] text-sm bg-white rounded-xl shadow-xl enter-menu overflow-hidden overflow-y-auto"
     >
       <div
         @click="openNotification(message.id)"

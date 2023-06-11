@@ -2,32 +2,13 @@ import { defineStore } from "pinia";
 import { fetch_login, fetch_me } from "@/services";
 import { fetch_doctor, patch_doctor } from "@/services/doctorServices"
 
-import { getLocalToken, getLocalUser, setLocalToken, setLocalUser, removeToken } from '@/utils/storage'
+import { getLocalToken, getLocalUser, setLocalToken, setLocalUser, removeToken, removeLocalUser } from '@/utils/storage'
 
 export const authStore = defineStore('auth', {
   state: () => {
     return {
       user: {},
-      notifications: [
-        {
-          id: 1,
-          message:
-            "Paciente 'Nome do Paciente' está a ter uma queda na temperatura, convém o monitorar.",
-          lida: true,
-        },
-        {
-          id: 2,
-          message:
-            "Paciente 'Nome do Paciente' está a ter uma queda no batimento cardíaco, convém o monitorar.",
-          lida: false,
-        },
-        {
-          id: 3,
-          message:
-            "Paciente 'Nome do Paciente' está a ter uma queda na temperatura, convém o monitorar.",
-          lida: false,
-        },
-      ],
+      notifications: [],
       modalNotification: false,
       token: "",
       isLogged: false,
@@ -101,7 +82,7 @@ export const authStore = defineStore('auth', {
       this.SetLocalData(response.data)
       this.user = response.data.users
       this.token = response.data.token
-      this.isLogged = true
+      this.SetLogged(true)
 
       return response.data.users
     },
@@ -119,6 +100,7 @@ export const authStore = defineStore('auth', {
       }
 
       this.SetToken(token)
+      this.SetLogged(true)
       this.RefreshSession(id, isAdmin)
     },
 
@@ -135,7 +117,7 @@ export const authStore = defineStore('auth', {
       this.user = {}
       this.SetToken(null)
       this.SetLogged(false)
-      removeToken()
+      removeLocalUser()
 
       // deleteLocalUser()
     },
@@ -186,6 +168,46 @@ export const authStore = defineStore('auth', {
 
     openModalNotification(action) {
       this.modalNotification = action
+    },
+
+    addNotificationTemp(n) {
+      const id = this.notifications.length + 1
+
+      if (n < 36) {
+        this.notifications.push({
+          id: id,
+          message: "Paciente Joana Mendonça está a ter uma queda na temperatura.",
+          lida: false,
+        })
+      }
+
+      if (n > 38) {
+        this.notifications.push({
+          id: id,
+          message: "Paciente Joana Mendonça está a ter uma subida drástica na temperatura.",
+          lida: false,
+        })
+      }
+    },
+
+    addNotificationBpm(n) {
+      const id = this.notifications.length + 1
+
+      if (n < 60) {
+        this.notifications.push({
+          id: id,
+          message: "Paciente Joana Mendonça está a ter uma queda nos batimentos cardíacos.",
+          lida: false,
+        })
+      }
+
+      if (n > 100) {
+        this.notifications.push({
+          id: id,
+          message: "Paciente Joana Mendonça está a ter uma subida drástica nos batimentos cardíacos.",
+          lida: false,
+        })
+      }
     },
 
     selectMenuConfig(id) {

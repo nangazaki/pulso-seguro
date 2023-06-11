@@ -25,7 +25,9 @@ export default {
         return;
       }
 
-      PacienteStore.AdicionarPacientes(user.value.pacientes);
+      setTimeout(() => {
+        PacienteStore.AdicionarPacientes(user.value.pacientes);
+      }, 1000);
     });
 
     async function nextPage() {

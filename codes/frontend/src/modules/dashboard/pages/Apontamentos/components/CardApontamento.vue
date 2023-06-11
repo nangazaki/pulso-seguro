@@ -7,6 +7,7 @@ export default {
       type: Object,
       // required: true,
     },
+    user_id: Number,
   },
   setup(props) {
     const date = new Date(props.apontamento.created_at);
@@ -25,6 +26,7 @@ export default {
 
 <template>
   <div
+    v-if="apontamento.user_id == user_id"
     class="bg-white min-w-0 w-full h-[180px] lg:w-[49%] p-6 overflow-hidden rounded-lg shadow-card transition ease-linear duration-500 hover:shadow-xl"
   >
     <div class="w-full flex gap-4">
@@ -38,7 +40,7 @@ export default {
       <div class="flex-grow-1">
         <div class="w-full">
           <div>{{ state.data }}</div>
-          <div>Cardiologia</div>
+          <div class="mb-2">APONTAMENTO</div>
           <div>
             {{ apontamento.apontamento }}
           </div>

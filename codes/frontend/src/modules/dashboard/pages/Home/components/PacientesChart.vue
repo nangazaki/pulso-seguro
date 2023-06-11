@@ -22,7 +22,7 @@ export default {
             borderColor: ["#1ca35e", "#64e564"],
             backgroundColor: ["rgba(28,163,94,0.1)", "rgba(100,229,100,0.1)"],
             borderWidth: 2,
-            borderRadius: 50,
+            borderRadius: 0,
             tension: 0,
             options: {
               reponsive: true,

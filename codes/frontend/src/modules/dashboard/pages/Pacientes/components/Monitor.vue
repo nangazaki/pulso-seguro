@@ -24,7 +24,6 @@ export default {
 
     client.on("message", (topic, message) => {
       const dados = JSON.parse(message.toString());
-      console.log(dados);
       addDadosNoChart(dados);
     });
 
@@ -32,6 +31,7 @@ export default {
       myChart.update();
       state.dados = [...state.dados, data];
       myChart.data.labels.push("BPM");
+      console.log(state.dados);
       myChart.update();
     }
 

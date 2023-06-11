@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { authStore } from "@/store/authStore"
-import { post_apontamento } from "../services"
+import { fetch_apontamentos, post_apontamento } from "../services"
 
 export const notasStore = defineStore('notas', {
   state: () => {
@@ -38,7 +38,15 @@ export const notasStore = defineStore('notas', {
       return response
     },
     async PegarNotas() {
-      this.notas = await authStore().getApontamentos
+      this.notas = await fetch_apontamentos()
+    },
+    PegarMinhasNotas(id) {
+      console.log(id)
+      const notas = this.notas.filter((nota, index) => {
+        return nota.user_id == id
+      })
+
+      console.log(notas)
     },
     RemoverNota() {
 

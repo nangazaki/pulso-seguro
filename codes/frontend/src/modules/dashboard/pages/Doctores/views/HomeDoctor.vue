@@ -66,14 +66,6 @@ export default {
               Exportar PDF
               <i class="ph ph-download-simple"></i>
             </a>
-
-            <select class="w-20 h-full bg-white p-2 rounded-md shadow-card">
-              <option selected>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
           </div>
         </div>
       </div>
