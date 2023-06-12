@@ -9,32 +9,32 @@ export default {
     const route = useRoute();
     const state = reactive({ bpm: 0, temperatura: 0 });
 
-    const client = mqtt.connect("wss://io.adafruit.com", {
-      username: "ClaudioCanga",
-      password: "aio_MZxg82KiRS0x01N8XT0CRq8NTI2U",
-    });
+    // const client = mqtt.connect("wss://io.adafruit.com", {
+    //   username: import.meta.env.VITE_ARDAFRUIT_USER,
+    //   password: import.meta.env.VITE_ARDAFRUIT_KEY,
+    // });
 
-    client.on("connect", () => {
-      client.subscribe(`ClaudioCanga/feeds/bpm${route.params.id}`);
-      client.subscribe(`ClaudioCanga/feeds/temObjecto${route.params.id}`);
-      console.log("Conectado!");
-    });
+    // client.on("connect", () => {
+    //   client.subscribe(`ClaudioCanga/feeds/bpm${route.params.id}`);
+    //   client.subscribe(`ClaudioCanga/feeds/temObjecto${route.params.id}`);
+    //   console.log("Conectado!");
+    // });
 
-    client.on("message", (topic, message) => {
-      if (topic == `ClaudioCanga/feeds/bpm${route.params.id}`) {
-        const dados = JSON.parse(message.toString());
-        console.log(dados);
-        state.bpm = dados;
-      }
-    });
+    // client.on("message", (topic, message) => {
+    //   if (topic == `ClaudioCanga/feeds/bpm${route.params.id}`) {
+    //     const dados = JSON.parse(message.toString());
+    //     console.log(dados);
+    //     state.bpm = dados;
+    //   }
+    // });
 
-    client.on("message", (topic, message) => {
-      if (topic == `ClaudioCanga/feeds/temObjecto${route.params.id}`) {
-        const dados = JSON.parse(message.toString());
-        console.log(dados);
-        state.temperatura = dados;
-      }
-    });
+    // client.on("message", (topic, message) => {
+    //   if (topic == `ClaudioCanga/feeds/temObjecto${route.params.id}`) {
+    //     const dados = JSON.parse(message.toString());
+    //     console.log(dados);
+    //     state.temperatura = dados;
+    //   }
+    // });
 
     return { state };
   },

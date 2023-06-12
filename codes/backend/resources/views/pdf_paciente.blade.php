@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-   @foreach ($paciente as $pacientes)
+  @foreach ($paciente as $pacientes)
   <title>(Mês: {{$mesActual}})-Pulso Seguro - diagnosticos - {{$pacientes->name}} {{$pacientes->sobrenome}}</title>
   @endforeach
   <style>
@@ -24,19 +24,19 @@
     td {
       padding: 6px;
     }
-   
   </style>
 </head>
 
 <body>
   <div style="margin-bottom: 32px;">
     <img src="{{$data['image']}}" />
-    <p>Pulso Seguro</p>
-    <p>Instito de Telecomunicações - ITEL</p>
+    <h3>Pulso Seguro</h3>
+    <h4>Instito de Telecomunicações - ITEL</h4>
   </div>
 
-   @foreach ($paciente as $pacientes)
-  <h1>Paciente: {{$pacientes->name}} {{$pacientes->sobrenome}}</h1>
+  @foreach ($paciente as $pacientes)
+  <h1>Prontuário Médico</h1>
+  <h2>Paciente: {{$pacientes->name}} {{$pacientes->sobrenome}}</h2>
   @endforeach
 
   <table>
@@ -52,15 +52,15 @@
     <tr>
       <td>Máximo: {{$temperaturaMax}}</td>
       <td>Máximo: {{$batcardiacoMax}}</td>
-    <tr> 
+    <tr>
     <tr>
       <td>Mínimo: {{$temperaturaMin}}</td>
       <td>Mínimo: {{$batcardiacoMin}}</td>
-    <tr> 
+    <tr>
     <tr>
       <td>Média: {{$temperaturaTotal}}</td>
       <td>Média: {{$batcardiacoTotal}}</td>
-    <tr>  
+    <tr>
   </table>
 </body>
 

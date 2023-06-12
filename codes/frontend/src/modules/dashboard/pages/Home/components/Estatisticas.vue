@@ -20,7 +20,9 @@ export default {
     <div
       class="bg-white w-1/3 h-auto rounded-xl p-4 shadow-card transition ease-linear duration-500 hover:shadow-xl"
     >
-      <h2 class="text-primary font-montserrat mb-4">Total de Usuarios</h2>
+      <h2 class="text-primary font-montserrat mb-4">
+        Pessoas Cadastradas no Sistema
+      </h2>
       <span class="font-montserrat block text-3xl">{{ total - 1 }}</span>
     </div>
     <div

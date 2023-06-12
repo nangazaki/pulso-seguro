@@ -72,7 +72,11 @@ export default {
         <span class="text-gray-500 uppercase text-xs mb-4">
           Informações clinicas
         </span>
-        <a href="#" class="flex items-center gap-2 mt-2 hover:text-primary">
+        <a
+          :href="`http://localhost:8000/api/dashboard/paciente/pdf/${paciente.id}`"
+          target="_blank"
+          class="flex items-center gap-2 mt-2 hover:text-primary"
+        >
           <i class="ph ph-download-simple" :class="`text-primary`"></i>
           <p class="text-sm">Baixar Prontuário Médico</p>
         </a>

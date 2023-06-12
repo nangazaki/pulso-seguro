@@ -11,7 +11,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="bg-green-50">
     <section class="relative w-full h-screen overflow-x-hidden">
       <div class="container py-6 mx-auto flex flex-col gap-[180px]">
         <div class="px-6">
@@ -35,7 +35,9 @@ export default {
             </p>
 
             <div class="flex gap-4">
-              <router-link to="/login" class="p-4 bg-primary rounded-lg"
+              <router-link
+                to="/login"
+                class="p-4 bg-primary rounded-lg text-white"
                 >Acessar o Sistema</router-link
               >
               <a href="" class="p-4 border border-primary rounded-lg"
@@ -54,8 +56,8 @@ export default {
         </div>
       </div>
     </section>
-    <section class="h-[700px]">SOBRE</section>
+    <section class="h-[700px] bg-gradient-1">SOBRE</section>
     <section class="h-[700px]">CONTACTO</section>
-    <section class="h-[700px]">FOOTER</section>
+    <section class="h-[700px] bg-gradient-1">FOOTER</section>
   </div>
 </template>
